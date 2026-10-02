@@ -195,15 +195,22 @@ function dayKey(ts) {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
 }
 
-/** Split [s, e] at local midnights. */
-function* byDay(s, e) {
+/** Split [s, e] at local hour boundaries → [date, hour, ms]. */
+function* byHour(s, e) {
   for (let a = s; a < e; ) {
+    const d = new Date(a);
     const next = new Date(a);
-    next.setHours(24, 0, 0, 0);
+    next.setMinutes(60, 0, 0);
     const b = Math.min(e, next.getTime());
-    yield [dayKey(a), b - a];
+    yield [dayKey(a), d.getHours(), b - a];
     a = b;
   }
+}
+
+function startOfDay(ts) {
+  const d = new Date(ts);
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
 }
 
 const started = Date.now();
@@ -235,8 +242,9 @@ for (const agent of Object.keys(AGENTS)) {
   }
 }
 
-// daily[date][agent] -> metrics
+// daily[date][agent] -> metrics, hourly[date][agent] -> 24-slot arrays (for "today vs yesterday at this time")
 const daily = {};
+const hourly = {};
 const models = {};
 const bucket = (date, agent) =>
   ((daily[date] ??= {})[agent] ??= {
@@ -249,13 +257,17 @@ const bucket = (date, agent) =>
     agentMinutes: 0, // summed per session — parallel sessions and subagents stack
     activeMinutes: 0, // wall clock — overlapping sessions merged
   });
+const slots = () => Array(24).fill(0);
+const hourBucket = (date, agent) =>
+  ((hourly[date] ??= {})[agent] ??= { activeMinutes: slots(), agentMinutes: slots(), prompts: slots(), sessions: slots(), tokens: slots() });
+const hourOf = (ts) => new Date(ts).getHours();
 
-/** Merge overlapping [start, end] runs and report the covered time per local day. */
-function unionByDay(runs, add) {
+/** Merge overlapping [start, end] runs and report the covered minutes per local day and hour. */
+function unionByHour(runs, add) {
   runs.sort((a, b) => a[0] - b[0]);
   let cur = null;
   const flush = () => {
-    if (cur) for (const [date, ms] of byDay(cur[0], cur[1])) add(date, ms / 60000);
+    if (cur) for (const [date, hour, ms] of byHour(cur[0], cur[1])) add(date, hour, ms / 60000);
   };
   for (const [s, e] of runs) {
     if (cur && s <= cur[1]) cur[1] = Math.max(cur[1], e);
@@ -270,48 +282,82 @@ function unionByDay(runs, add) {
 const everyRun = []; // across all agents, for "all agents" wall clock
 for (const [agent, src] of Object.entries(merged)) {
   for (const [ts, input, output, cache, model] of Object.values(src.msgs)) {
-    const b = bucket(dayKey(ts), agent);
+    const date = dayKey(ts);
+    const b = bucket(date, agent);
     b.turns++;
     b.inputTokens += input;
     b.outputTokens += output;
     b.cacheTokens += cache;
+    hourBucket(date, agent).tokens[hourOf(ts)] += input + output;
     if (model && !model.startsWith("<")) (models[agent] ??= {})[model] = (models[agent][model] ?? 0) + 1;
   }
-  for (const ts of Object.values(src.prompts)) bucket(dayKey(ts), agent).prompts++;
+  for (const ts of Object.values(src.prompts)) {
+    bucket(dayKey(ts), agent).prompts++;
+    hourBucket(dayKey(ts), agent).prompts[hourOf(ts)]++;
+  }
 
-  const sessionDays = new Set();
+  const sessionFirstSeen = new Map(); // "sid|date" -> earliest activity that day
+  const seen = (sid, ts) => {
+    const k = `${sid}|${dayKey(ts)}`;
+    if (!(sessionFirstSeen.get(k) <= ts)) sessionFirstSeen.set(k, ts);
+  };
   const runs = [];
   for (const f of Object.values(src.files)) {
     for (const [s, e] of f.runs) {
       runs.push([s, e]);
-      for (const [date, ms] of byDay(s, e)) bucket(date, agent).agentMinutes += ms / 60000;
-      if (f.main) sessionDays.add(`${f.sid}|${dayKey(s)}`).add(`${f.sid}|${dayKey(e)}`);
+      for (const [date, hour, ms] of byHour(s, e)) {
+        bucket(date, agent).agentMinutes += ms / 60000;
+        hourBucket(date, agent).agentMinutes[hour] += ms / 60000;
+      }
+      if (f.main) {
+        seen(f.sid, s);
+        if (dayKey(e) !== dayKey(s)) seen(f.sid, startOfDay(e));
+      }
     }
   }
-  for (const k of sessionDays) bucket(k.split("|")[1], agent).sessions++;
+  for (const [k, ts] of sessionFirstSeen) {
+    const date = k.split("|")[1];
+    bucket(date, agent).sessions++;
+    hourBucket(date, agent).sessions[hourOf(ts)]++;
+  }
 
   // wall clock: union of every run across sessions (and machines)
   everyRun.push(...runs);
-  unionByDay(runs, (date, min) => (bucket(date, agent).activeMinutes += min));
+  unionByHour(runs, (date, hour, min) => {
+    bucket(date, agent).activeMinutes += min;
+    hourBucket(date, agent).activeMinutes[hour] += min;
+  });
 }
 
 // same, across agents — Claude Code and Codex running at once count once
 const allActive = {};
-unionByDay(everyRun, (date, min) => (allActive[date] = (allActive[date] ?? 0) + min));
+unionByHour(everyRun, (date, hour, min) => ((allActive[date] ??= slots())[hour] += min));
 
+const round1 = (v) => Math.round(v * 10) / 10;
 for (const agents of Object.values(daily))
   for (const m of Object.values(agents)) {
     m.agentMinutes = Math.round(m.agentMinutes);
     m.activeMinutes = Math.round(m.activeMinutes);
   }
+for (const agents of Object.values(hourly))
+  for (const h of Object.values(agents)) {
+    h.activeMinutes = h.activeMinutes.map(round1);
+    h.agentMinutes = h.agentMinutes.map(round1);
+  }
 
 const days = Object.keys(daily).sort();
+const sum24 = (a) => a.reduce((s, v) => s + v, 0);
 const out = {
   generatedAt: new Date().toISOString(),
   sources: labels,
   agents: AGENTS,
   models,
-  days: days.map((date) => ({ date, agents: daily[date], allActiveMinutes: Math.round(allActive[date] ?? 0) })),
+  days: days.map((date) => ({
+    date,
+    agents: daily[date],
+    allActiveMinutes: Math.round(sum24(allActive[date] ?? [])),
+    hourly: { agents: hourly[date] ?? {}, allActiveMinutes: (allActive[date] ?? slots()).map(round1) },
+  })),
 };
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });

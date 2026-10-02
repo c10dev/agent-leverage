@@ -1,5 +1,5 @@
 import { useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
-import { addDays, fmt, fmtDate, parseDay, weekStart, type DayPoint, type MetricKey } from "./usage";
+import { addDays, cumulative, fmt, fmtClock, fmtDate, parseDay, valueUntil, weekStart, type DayPoint, type MetricKey } from "./usage";
 
 // ---------- shared ----------
 
@@ -83,8 +83,6 @@ export function TrendChart({ cur, prev, metric, partialLast = false }: { cur: Da
   const curLine = smoothPath(pts(cur));
   const area = `${curLine}L${x(n - 1)},${y(0)}L${x(0)},${y(0)}Z`;
 
-  const peak = cur.reduce((best, d, i) => (d.total > cur[best].total ? i : best), 0);
-  const showPeak = cur[peak].total > 0 && hover === null;
   const labelEvery = n <= 7 ? 1 : Math.ceil(n / Math.max(2, Math.floor(iw / 72)));
 
   const onMove = (e: React.PointerEvent) => {
@@ -152,15 +150,6 @@ export function TrendChart({ cur, prev, metric, partialLast = false }: { cur: Da
           </>
         )}
 
-        {showPeak && (
-          <g className="au-peak">
-            <circle cx={x(peak)} cy={y(cur[peak].total)} r="3" />
-            <text x={x(peak)} y={y(cur[peak].total) - 12} textAnchor={peak < n * 0.15 ? "start" : peak > n * 0.85 ? "end" : "middle"}>
-              최고 {fmt(cur[peak].total, metric)}
-            </text>
-          </g>
-        )}
-
         {hover !== null && (
           <g>
             <line className="au-crosshair" x1={x(hover)} x2={x(hover)} y1={PAD.top - 8} y2={PAD.top + ih} />
@@ -183,6 +172,111 @@ export function TrendChart({ cur, prev, metric, partialLast = false }: { cur: Da
             <i className="au-key au-key-prev" />
             <strong>{fmt(h.p.total, metric)}</strong>
             <span>{fmtDate(h.p.date, { weekday: true })}</span>
+          </div>
+        </Tooltip>
+      )}
+    </div>
+  );
+}
+
+// ---------- today vs yesterday: running totals through the day ----------
+
+/** `until`: hours elapsed today (fractional). Yesterday is drawn in full so you can see where it ended up. */
+export function TodayChart({ today, yesterday, until, metric }: { today: number[]; yesterday: number[]; until: number; metric: MetricKey }) {
+  const [ref, width] = useWidth<HTMLDivElement>();
+  const [hover, setHover] = useState<number | null>(null);
+  const gradId = useId();
+  const height = width < 520 ? 200 : 260;
+  const cumT = cumulative(today);
+  const cumY = cumulative(yesterday);
+  const nowT = valueUntil(today, until);
+  const nowY = valueUntil(yesterday, until);
+  const ticks = niceTicks(Math.max(cumY[24], nowT));
+  const yMax = ticks[ticks.length - 1];
+  const iw = width - PAD.left - PAD.right;
+  const ih = height - PAD.top - PAD.bottom;
+  const x = (h: number) => PAD.left + (h / 24) * iw;
+  const y = (v: number) => PAD.top + ih - (v / yMax) * ih;
+
+  const todayPts: [number, number][] = [];
+  for (let h = 0; h <= Math.min(24, Math.floor(until)); h++) todayPts.push([x(h), y(cumT[h])]);
+  if (until < 24 && until % 1 > 0) todayPts.push([x(until), y(nowT)]);
+  const todayLine = smoothPath(todayPts);
+  const area = todayPts.length > 1 ? `${todayLine}L${x(until)},${y(0)}L${x(0)},${y(0)}Z` : "";
+  const live = until < 24;
+
+  const onMove = (e: React.PointerEvent) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    setHover(Math.max(0, Math.min(24, Math.round(((e.clientX - r.left - PAD.left) / iw) * 24))));
+  };
+
+  return (
+    <div className="au-chart" ref={ref}>
+      <svg
+        width={width}
+        height={height}
+        onPointerMove={onMove}
+        onPointerLeave={() => setHover(null)}
+        role="img"
+        aria-label="오늘과 어제의 시간대별 누적 비교"
+      >
+        <defs>
+          <linearGradient id={gradId} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="var(--ink)" stopOpacity="0.16" />
+            <stop offset="100%" stopColor="var(--ink)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        {ticks.map((t) => (
+          <g key={t}>
+            <line className={t === 0 ? "au-baseline" : "au-gridline"} x1={PAD.left} x2={width - PAD.right} y1={y(t)} y2={y(t)} />
+            <text className="au-axis" x={PAD.left - 10} y={y(t)} dy="0.32em" textAnchor="end">
+              {fmt(t, metric)}
+            </text>
+          </g>
+        ))}
+        {[0, 6, 12, 18, 24].map((h) => (
+          <text key={h} className="au-axis" x={x(h)} y={height - 8} textAnchor={h === 0 ? "start" : h === 24 ? "end" : "middle"}>
+            {h}시
+          </text>
+        ))}
+
+        <path d={smoothPath(cumY.map((v, h) => [x(h), y(v)] as [number, number]))} className="au-line-prev" />
+        {area && <path d={area} fill={`url(#${gradId})`} className="au-fade" key={`a-${metric}`} />}
+        <path d={todayLine} className="au-line-cur au-draw" pathLength={1} key={`l-${metric}`} />
+
+        {live && hover === null && (
+          <g className="au-now">
+            <line x1={x(until)} x2={x(until)} y1={PAD.top - 8} y2={PAD.top + ih} />
+            <text x={x(until)} y={PAD.top - 14} textAnchor={until > 20 ? "end" : until < 4 ? "start" : "middle"}>
+              지금 {fmtClock(until)}
+            </text>
+            {/* the gap between "me now" and "me yesterday at this time" */}
+            <line className={`au-gap ${nowT >= nowY ? "is-up" : "is-down"}`} x1={x(until)} x2={x(until)} y1={y(nowY)} y2={y(nowT)} />
+            <circle className="au-dot-prev" cx={x(until)} cy={y(nowY)} r="4" />
+          </g>
+        )}
+        <circle className="au-dot-cur" cx={x(until)} cy={y(nowT)} r="5" />
+
+        {hover !== null && (
+          <g>
+            <line className="au-crosshair" x1={x(hover)} x2={x(hover)} y1={PAD.top - 8} y2={PAD.top + ih} />
+            <circle className="au-dot-prev" cx={x(hover)} cy={y(cumY[hover])} r="4" />
+            {hover <= until && <circle className="au-dot-cur" cx={x(hover)} cy={y(cumT[hover])} r="5" />}
+          </g>
+        )}
+      </svg>
+      {hover !== null && (
+        <Tooltip x={x(hover)} y={PAD.top - 8} width={width}>
+          <div className="au-tip-date">{hover}시까지 누적</div>
+          <div className="au-tip-row">
+            <i className="au-key au-key-cur" />
+            <strong>{hover <= until ? fmt(cumT[hover], metric) : "–"}</strong>
+            <span>오늘</span>
+          </div>
+          <div className="au-tip-row au-tip-prev">
+            <i className="au-key au-key-prev" />
+            <strong>{fmt(cumY[hover], metric)}</strong>
+            <span>어제</span>
           </div>
         </Tooltip>
       )}

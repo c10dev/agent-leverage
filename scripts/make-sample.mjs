@@ -28,6 +28,33 @@ function day(scale) {
   };
 }
 
+// a working day: quiet overnight, ramping up from 9, busiest late afternoon and evening
+const CURVE = [1, 0.5, 0.2, 0.1, 0.1, 0.1, 0.2, 0.4, 0.8, 2, 3, 3.4, 2.4, 3, 3.8, 4.2, 4, 3.6, 2.6, 2.8, 3.4, 3.2, 2.6, 1.8];
+
+/** Split a daily total over 24 hours; whole numbers stay whole and still add up. */
+function spread(total, whole) {
+  const w = CURVE.map((c) => c * (0.6 + rand() * 0.8));
+  const sumW = w.reduce((a, b) => a + b, 0);
+  const out = w.map((x) => (total * x) / sumW);
+  if (!whole) return out.map((v) => Math.round(v * 10) / 10);
+  const floored = out.map(Math.floor);
+  floored[16] += total - floored.reduce((a, b) => a + b, 0);
+  return floored;
+}
+
+function hourlyFor(agents, allActiveMinutes) {
+  const byAgent = {};
+  for (const [a, m] of Object.entries(agents))
+    byAgent[a] = {
+      activeMinutes: spread(m.activeMinutes, false),
+      agentMinutes: spread(m.agentMinutes, false),
+      prompts: spread(m.prompts, true),
+      sessions: spread(m.sessions, true),
+      tokens: spread(m.inputTokens + m.outputTokens, true),
+    };
+  return { agents: byAgent, allActiveMinutes: spread(allActiveMinutes, false) };
+}
+
 const days = [];
 for (let i = DAYS - 1; i >= 0; i--) {
   const d = new Date(end);
@@ -42,7 +69,7 @@ for (let i = DAYS - 1; i >= 0; i--) {
   if (rand() < 0.95 && claude > 0.05) agents["claude-code"] = day(claude);
   const mins = Object.values(agents).map((m) => m.activeMinutes);
   const allActiveMinutes = Math.min(1440, Math.round(Math.max(0, ...mins) + 0.6 * (mins.reduce((a, b) => a + b, 0) - Math.max(0, ...mins))));
-  if (mins.length) days.push({ date: key(d), agents, allActiveMinutes });
+  if (mins.length) days.push({ date: key(d), agents, allActiveMinutes, hourly: hourlyFor(agents, allActiveMinutes) });
 }
 
 const out = {

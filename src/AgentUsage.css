@@ -16,9 +16,7 @@
   --series-3: #1baf7a;
   --series-4: #eda100;
   --up: #0f7b45;
-  --up-wash: rgba(15, 123, 69, 0.1);
   --down: #c43a39;
-  --down-wash: rgba(196, 58, 57, 0.1);
   --shadow: 0 1px 2px rgba(24, 22, 12, 0.04), 0 4px 16px rgba(24, 22, 12, 0.04);
   --shadow-pop: 0 2px 6px rgba(24, 22, 12, 0.08), 0 12px 32px rgba(24, 22, 12, 0.1);
 }
@@ -40,9 +38,7 @@
     --series-3: #199e70;
     --series-4: #c98500;
     --up: #4cc27f;
-    --up-wash: rgba(76, 194, 127, 0.12);
     --down: #f07a79;
-    --down-wash: rgba(240, 122, 121, 0.12);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-pop: 0 2px 6px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.4);
   }
@@ -63,9 +59,7 @@
   --series-3: #199e70;
   --series-4: #c98500;
   --up: #4cc27f;
-  --up-wash: rgba(76, 194, 127, 0.12);
   --down: #f07a79;
-  --down-wash: rgba(240, 122, 121, 0.12);
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-pop: 0 2px 6px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.4);
 }
@@ -78,6 +72,7 @@
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
+  word-break: keep-all; /* wrap Korean at word boundaries, not mid-word */
   padding: 48px 24px 32px;
 }
 .au-inner {
@@ -296,6 +291,7 @@
   line-height: 1;
 }
 .au-hero-unit {
+  margin-left: 4px;
   font-size: 26px;
   font-weight: 650;
   letter-spacing: -0.02em;
@@ -364,28 +360,23 @@
   font-weight: 650;
   white-space: nowrap;
 }
-.au-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  border-radius: 999px;
+.au-arrow {
+  margin-left: 6px;
   font-size: 13px;
   font-weight: 700;
-  background: var(--surface-2);
+}
+.au-hero-arrow {
+  align-self: center;
+  margin-right: 4px;
+  font-size: 44px;
+  font-weight: 600;
 }
 .au-change-up,
 .au-change-new {
   color: var(--up);
 }
-.au-pill.au-change-up,
-.au-pill.au-change-new {
-  background: var(--up-wash);
-}
 .au-change-down {
   color: var(--down);
-}
-.au-pill.au-change-down {
-  background: var(--down-wash);
 }
 .au-change-flat,
 .au-change-none {
@@ -488,15 +479,25 @@
 .au-dot-prev {
   fill: var(--prev);
 }
-.au-peak circle {
-  fill: var(--surface);
-  stroke: var(--ink);
-  stroke-width: 2;
+.au-now line {
+  stroke: var(--text-3);
+  stroke-dasharray: 2 3;
 }
-.au-peak text {
-  fill: var(--ink);
+.au-now text {
+  fill: var(--text-2);
   font-size: 11px;
-  font-weight: 650;
+  font-weight: 600;
+}
+.au-now .au-gap {
+  stroke-dasharray: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.au-gap.is-up {
+  stroke: var(--up);
+}
+.au-gap.is-down {
+  stroke: var(--down);
 }
 
 .au-draw {

@@ -1,18 +1,19 @@
 <div align="center">
 
-# agent-usage
+# agent-leverage
 
-**How much do you use AI coding agents, and how does it compare with your past self?**
+**Your hour, multiplied.**
 
-A React dashboard for Claude Code and Codex usage, built from the logs already on your machine.
+How many hours do your AI coding agents work for every hour you do, and how does that compare with your past self?
+A React dashboard for Claude Code and Codex, built from the logs already on your machine.
 
-[![Live demo](https://img.shields.io/badge/live_demo-open-111111?style=flat-square)](https://chaehy5665.github.io/agent-usage/)
+[![Live demo](https://img.shields.io/badge/live_demo-open-111111?style=flat-square)](https://chaehy5665.github.io/agent-leverage/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-111111?style=flat-square)](LICENSE)
 ![React 19](https://img.shields.io/badge/React-19-111111?style=flat-square&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-7-111111?style=flat-square&logo=typescript)
 ![Vite](https://img.shields.io/badge/Vite-8-111111?style=flat-square&logo=vite)
 
-[Live demo](https://chaehy5665.github.io/agent-usage/) · [Quick start](#quick-start) · [Metrics](#metrics) · [Privacy](#privacy)
+[Live demo](https://chaehy5665.github.io/agent-leverage/) · [Quick start](#quick-start) · [Metrics](#metrics) · [Privacy](#privacy)
 
 </div>
 
@@ -27,8 +28,8 @@ A React dashboard for Claude Code and Codex usage, built from the logs already o
 
 ## Highlights
 
+- **Leverage.** Agent hours ÷ your hours: how many hours your agents worked for every hour you did, per agent, now vs. before.
 - **Today vs. yesterday at this time.** A day in progress isn't compared with all of yesterday. It's compared with yesterday *up to the same clock time*, using hourly data.
-- **Leverage.** How many hours your agents worked for every hour you did, now and before.
 - **Overlap-aware time.** Parallel sessions, subagents, and two agents running at once are counted once for wall-clock time.
 - **Every machine, once.** Logs from SSH servers are merged with local ones, and sessions the desktop app mirrors locally aren't double-counted.
 - **Private by default.** Only daily and hourly totals leave the collector. No prompt text, file paths, or project names.
@@ -101,7 +102,7 @@ Color is used only to identify agents (Claude Code orange, Codex blue). Everythi
 
 - `usage.json` holds only daily/hourly aggregates and response counts per model: no prompt text, paths, or project names.
 - `public/usage.json` and `remotes.txt` are gitignored.
-- The [live demo](https://chaehy5665.github.io/agent-usage/) is built by GitHub Actions from the repo, so it can only see the synthetic sample. The build also drops `usage.json` from its output, as a second guard.
+- The [live demo](https://chaehy5665.github.io/agent-leverage/) is built by GitHub Actions from the repo, so it can only see the synthetic sample. The build also drops `usage.json` from its output, as a second guard.
 - Nothing is sent anywhere. The collector reads files locally, or on your own SSH hosts.
 
 ## Collecting from SSH servers

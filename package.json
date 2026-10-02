@@ -1,9 +1,9 @@
 {
-  "name": "agent-usage",
+  "name": "agent-leverage",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "How much you use AI coding agents (Claude Code, Codex), compared with the previous period",
+  "description": "How many hours your AI coding agents (Claude Code, Codex) work for every hour you do — compared with your past self",
   "scripts": {
     "collect": "node scripts/collect.mjs --out public/usage.json",
     "sample": "node scripts/make-sample.mjs",

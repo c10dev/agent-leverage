@@ -29,7 +29,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          BASE_PATH: /agent-usage/
+          BASE_PATH: /agent-leverage/
           VITE_DEMO: "1"
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5

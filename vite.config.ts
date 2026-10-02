@@ -14,5 +14,5 @@ const dropRealUsage: Plugin = {
   },
 };
 
-// BASE_PATH lets the GitHub Pages build live under /agent-usage/
+// BASE_PATH lets the GitHub Pages build live under /agent-leverage/
 export default defineConfig({ base: process.env.BASE_PATH ?? "/", plugins: [react(), dropRealUsage] });

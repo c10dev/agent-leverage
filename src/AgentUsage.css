@@ -1,0 +1,450 @@
+.au-root {
+  color-scheme: light;
+  --surface-0: #f5f4f1;
+  --surface-1: #fcfcfb;
+  --border: #e4e2dc;
+  --grid: #ecebe7;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #7a7974;
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --current: #0b0b0b;
+  --current-wash: rgba(11, 11, 11, 0.05);
+  --previous: #9a9993;
+  --good: #0b7a3e;
+  --bad: #c43a39;
+  --hover: rgba(0, 0, 0, 0.04);
+
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", system-ui, sans-serif;
+  color: var(--text-primary);
+  background: var(--surface-0);
+  padding: 24px;
+  border-radius: 16px;
+  display: grid;
+  gap: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .au-root {
+    color-scheme: dark;
+    --surface-0: #121211;
+    --surface-1: #1a1a19;
+    --border: #2e2e2b;
+    --grid: #262624;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #8f8e86;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --current: #ffffff;
+    --current-wash: rgba(255, 255, 255, 0.06);
+    --previous: #77766f;
+    --good: #4cc27f;
+    --bad: #f07a79;
+    --hover: rgba(255, 255, 255, 0.05);
+  }
+}
+:root[data-theme="dark"] .au-root {
+  color-scheme: dark;
+  --surface-0: #121211;
+  --surface-1: #1a1a19;
+  --border: #2e2e2b;
+  --grid: #262624;
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #8f8e86;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --current: #ffffff;
+  --current-wash: rgba(255, 255, 255, 0.06);
+  --previous: #77766f;
+  --good: #4cc27f;
+  --bad: #f07a79;
+  --hover: rgba(255, 255, 255, 0.05);
+}
+
+.au-root h2,
+.au-root h3 {
+  margin: 0;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+.au-root h2 {
+  font-size: 20px;
+}
+.au-root h3 {
+  font-size: 14px;
+}
+.au-sub {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.au-muted {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.au-badge {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* filters */
+.au-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.au-seg {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+}
+.au-seg button {
+  all: unset;
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.au-seg button:hover {
+  background: var(--hover);
+}
+.au-seg button[aria-checked="true"] {
+  background: var(--text-primary);
+  color: var(--surface-1);
+  font-weight: 600;
+}
+.au-seg button:focus-visible,
+.au-kpi:focus-visible,
+.au-week:focus-visible {
+  outline: 2px solid var(--series-1);
+  outline-offset: 2px;
+}
+
+/* KPI tiles — each is a tab that picks the chart metric */
+.au-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+}
+.au-kpi {
+  all: unset;
+  cursor: pointer;
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  transition: border-color 120ms;
+}
+.au-kpi:hover {
+  border-color: var(--text-muted);
+}
+.au-kpi[aria-selected="true"] {
+  border-color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px var(--text-primary);
+}
+.au-kpi-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.au-kpi-value {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.au-kpi-prev {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.au-delta {
+  font-size: 12px;
+  font-weight: 600;
+  justify-self: start;
+}
+.au-delta-up {
+  color: var(--good);
+}
+.au-delta-down {
+  color: var(--bad);
+}
+.au-delta-flat {
+  color: var(--text-muted);
+}
+
+/* cards */
+.au-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 0;
+}
+.au-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.au-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.au-legend {
+  display: flex;
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.au-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* charts */
+.au-chart {
+  position: relative;
+  width: 100%;
+}
+.au-chart svg {
+  display: block;
+  overflow: visible;
+}
+.au-grid-line {
+  stroke: var(--grid);
+  stroke-width: 1;
+}
+.au-axis {
+  fill: var(--text-muted);
+  font-size: 11px;
+}
+.au-area {
+  fill: var(--current-wash);
+}
+.au-line-cur {
+  fill: none;
+  stroke: var(--current);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.au-line-prev {
+  fill: none;
+  stroke: var(--previous);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+  stroke-linejoin: round;
+}
+.au-crosshair {
+  stroke: var(--text-muted);
+  stroke-width: 1;
+}
+.au-dot-cur,
+.au-dot-prev {
+  stroke: var(--surface-1);
+  stroke-width: 2;
+}
+.au-dot-cur {
+  fill: var(--current);
+}
+.au-dot-prev {
+  fill: var(--previous);
+}
+.au-week {
+  outline: none;
+}
+.au-week.is-past path {
+  opacity: 0.55;
+}
+.au-week.is-hover path {
+  opacity: 1;
+  filter: brightness(1.1);
+}
+
+.au-tooltip {
+  position: absolute;
+  top: 4px;
+  pointer-events: none;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  display: grid;
+  gap: 4px;
+  white-space: nowrap;
+  z-index: 1;
+}
+.au-tip-title {
+  color: var(--text-secondary);
+}
+.au-tip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.au-tip-row strong {
+  font-size: 13px;
+}
+.au-tip-row span {
+  color: var(--text-secondary);
+}
+
+/* agent comparison bars */
+.au-bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.au-bars li {
+  display: grid;
+  gap: 4px;
+}
+.au-bars-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+}
+.au-bars-name {
+  font-weight: 600;
+}
+.au-bars-val {
+  margin-left: auto;
+  font-weight: 600;
+}
+.au-bar-track {
+  height: 10px;
+}
+.au-bar-track-prev {
+  height: 6px;
+}
+.au-bar {
+  height: 100%;
+  min-width: 2px;
+  border-radius: 0 4px 4px 0;
+}
+.au-bar-prev {
+  background: var(--previous);
+  opacity: 0.6;
+}
+.au-bars-prev {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* models */
+.au-models {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+}
+.au-models li {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 10px;
+}
+.au-model-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.au-model-name i {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.au-model-bar {
+  height: 6px;
+}
+.au-model-bar span {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  border-radius: 0 3px 3px 0;
+}
+.au-model-pct {
+  text-align: right;
+  color: var(--text-secondary);
+}
+
+/* table view */
+.au-table summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.au-table table {
+  margin-top: 8px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  background: var(--surface-1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.au-table th,
+.au-table td {
+  padding: 6px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--grid);
+}
+.au-table th:first-child,
+.au-table td:first-child {
+  text-align: left;
+}
+.au-table th {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+@media (max-width: 520px) {
+  .au-root {
+    padding: 16px;
+    border-radius: 0;
+  }
+  .au-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .au-kpi-value {
+    font-size: 22px;
+  }
+}

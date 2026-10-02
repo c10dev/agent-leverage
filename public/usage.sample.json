@@ -1,0 +1,4112 @@
+{
+ "generatedAt": "2026-10-02T09:00:00.000Z",
+ "sample": true,
+ "agents": {
+  "claude-code": "Claude Code",
+  "codex": "Codex"
+ },
+ "models": {
+  "claude-code": {
+   "claude-opus-5-5": 18200,
+   "claude-sonnet-5-5": 4100,
+   "claude-haiku-4-5": 900
+  },
+  "codex": {
+   "gpt-5.5": 9800,
+   "gpt-5.6-sol": 3100,
+   "gpt-5.4": 1400
+  }
+ },
+ "days": [
+  {
+   "date": "2026-04-06",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 50,
+     "turns": 700,
+     "inputTokens": 2207800,
+     "outputTokens": 366800,
+     "cacheTokens": 48633900,
+     "agentMinutes": 253,
+     "activeMinutes": 122
+    }
+   }
+  },
+  {
+   "date": "2026-04-07",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 76,
+     "turns": 1064,
+     "inputTokens": 3771880,
+     "outputTokens": 393680,
+     "cacheTokens": 144711448,
+     "agentMinutes": 601,
+     "activeMinutes": 283
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 110,
+     "inputTokens": 952490,
+     "outputTokens": 78210,
+     "cacheTokens": 7966640,
+     "agentMinutes": 69,
+     "activeMinutes": 34
+    }
+   }
+  },
+  {
+   "date": "2026-04-08",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 47,
+     "turns": 376,
+     "inputTokens": 3035072,
+     "outputTokens": 240640,
+     "cacheTokens": 34013336,
+     "agentMinutes": 259,
+     "activeMinutes": 145
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 12,
+     "turns": 180,
+     "inputTokens": 645840,
+     "outputTokens": 71280,
+     "cacheTokens": 17242200,
+     "agentMinutes": 64,
+     "activeMinutes": 48
+    }
+   }
+  },
+  {
+   "date": "2026-04-09",
+   "agents": {
+    "codex": {
+     "sessions": 11,
+     "prompts": 81,
+     "turns": 1296,
+     "inputTokens": 6003072,
+     "outputTokens": 401760,
+     "cacheTokens": 106580448,
+     "agentMinutes": 345,
+     "activeMinutes": 225
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 15,
+     "turns": 150,
+     "inputTokens": 753000,
+     "outputTokens": 68550,
+     "cacheTokens": 10552350,
+     "agentMinutes": 122,
+     "activeMinutes": 56
+    }
+   }
+  },
+  {
+   "date": "2026-04-10",
+   "agents": {
+    "codex": {
+     "sessions": 10,
+     "prompts": 102,
+     "turns": 1632,
+     "inputTokens": 7898880,
+     "outputTokens": 585888,
+     "cacheTokens": 164406048,
+     "agentMinutes": 385,
+     "activeMinutes": 292
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 12,
+     "turns": 180,
+     "inputTokens": 785520,
+     "outputTokens": 116460,
+     "cacheTokens": 23498280,
+     "agentMinutes": 73,
+     "activeMinutes": 36
+    }
+   }
+  },
+  {
+   "date": "2026-04-11",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 43,
+     "turns": 516,
+     "inputTokens": 3219324,
+     "outputTokens": 323016,
+     "cacheTokens": 71737416,
+     "agentMinutes": 161,
+     "activeMinutes": 99
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 5,
+     "turns": 40,
+     "inputTokens": 354880,
+     "outputTokens": 28000,
+     "cacheTokens": 2939680,
+     "agentMinutes": 17,
+     "activeMinutes": 11
+    }
+   }
+  },
+  {
+   "date": "2026-04-12",
+   "agents": {
+    "codex": {
+     "sessions": 5,
+     "prompts": 33,
+     "turns": 528,
+     "inputTokens": 2585088,
+     "outputTokens": 298320,
+     "cacheTokens": 42835584,
+     "agentMinutes": 202,
+     "activeMinutes": 126
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 5,
+     "turns": 60,
+     "inputTokens": 393660,
+     "outputTokens": 39000,
+     "cacheTokens": 6253380,
+     "agentMinutes": 27,
+     "activeMinutes": 15
+    }
+   }
+  },
+  {
+   "date": "2026-04-13",
+   "agents": {
+    "codex": {
+     "sessions": 9,
+     "prompts": 66,
+     "turns": 792,
+     "inputTokens": 6751800,
+     "outputTokens": 613800,
+     "cacheTokens": 83721528,
+     "agentMinutes": 544,
+     "activeMinutes": 256
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 9,
+     "turns": 117,
+     "inputTokens": 1038960,
+     "outputTokens": 76518,
+     "cacheTokens": 14658579,
+     "agentMinutes": 41,
+     "activeMinutes": 27
+    }
+   }
+  },
+  {
+   "date": "2026-04-14",
+   "agents": {
+    "codex": {
+     "sessions": 10,
+     "prompts": 85,
+     "turns": 680,
+     "inputTokens": 5166640,
+     "outputTokens": 534480,
+     "cacheTokens": 42882840,
+     "agentMinutes": 405,
+     "activeMinutes": 228
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 12,
+     "turns": 180,
+     "inputTokens": 1318860,
+     "outputTokens": 99540,
+     "cacheTokens": 11293380,
+     "agentMinutes": 72,
+     "activeMinutes": 35
+    }
+   }
+  },
+  {
+   "date": "2026-04-15",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 98,
+     "turns": 1470,
+     "inputTokens": 13078590,
+     "outputTokens": 898170,
+     "cacheTokens": 180498360,
+     "agentMinutes": 378,
+     "activeMinutes": 301
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 12,
+     "turns": 120,
+     "inputTokens": 1037160,
+     "outputTokens": 62880,
+     "cacheTokens": 10585440,
+     "agentMinutes": 75,
+     "activeMinutes": 42
+    }
+   }
+  },
+  {
+   "date": "2026-04-16",
+   "agents": {
+    "codex": {
+     "sessions": 7,
+     "prompts": 43,
+     "turns": 516,
+     "inputTokens": 1982988,
+     "outputTokens": 182664,
+     "cacheTokens": 41544192,
+     "agentMinutes": 203,
+     "activeMinutes": 137
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 10,
+     "turns": 180,
+     "inputTokens": 930240,
+     "outputTokens": 117000,
+     "cacheTokens": 14828940,
+     "agentMinutes": 70,
+     "activeMinutes": 33
+    }
+   }
+  },
+  {
+   "date": "2026-04-17",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 75,
+     "turns": 1125,
+     "inputTokens": 5248125,
+     "outputTokens": 420750,
+     "cacheTokens": 88507125,
+     "agentMinutes": 341,
+     "activeMinutes": 262
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 176,
+     "inputTokens": 836000,
+     "outputTokens": 113696,
+     "cacheTokens": 16562128,
+     "agentMinutes": 56,
+     "activeMinutes": 36
+    }
+   }
+  },
+  {
+   "date": "2026-04-18",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 33,
+     "turns": 528,
+     "inputTokens": 4127376,
+     "outputTokens": 411840,
+     "cacheTokens": 65279280,
+     "agentMinutes": 231,
+     "activeMinutes": 111
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 5,
+     "turns": 65,
+     "inputTokens": 365560,
+     "outputTokens": 21190,
+     "cacheTokens": 8205990,
+     "agentMinutes": 24,
+     "activeMinutes": 17
+    }
+   }
+  },
+  {
+   "date": "2026-04-19",
+   "agents": {
+    "codex": {
+     "sessions": 7,
+     "prompts": 45,
+     "turns": 675,
+     "inputTokens": 4048650,
+     "outputTokens": 395550,
+     "cacheTokens": 90659925,
+     "agentMinutes": 194,
+     "activeMinutes": 144
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 7,
+     "turns": 126,
+     "inputTokens": 547218,
+     "outputTokens": 87318,
+     "cacheTokens": 16323930,
+     "agentMinutes": 52,
+     "activeMinutes": 25
+    }
+   }
+  },
+  {
+   "date": "2026-04-20",
+   "agents": {
+    "codex": {
+     "sessions": 5,
+     "prompts": 46,
+     "turns": 690,
+     "inputTokens": 4454640,
+     "outputTokens": 514050,
+     "cacheTokens": 83458260,
+     "agentMinutes": 348,
+     "activeMinutes": 178
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 14,
+     "turns": 140,
+     "inputTokens": 622160,
+     "outputTokens": 52920,
+     "cacheTokens": 13145160,
+     "agentMinutes": 56,
+     "activeMinutes": 42
+    }
+   }
+  },
+  {
+   "date": "2026-04-21",
+   "agents": {
+    "codex": {
+     "sessions": 12,
+     "prompts": 81,
+     "turns": 810,
+     "inputTokens": 6392520,
+     "outputTokens": 639900,
+     "cacheTokens": 74493270,
+     "agentMinutes": 325,
+     "activeMinutes": 199
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 8,
+     "turns": 128,
+     "inputTokens": 839168,
+     "outputTokens": 61696,
+     "cacheTokens": 15058176,
+     "agentMinutes": 30,
+     "activeMinutes": 20
+    }
+   }
+  },
+  {
+   "date": "2026-04-22",
+   "agents": {
+    "codex": {
+     "sessions": 9,
+     "prompts": 97,
+     "turns": 1552,
+     "inputTokens": 6367856,
+     "outputTokens": 704608,
+     "cacheTokens": 133926736,
+     "agentMinutes": 433,
+     "activeMinutes": 204
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 88,
+     "inputTokens": 735856,
+     "outputTokens": 28160,
+     "cacheTokens": 10161008,
+     "agentMinutes": 50,
+     "activeMinutes": 39
+    }
+   }
+  },
+  {
+   "date": "2026-04-23",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 56,
+     "turns": 616,
+     "inputTokens": 2073456,
+     "outputTokens": 437976,
+     "cacheTokens": 45820544,
+     "agentMinutes": 299,
+     "activeMinutes": 208
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 9,
+     "turns": 108,
+     "inputTokens": 610848,
+     "outputTokens": 60156,
+     "cacheTokens": 12659652,
+     "agentMinutes": 50,
+     "activeMinutes": 36
+    }
+   }
+  },
+  {
+   "date": "2026-04-24",
+   "agents": {
+    "codex": {
+     "sessions": 9,
+     "prompts": 69,
+     "turns": 1035,
+     "inputTokens": 5490675,
+     "outputTokens": 764865,
+     "cacheTokens": 110466585,
+     "agentMinutes": 405,
+     "activeMinutes": 275
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 17,
+     "turns": 255,
+     "inputTokens": 1293870,
+     "outputTokens": 102765,
+     "cacheTokens": 30978420,
+     "agentMinutes": 98,
+     "activeMinutes": 56
+    }
+   }
+  },
+  {
+   "date": "2026-04-25",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 20,
+     "turns": 300,
+     "inputTokens": 2285700,
+     "outputTokens": 157500,
+     "cacheTokens": 36177900,
+     "agentMinutes": 100,
+     "activeMinutes": 75
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 5,
+     "turns": 65,
+     "inputTokens": 210730,
+     "outputTokens": 20670,
+     "cacheTokens": 7868380,
+     "agentMinutes": 20,
+     "activeMinutes": 13
+    }
+   }
+  },
+  {
+   "date": "2026-04-26",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 29,
+     "turns": 464,
+     "inputTokens": 3825680,
+     "outputTokens": 199520,
+     "cacheTokens": 50030800,
+     "agentMinutes": 110,
+     "activeMinutes": 81
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 4,
+     "turns": 52,
+     "inputTokens": 285532,
+     "outputTokens": 35672,
+     "cacheTokens": 7260136,
+     "agentMinutes": 18,
+     "activeMinutes": 10
+    }
+   }
+  },
+  {
+   "date": "2026-04-27",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 55,
+     "turns": 660,
+     "inputTokens": 2870340,
+     "outputTokens": 378180,
+     "cacheTokens": 55838640,
+     "agentMinutes": 453,
+     "activeMinutes": 208
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 9,
+     "turns": 135,
+     "inputTokens": 855360,
+     "outputTokens": 85455,
+     "cacheTokens": 9993915,
+     "agentMinutes": 64,
+     "activeMinutes": 32
+    }
+   }
+  },
+  {
+   "date": "2026-04-28",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 59,
+     "turns": 1003,
+     "inputTokens": 4774280,
+     "outputTokens": 607818,
+     "cacheTokens": 72559026,
+     "agentMinutes": 294,
+     "activeMinutes": 218
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 16,
+     "turns": 160,
+     "inputTokens": 1100800,
+     "outputTokens": 104640,
+     "cacheTokens": 11143520,
+     "agentMinutes": 72,
+     "activeMinutes": 58
+    }
+   }
+  },
+  {
+   "date": "2026-04-29",
+   "agents": {
+    "codex": {
+     "sessions": 10,
+     "prompts": 80,
+     "turns": 1360,
+     "inputTokens": 12184240,
+     "outputTokens": 602480,
+     "cacheTokens": 167618640,
+     "agentMinutes": 302,
+     "activeMinutes": 214
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 121,
+     "inputTokens": 933999,
+     "outputTokens": 54329,
+     "cacheTokens": 13635369,
+     "agentMinutes": 44,
+     "activeMinutes": 28
+    }
+   }
+  },
+  {
+   "date": "2026-04-30",
+   "agents": {
+    "codex": {
+     "sessions": 5,
+     "prompts": 40,
+     "turns": 680,
+     "inputTokens": 5727640,
+     "outputTokens": 337960,
+     "cacheTokens": 87556120,
+     "agentMinutes": 162,
+     "activeMinutes": 122
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 13,
+     "turns": 130,
+     "inputTokens": 1167010,
+     "outputTokens": 60970,
+     "cacheTokens": 14024920,
+     "agentMinutes": 64,
+     "activeMinutes": 49
+    }
+   }
+  },
+  {
+   "date": "2026-05-01",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 83,
+     "turns": 747,
+     "inputTokens": 5139360,
+     "outputTokens": 377235,
+     "cacheTokens": 59315535,
+     "agentMinutes": 393,
+     "activeMinutes": 313
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 17,
+     "turns": 204,
+     "inputTokens": 1294584,
+     "outputTokens": 119340,
+     "cacheTokens": 17818584,
+     "agentMinutes": 50,
+     "activeMinutes": 40
+    }
+   }
+  },
+  {
+   "date": "2026-05-02",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 19,
+     "turns": 342,
+     "inputTokens": 2615616,
+     "outputTokens": 145692,
+     "cacheTokens": 36178128,
+     "agentMinutes": 86,
+     "activeMinutes": 65
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 7,
+     "turns": 105,
+     "inputTokens": 700350,
+     "outputTokens": 62160,
+     "cacheTokens": 13890765,
+     "agentMinutes": 42,
+     "activeMinutes": 20
+    }
+   }
+  },
+  {
+   "date": "2026-05-03",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 19,
+     "turns": 247,
+     "inputTokens": 1657864,
+     "outputTokens": 147953,
+     "cacheTokens": 21454914,
+     "agentMinutes": 140,
+     "activeMinutes": 71
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 8,
+     "turns": 128,
+     "inputTokens": 920576,
+     "outputTokens": 62592,
+     "cacheTokens": 11266944,
+     "agentMinutes": 29,
+     "activeMinutes": 21
+    }
+   }
+  },
+  {
+   "date": "2026-05-04",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 64,
+     "turns": 704,
+     "inputTokens": 4437312,
+     "outputTokens": 549120,
+     "cacheTokens": 62751744,
+     "agentMinutes": 307,
+     "activeMinutes": 179
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 16,
+     "turns": 192,
+     "inputTokens": 833664,
+     "outputTokens": 118272,
+     "cacheTokens": 26797056,
+     "agentMinutes": 66,
+     "activeMinutes": 48
+    }
+   }
+  },
+  {
+   "date": "2026-05-05",
+   "agents": {
+    "codex": {
+     "sessions": 9,
+     "prompts": 86,
+     "turns": 1204,
+     "inputTokens": 6516048,
+     "outputTokens": 813904,
+     "cacheTokens": 124115544,
+     "agentMinutes": 349,
+     "activeMinutes": 242
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 20,
+     "turns": 160,
+     "inputTokens": 1179040,
+     "outputTokens": 58080,
+     "cacheTokens": 18476320,
+     "agentMinutes": 140,
+     "activeMinutes": 66
+    }
+   }
+  },
+  {
+   "date": "2026-05-06",
+   "agents": {
+    "codex": {
+     "sessions": 11,
+     "prompts": 83,
+     "turns": 830,
+     "inputTokens": 3135740,
+     "outputTokens": 549460,
+     "cacheTokens": 80377200,
+     "agentMinutes": 523,
+     "activeMinutes": 317
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 21,
+     "turns": 189,
+     "inputTokens": 1601208,
+     "outputTokens": 150822,
+     "cacheTokens": 16142490,
+     "agentMinutes": 116,
+     "activeMinutes": 56
+    }
+   }
+  },
+  {
+   "date": "2026-05-07",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 70,
+     "turns": 1190,
+     "inputTokens": 7432740,
+     "outputTokens": 422450,
+     "cacheTokens": 114376850,
+     "agentMinutes": 402,
+     "activeMinutes": 276
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 10,
+     "turns": 160,
+     "inputTokens": 1096960,
+     "outputTokens": 114880,
+     "cacheTokens": 15767200,
+     "agentMinutes": 70,
+     "activeMinutes": 35
+    }
+   }
+  },
+  {
+   "date": "2026-05-08",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 64,
+     "turns": 832,
+     "inputTokens": 6656000,
+     "outputTokens": 386048,
+     "cacheTokens": 107574272,
+     "agentMinutes": 307,
+     "activeMinutes": 157
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 16,
+     "turns": 208,
+     "inputTokens": 953264,
+     "outputTokens": 79872,
+     "cacheTokens": 28965040,
+     "agentMinutes": 60,
+     "activeMinutes": 44
+    }
+   }
+  },
+  {
+   "date": "2026-05-09",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 31,
+     "turns": 403,
+     "inputTokens": 1501175,
+     "outputTokens": 188201,
+     "cacheTokens": 28955550,
+     "agentMinutes": 158,
+     "activeMinutes": 95
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 7,
+     "turns": 105,
+     "inputTokens": 597870,
+     "outputTokens": 52080,
+     "cacheTokens": 12502770,
+     "agentMinutes": 32,
+     "activeMinutes": 21
+    }
+   }
+  },
+  {
+   "date": "2026-05-10",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 27,
+     "turns": 297,
+     "inputTokens": 2477871,
+     "outputTokens": 226611,
+     "cacheTokens": 32774841,
+     "agentMinutes": 149,
+     "activeMinutes": 86
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 5,
+     "turns": 75,
+     "inputTokens": 310350,
+     "outputTokens": 34350,
+     "cacheTokens": 4853550,
+     "agentMinutes": 21,
+     "activeMinutes": 13
+    }
+   }
+  },
+  {
+   "date": "2026-05-11",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 45,
+     "turns": 765,
+     "inputTokens": 5536305,
+     "outputTokens": 584460,
+     "cacheTokens": 82607760,
+     "agentMinutes": 273,
+     "activeMinutes": 136
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 22,
+     "turns": 330,
+     "inputTokens": 1641420,
+     "outputTokens": 189420,
+     "cacheTokens": 28271760,
+     "agentMinutes": 149,
+     "activeMinutes": 87
+    }
+   }
+  },
+  {
+   "date": "2026-05-12",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 62,
+     "turns": 620,
+     "inputTokens": 3048540,
+     "outputTokens": 327360,
+     "cacheTokens": 84107960,
+     "agentMinutes": 247,
+     "activeMinutes": 170
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 19,
+     "turns": 209,
+     "inputTokens": 1769394,
+     "outputTokens": 137940,
+     "cacheTokens": 28624431,
+     "agentMinutes": 88,
+     "activeMinutes": 46
+    }
+   }
+  },
+  {
+   "date": "2026-05-13",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 64,
+     "turns": 640,
+     "inputTokens": 5508480,
+     "outputTokens": 405120,
+     "cacheTokens": 64529280,
+     "agentMinutes": 352,
+     "activeMinutes": 166
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 22,
+     "turns": 176,
+     "inputTokens": 1140480,
+     "outputTokens": 95568,
+     "cacheTokens": 20687920,
+     "agentMinutes": 129,
+     "activeMinutes": 81
+    }
+   }
+  },
+  {
+   "date": "2026-05-14",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 44,
+     "turns": 396,
+     "inputTokens": 2454408,
+     "outputTokens": 313632,
+     "cacheTokens": 41387148,
+     "agentMinutes": 165,
+     "activeMinutes": 121
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 11,
+     "turns": 176,
+     "inputTokens": 1465376,
+     "outputTokens": 133936,
+     "cacheTokens": 19062912,
+     "agentMinutes": 64,
+     "activeMinutes": 37
+    }
+   }
+  },
+  {
+   "date": "2026-05-15",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 49,
+     "turns": 539,
+     "inputTokens": 2311771,
+     "outputTokens": 403172,
+     "cacheTokens": 38411296,
+     "agentMinutes": 371,
+     "activeMinutes": 192
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 23,
+     "turns": 253,
+     "inputTokens": 1852213,
+     "outputTokens": 78430,
+     "cacheTokens": 30272462,
+     "agentMinutes": 130,
+     "activeMinutes": 74
+    }
+   }
+  },
+  {
+   "date": "2026-05-16",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 25,
+     "turns": 375,
+     "inputTokens": 1673250,
+     "outputTokens": 196125,
+     "cacheTokens": 26813250,
+     "agentMinutes": 73,
+     "activeMinutes": 55
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 6,
+     "turns": 60,
+     "inputTokens": 431460,
+     "outputTokens": 40980,
+     "cacheTokens": 6797400,
+     "agentMinutes": 31,
+     "activeMinutes": 21
+    }
+   }
+  },
+  {
+   "date": "2026-05-17",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 20,
+     "turns": 360,
+     "inputTokens": 1590480,
+     "outputTokens": 264960,
+     "cacheTokens": 48999960,
+     "agentMinutes": 86,
+     "activeMinutes": 56
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 5,
+     "turns": 90,
+     "inputTokens": 485190,
+     "outputTokens": 62640,
+     "cacheTokens": 8141310,
+     "agentMinutes": 30,
+     "activeMinutes": 20
+    }
+   }
+  },
+  {
+   "date": "2026-05-18",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 53,
+     "turns": 477,
+     "inputTokens": 2867724,
+     "outputTokens": 285723,
+     "cacheTokens": 54442395,
+     "agentMinutes": 268,
+     "activeMinutes": 176
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 13,
+     "turns": 182,
+     "inputTokens": 701428,
+     "outputTokens": 127582,
+     "cacheTokens": 11712246,
+     "agentMinutes": 92,
+     "activeMinutes": 48
+    }
+   }
+  },
+  {
+   "date": "2026-05-19",
+   "agents": {
+    "codex": {
+     "sessions": 7,
+     "prompts": 83,
+     "turns": 913,
+     "inputTokens": 4050981,
+     "outputTokens": 502150,
+     "cacheTokens": 64917952,
+     "agentMinutes": 397,
+     "activeMinutes": 185
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 110,
+     "inputTokens": 331430,
+     "outputTokens": 87890,
+     "cacheTokens": 9183020,
+     "agentMinutes": 62,
+     "activeMinutes": 30
+    }
+   }
+  },
+  {
+   "date": "2026-05-20",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 39,
+     "turns": 429,
+     "inputTokens": 3705273,
+     "outputTokens": 162591,
+     "cacheTokens": 56949750,
+     "agentMinutes": 149,
+     "activeMinutes": 88
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 13,
+     "turns": 221,
+     "inputTokens": 760019,
+     "outputTokens": 148733,
+     "cacheTokens": 24222263,
+     "agentMinutes": 102,
+     "activeMinutes": 47
+    }
+   }
+  },
+  {
+   "date": "2026-05-21",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 34,
+     "turns": 510,
+     "inputTokens": 2305200,
+     "outputTokens": 188190,
+     "cacheTokens": 46811880,
+     "agentMinutes": 125,
+     "activeMinutes": 89
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 22,
+     "turns": 220,
+     "inputTokens": 793320,
+     "outputTokens": 121000,
+     "cacheTokens": 27269880,
+     "agentMinutes": 89,
+     "activeMinutes": 66
+    }
+   }
+  },
+  {
+   "date": "2026-05-22",
+   "agents": {
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 28,
+     "turns": 476,
+     "inputTokens": 2641324,
+     "outputTokens": 258468,
+     "cacheTokens": 47092108,
+     "agentMinutes": 156,
+     "activeMinutes": 87
+    }
+   }
+  },
+  {
+   "date": "2026-05-23",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 23,
+     "turns": 230,
+     "inputTokens": 2019170,
+     "outputTokens": 131790,
+     "cacheTokens": 17139600,
+     "agentMinutes": 79,
+     "activeMinutes": 60
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 88,
+     "inputTokens": 444312,
+     "outputTokens": 47608,
+     "cacheTokens": 9128856,
+     "agentMinutes": 57,
+     "activeMinutes": 31
+    }
+   }
+  },
+  {
+   "date": "2026-05-24",
+   "agents": {
+    "codex": {
+     "sessions": 5,
+     "prompts": 35,
+     "turns": 350,
+     "inputTokens": 1905400,
+     "outputTokens": 152600,
+     "cacheTokens": 35086100,
+     "agentMinutes": 119,
+     "activeMinutes": 73
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 13,
+     "turns": 221,
+     "inputTokens": 1827670,
+     "outputTokens": 106080,
+     "cacheTokens": 20260175,
+     "agentMinutes": 46,
+     "activeMinutes": 28
+    }
+   }
+  },
+  {
+   "date": "2026-05-25",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 75,
+     "turns": 1200,
+     "inputTokens": 4630800,
+     "outputTokens": 384000,
+     "cacheTokens": 161407200,
+     "agentMinutes": 332,
+     "activeMinutes": 190
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 19,
+     "turns": 266,
+     "inputTokens": 1923978,
+     "outputTokens": 133000,
+     "cacheTokens": 18109546,
+     "agentMinutes": 109,
+     "activeMinutes": 55
+    }
+   }
+  },
+  {
+   "date": "2026-05-26",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 33,
+     "turns": 594,
+     "inputTokens": 3309174,
+     "outputTokens": 260172,
+     "cacheTokens": 64745406,
+     "agentMinutes": 163,
+     "activeMinutes": 123
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 24,
+     "turns": 288,
+     "inputTokens": 1785888,
+     "outputTokens": 152640,
+     "cacheTokens": 30430368,
+     "agentMinutes": 132,
+     "activeMinutes": 63
+    }
+   }
+  },
+  {
+   "date": "2026-05-27",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 51,
+     "turns": 816,
+     "inputTokens": 5735664,
+     "outputTokens": 334560,
+     "cacheTokens": 88661664,
+     "agentMinutes": 180,
+     "activeMinutes": 103
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 26,
+     "turns": 286,
+     "inputTokens": 1146574,
+     "outputTokens": 130416,
+     "cacheTokens": 26696384,
+     "agentMinutes": 179,
+     "activeMinutes": 84
+    }
+   }
+  },
+  {
+   "date": "2026-05-28",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 63,
+     "turns": 756,
+     "inputTokens": 4975236,
+     "outputTokens": 579852,
+     "cacheTokens": 97845300,
+     "agentMinutes": 195,
+     "activeMinutes": 160
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 22,
+     "turns": 374,
+     "inputTokens": 1253648,
+     "outputTokens": 271150,
+     "cacheTokens": 28658124,
+     "agentMinutes": 66,
+     "activeMinutes": 46
+    }
+   }
+  },
+  {
+   "date": "2026-05-29",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 53,
+     "turns": 583,
+     "inputTokens": 2993705,
+     "outputTokens": 274010,
+     "cacheTokens": 67199495,
+     "agentMinutes": 167,
+     "activeMinutes": 107
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 34,
+     "turns": 476,
+     "inputTokens": 2700348,
+     "outputTokens": 255136,
+     "cacheTokens": 31977680,
+     "agentMinutes": 246,
+     "activeMinutes": 125
+    }
+   }
+  },
+  {
+   "date": "2026-05-30",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 34,
+     "turns": 612,
+     "inputTokens": 2514096,
+     "outputTokens": 273564,
+     "cacheTokens": 47920212,
+     "agentMinutes": 170,
+     "activeMinutes": 98
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 15,
+     "turns": 210,
+     "inputTokens": 1798020,
+     "outputTokens": 144690,
+     "cacheTokens": 18945990,
+     "agentMinutes": 85,
+     "activeMinutes": 49
+    }
+   }
+  },
+  {
+   "date": "2026-05-31",
+   "agents": {
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 16,
+     "turns": 160,
+     "inputTokens": 1200800,
+     "outputTokens": 125760,
+     "cacheTokens": 12384640,
+     "agentMinutes": 98,
+     "activeMinutes": 48
+    }
+   }
+  },
+  {
+   "date": "2026-06-01",
+   "agents": {
+    "codex": {
+     "sessions": 7,
+     "prompts": 59,
+     "turns": 590,
+     "inputTokens": 4509370,
+     "outputTokens": 442500,
+     "cacheTokens": 50326410,
+     "agentMinutes": 247,
+     "activeMinutes": 140
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 33,
+     "turns": 297,
+     "inputTokens": 2161863,
+     "outputTokens": 211761,
+     "cacheTokens": 41457042,
+     "agentMinutes": 158,
+     "activeMinutes": 101
+    }
+   }
+  },
+  {
+   "date": "2026-06-02",
+   "agents": {
+    "codex": {
+     "sessions": 8,
+     "prompts": 51,
+     "turns": 510,
+     "inputTokens": 2645370,
+     "outputTokens": 316200,
+     "cacheTokens": 35195610,
+     "agentMinutes": 250,
+     "activeMinutes": 132
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 23,
+     "turns": 299,
+     "inputTokens": 1266265,
+     "outputTokens": 101361,
+     "cacheTokens": 30029766,
+     "agentMinutes": 118,
+     "activeMinutes": 59
+    }
+   }
+  },
+  {
+   "date": "2026-06-03",
+   "agents": {
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 20,
+     "turns": 180,
+     "inputTokens": 747360,
+     "outputTokens": 55260,
+     "cacheTokens": 20203740,
+     "agentMinutes": 146,
+     "activeMinutes": 79
+    }
+   }
+  },
+  {
+   "date": "2026-06-04",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 53,
+     "turns": 742,
+     "inputTokens": 5448506,
+     "outputTokens": 523110,
+     "cacheTokens": 84992390,
+     "agentMinutes": 282,
+     "activeMinutes": 172
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 20,
+     "turns": 180,
+     "inputTokens": 1231740,
+     "outputTokens": 140040,
+     "cacheTokens": 18728460,
+     "agentMinutes": 59,
+     "activeMinutes": 45
+    }
+   }
+  },
+  {
+   "date": "2026-06-05",
+   "agents": {
+    "codex": {
+     "sessions": 7,
+     "prompts": 64,
+     "turns": 1152,
+     "inputTokens": 9250560,
+     "outputTokens": 737280,
+     "cacheTokens": 161146368,
+     "agentMinutes": 219,
+     "activeMinutes": 141
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 18,
+     "turns": 324,
+     "inputTokens": 2008152,
+     "outputTokens": 221616,
+     "cacheTokens": 19517436,
+     "agentMinutes": 111,
+     "activeMinutes": 59
+    }
+   }
+  },
+  {
+   "date": "2026-06-06",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 30,
+     "turns": 300,
+     "inputTokens": 1913700,
+     "outputTokens": 163500,
+     "cacheTokens": 33705000,
+     "agentMinutes": 146,
+     "activeMinutes": 88
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 16,
+     "turns": 288,
+     "inputTokens": 1407744,
+     "outputTokens": 214560,
+     "cacheTokens": 26850240,
+     "agentMinutes": 82,
+     "activeMinutes": 41
+    }
+   }
+  },
+  {
+   "date": "2026-06-07",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 15,
+     "turns": 165,
+     "inputTokens": 858990,
+     "outputTokens": 103125,
+     "cacheTokens": 20669880,
+     "agentMinutes": 68,
+     "activeMinutes": 43
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 14,
+     "turns": 182,
+     "inputTokens": 1515150,
+     "outputTokens": 92274,
+     "cacheTokens": 22010534,
+     "agentMinutes": 72,
+     "activeMinutes": 38
+    }
+   }
+  },
+  {
+   "date": "2026-06-08",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 47,
+     "turns": 470,
+     "inputTokens": 1463580,
+     "outputTokens": 343570,
+     "cacheTokens": 31127630,
+     "agentMinutes": 265,
+     "activeMinutes": 152
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 40,
+     "turns": 520,
+     "inputTokens": 3481920,
+     "outputTokens": 354640,
+     "cacheTokens": 49194080,
+     "agentMinutes": 236,
+     "activeMinutes": 142
+    }
+   }
+  },
+  {
+   "date": "2026-06-09",
+   "agents": {
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 35,
+     "turns": 280,
+     "inputTokens": 2026920,
+     "outputTokens": 172200,
+     "cacheTokens": 18700640,
+     "agentMinutes": 265,
+     "activeMinutes": 135
+    }
+   }
+  },
+  {
+   "date": "2026-06-10",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 34,
+     "turns": 510,
+     "inputTokens": 2474520,
+     "outputTokens": 158100,
+     "cacheTokens": 53254200,
+     "agentMinutes": 181,
+     "activeMinutes": 123
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 27,
+     "turns": 351,
+     "inputTokens": 1446471,
+     "outputTokens": 246051,
+     "cacheTokens": 48050496,
+     "agentMinutes": 77,
+     "activeMinutes": 60
+    }
+   }
+  },
+  {
+   "date": "2026-06-11",
+   "agents": {
+    "codex": {
+     "sessions": 5,
+     "prompts": 53,
+     "turns": 742,
+     "inputTokens": 4917976,
+     "outputTokens": 350224,
+     "cacheTokens": 96694472,
+     "agentMinutes": 263,
+     "activeMinutes": 160
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 27,
+     "turns": 243,
+     "inputTokens": 1029591,
+     "outputTokens": 194157,
+     "cacheTokens": 28640466,
+     "agentMinutes": 92,
+     "activeMinutes": 54
+    }
+   }
+  },
+  {
+   "date": "2026-06-12",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 32,
+     "turns": 384,
+     "inputTokens": 1162368,
+     "outputTokens": 247296,
+     "cacheTokens": 35553408,
+     "agentMinutes": 177,
+     "activeMinutes": 100
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 32,
+     "turns": 320,
+     "inputTokens": 988160,
+     "outputTokens": 219840,
+     "cacheTokens": 33682560,
+     "agentMinutes": 205,
+     "activeMinutes": 121
+    }
+   }
+  },
+  {
+   "date": "2026-06-13",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 30,
+     "turns": 360,
+     "inputTokens": 2772720,
+     "outputTokens": 228960,
+     "cacheTokens": 39127680,
+     "agentMinutes": 113,
+     "activeMinutes": 73
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 99,
+     "inputTokens": 641223,
+     "outputTokens": 39996,
+     "cacheTokens": 10823670,
+     "agentMinutes": 42,
+     "activeMinutes": 28
+    }
+   }
+  },
+  {
+   "date": "2026-06-14",
+   "agents": {
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 16,
+     "turns": 240,
+     "inputTokens": 1422000,
+     "outputTokens": 187680,
+     "cacheTokens": 24662160,
+     "agentMinutes": 59,
+     "activeMinutes": 40
+    }
+   }
+  },
+  {
+   "date": "2026-06-15",
+   "agents": {
+    "codex": {
+     "sessions": 5,
+     "prompts": 57,
+     "turns": 741,
+     "inputTokens": 3369327,
+     "outputTokens": 293436,
+     "cacheTokens": 86020467,
+     "agentMinutes": 399,
+     "activeMinutes": 201
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 40,
+     "turns": 360,
+     "inputTokens": 3108960,
+     "outputTokens": 267120,
+     "cacheTokens": 34237080,
+     "agentMinutes": 200,
+     "activeMinutes": 137
+    }
+   }
+  },
+  {
+   "date": "2026-06-16",
+   "agents": {
+    "codex": {
+     "sessions": 5,
+     "prompts": 44,
+     "turns": 396,
+     "inputTokens": 1499652,
+     "outputTokens": 246312,
+     "cacheTokens": 32037984,
+     "agentMinutes": 135,
+     "activeMinutes": 93
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 27,
+     "turns": 378,
+     "inputTokens": 3299562,
+     "outputTokens": 178038,
+     "cacheTokens": 44942310,
+     "agentMinutes": 132,
+     "activeMinutes": 99
+    }
+   }
+  },
+  {
+   "date": "2026-06-17",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 56,
+     "turns": 672,
+     "inputTokens": 3386208,
+     "outputTokens": 241920,
+     "cacheTokens": 48724032,
+     "agentMinutes": 242,
+     "activeMinutes": 182
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 28,
+     "turns": 448,
+     "inputTokens": 2479680,
+     "outputTokens": 160384,
+     "cacheTokens": 59605504,
+     "agentMinutes": 192,
+     "activeMinutes": 104
+    }
+   }
+  },
+  {
+   "date": "2026-06-18",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 54,
+     "turns": 972,
+     "inputTokens": 6630012,
+     "outputTokens": 355752,
+     "cacheTokens": 118031904,
+     "agentMinutes": 344,
+     "activeMinutes": 174
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 47,
+     "turns": 705,
+     "inputTokens": 4611405,
+     "outputTokens": 344745,
+     "cacheTokens": 63235680,
+     "agentMinutes": 219,
+     "activeMinutes": 178
+    }
+   }
+  },
+  {
+   "date": "2026-06-19",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 35,
+     "turns": 455,
+     "inputTokens": 1430065,
+     "outputTokens": 316225,
+     "cacheTokens": 53591720,
+     "agentMinutes": 233,
+     "activeMinutes": 111
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 26,
+     "turns": 442,
+     "inputTokens": 1946568,
+     "outputTokens": 344318,
+     "cacheTokens": 44384314,
+     "agentMinutes": 86,
+     "activeMinutes": 61
+    }
+   }
+  },
+  {
+   "date": "2026-06-20",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 17,
+     "turns": 153,
+     "inputTokens": 1339362,
+     "outputTokens": 121788,
+     "cacheTokens": 11545686,
+     "agentMinutes": 135,
+     "activeMinutes": 66
+    },
+    "claude-code": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 143,
+     "inputTokens": 900471,
+     "outputTokens": 75075,
+     "cacheTokens": 19848972,
+     "agentMinutes": 91,
+     "activeMinutes": 42
+    }
+   }
+  },
+  {
+   "date": "2026-06-21",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 14,
+     "turns": 168,
+     "inputTokens": 1011360,
+     "outputTokens": 79800,
+     "cacheTokens": 11950008,
+     "agentMinutes": 86,
+     "activeMinutes": 43
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 22,
+     "turns": 308,
+     "inputTokens": 2260412,
+     "outputTokens": 117964,
+     "cacheTokens": 25481456,
+     "agentMinutes": 136,
+     "activeMinutes": 66
+    }
+   }
+  },
+  {
+   "date": "2026-06-22",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 60,
+     "turns": 1080,
+     "inputTokens": 8193960,
+     "outputTokens": 468720,
+     "cacheTokens": 88048080,
+     "agentMinutes": 306,
+     "activeMinutes": 204
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 37,
+     "turns": 629,
+     "inputTokens": 3835013,
+     "outputTokens": 237133,
+     "cacheTokens": 73732638,
+     "agentMinutes": 205,
+     "activeMinutes": 127
+    }
+   }
+  },
+  {
+   "date": "2026-06-23",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 43,
+     "turns": 387,
+     "inputTokens": 2187324,
+     "outputTokens": 257355,
+     "cacheTokens": 32394609,
+     "agentMinutes": 172,
+     "activeMinutes": 115
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 35,
+     "turns": 455,
+     "inputTokens": 2664935,
+     "outputTokens": 289380,
+     "cacheTokens": 61201595,
+     "agentMinutes": 144,
+     "activeMinutes": 96
+    }
+   }
+  },
+  {
+   "date": "2026-06-24",
+   "agents": {
+    "codex": {
+     "sessions": 6,
+     "prompts": 50,
+     "turns": 750,
+     "inputTokens": 6089250,
+     "outputTokens": 399000,
+     "cacheTokens": 59653500,
+     "agentMinutes": 197,
+     "activeMinutes": 119
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 57,
+     "turns": 513,
+     "inputTokens": 3519180,
+     "outputTokens": 259065,
+     "cacheTokens": 54768906,
+     "agentMinutes": 341,
+     "activeMinutes": 186
+    }
+   }
+  },
+  {
+   "date": "2026-06-25",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 35,
+     "turns": 595,
+     "inputTokens": 2977975,
+     "outputTokens": 271915,
+     "cacheTokens": 61224905,
+     "agentMinutes": 128,
+     "activeMinutes": 82
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 27,
+     "turns": 459,
+     "inputTokens": 2549286,
+     "outputTokens": 274482,
+     "cacheTokens": 52252560,
+     "agentMinutes": 158,
+     "activeMinutes": 94
+    }
+   }
+  },
+  {
+   "date": "2026-06-26",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 40,
+     "turns": 680,
+     "inputTokens": 4893960,
+     "outputTokens": 308720,
+     "cacheTokens": 48317400,
+     "agentMinutes": 201,
+     "activeMinutes": 95
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 35,
+     "turns": 490,
+     "inputTokens": 3554950,
+     "outputTokens": 345450,
+     "cacheTokens": 53195380,
+     "agentMinutes": 146,
+     "activeMinutes": 104
+    }
+   }
+  },
+  {
+   "date": "2026-06-27",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 25,
+     "turns": 275,
+     "inputTokens": 1283700,
+     "outputTokens": 146300,
+     "cacheTokens": 26158550,
+     "agentMinutes": 158,
+     "activeMinutes": 78
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 24,
+     "turns": 432,
+     "inputTokens": 3462912,
+     "outputTokens": 165888,
+     "cacheTokens": 34630416,
+     "agentMinutes": 103,
+     "activeMinutes": 79
+    }
+   }
+  },
+  {
+   "date": "2026-06-28",
+   "agents": {
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 27,
+     "turns": 351,
+     "inputTokens": 2810106,
+     "outputTokens": 222885,
+     "cacheTokens": 37708983,
+     "agentMinutes": 104,
+     "activeMinutes": 74
+    }
+   }
+  },
+  {
+   "date": "2026-06-29",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 34,
+     "turns": 544,
+     "inputTokens": 2677024,
+     "outputTokens": 360128,
+     "cacheTokens": 65604224,
+     "agentMinutes": 86,
+     "activeMinutes": 70
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 52,
+     "turns": 676,
+     "inputTokens": 3596320,
+     "outputTokens": 470496,
+     "cacheTokens": 81217344,
+     "agentMinutes": 280,
+     "activeMinutes": 139
+    }
+   }
+  },
+  {
+   "date": "2026-06-30",
+   "agents": {
+    "codex": {
+     "sessions": 5,
+     "prompts": 32,
+     "turns": 256,
+     "inputTokens": 1849344,
+     "outputTokens": 151296,
+     "cacheTokens": 24231168,
+     "agentMinutes": 162,
+     "activeMinutes": 79
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 44,
+     "turns": 660,
+     "inputTokens": 5664120,
+     "outputTokens": 428340,
+     "cacheTokens": 84605400,
+     "agentMinutes": 195,
+     "activeMinutes": 89
+    }
+   }
+  },
+  {
+   "date": "2026-07-01",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 23,
+     "turns": 391,
+     "inputTokens": 2624783,
+     "outputTokens": 280347,
+     "cacheTokens": 38430608,
+     "agentMinutes": 125,
+     "activeMinutes": 57
+    },
+    "claude-code": {
+     "sessions": 8,
+     "prompts": 54,
+     "turns": 702,
+     "inputTokens": 2686554,
+     "outputTokens": 455598,
+     "cacheTokens": 42139656,
+     "agentMinutes": 222,
+     "activeMinutes": 120
+    }
+   }
+  },
+  {
+   "date": "2026-07-02",
+   "agents": {
+    "codex": {
+     "sessions": 7,
+     "prompts": 49,
+     "turns": 588,
+     "inputTokens": 2309664,
+     "outputTokens": 460992,
+     "cacheTokens": 38761548,
+     "agentMinutes": 174,
+     "activeMinutes": 134
+    },
+    "claude-code": {
+     "sessions": 7,
+     "prompts": 48,
+     "turns": 576,
+     "inputTokens": 4264128,
+     "outputTokens": 238464,
+     "cacheTokens": 67070016,
+     "agentMinutes": 208,
+     "activeMinutes": 161
+    }
+   }
+  },
+  {
+   "date": "2026-07-03",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 25,
+     "turns": 200,
+     "inputTokens": 1434200,
+     "outputTokens": 103600,
+     "cacheTokens": 12320600,
+     "agentMinutes": 171,
+     "activeMinutes": 90
+    },
+    "claude-code": {
+     "sessions": 7,
+     "prompts": 52,
+     "turns": 468,
+     "inputTokens": 3546972,
+     "outputTokens": 145548,
+     "cacheTokens": 58536036,
+     "agentMinutes": 203,
+     "activeMinutes": 104
+    }
+   }
+  },
+  {
+   "date": "2026-07-04",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 16,
+     "turns": 256,
+     "inputTokens": 2134784,
+     "outputTokens": 82944,
+     "cacheTokens": 24950272,
+     "agentMinutes": 84,
+     "activeMinutes": 44
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 17,
+     "turns": 136,
+     "inputTokens": 835584,
+     "outputTokens": 64736,
+     "cacheTokens": 12033416,
+     "agentMinutes": 99,
+     "activeMinutes": 68
+    }
+   }
+  },
+  {
+   "date": "2026-07-05",
+   "agents": {
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 25,
+     "turns": 350,
+     "inputTokens": 2395050,
+     "outputTokens": 247450,
+     "cacheTokens": 22286600,
+     "agentMinutes": 139,
+     "activeMinutes": 70
+    }
+   }
+  },
+  {
+   "date": "2026-07-06",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 43,
+     "turns": 688,
+     "inputTokens": 4674272,
+     "outputTokens": 261440,
+     "cacheTokens": 77318128,
+     "agentMinutes": 120,
+     "activeMinutes": 95
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 54,
+     "turns": 702,
+     "inputTokens": 5586516,
+     "outputTokens": 297648,
+     "cacheTokens": 56649294,
+     "agentMinutes": 254,
+     "activeMinutes": 202
+    }
+   }
+  },
+  {
+   "date": "2026-07-07",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 46,
+     "turns": 828,
+     "inputTokens": 5762880,
+     "outputTokens": 499284,
+     "cacheTokens": 62858448,
+     "agentMinutes": 353,
+     "activeMinutes": 163
+    },
+    "claude-code": {
+     "sessions": 6,
+     "prompts": 63,
+     "turns": 1071,
+     "inputTokens": 6956145,
+     "outputTokens": 845019,
+     "cacheTokens": 126992754,
+     "agentMinutes": 199,
+     "activeMinutes": 161
+    }
+   }
+  },
+  {
+   "date": "2026-07-08",
+   "agents": {
+    "claude-code": {
+     "sessions": 9,
+     "prompts": 61,
+     "turns": 610,
+     "inputTokens": 2080710,
+     "outputTokens": 407480,
+     "cacheTokens": 67711220,
+     "agentMinutes": 462,
+     "activeMinutes": 244
+    }
+   }
+  },
+  {
+   "date": "2026-07-09",
+   "agents": {
+    "claude-code": {
+     "sessions": 6,
+     "prompts": 67,
+     "turns": 603,
+     "inputTokens": 1967589,
+     "outputTokens": 327429,
+     "cacheTokens": 64126638,
+     "agentMinutes": 334,
+     "activeMinutes": 196
+    }
+   }
+  },
+  {
+   "date": "2026-07-10",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 49,
+     "turns": 441,
+     "inputTokens": 1693881,
+     "outputTokens": 347508,
+     "cacheTokens": 47893923,
+     "agentMinutes": 417,
+     "activeMinutes": 194
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 40,
+     "turns": 440,
+     "inputTokens": 3384040,
+     "outputTokens": 286000,
+     "cacheTokens": 51546880,
+     "agentMinutes": 169,
+     "activeMinutes": 119
+    }
+   }
+  },
+  {
+   "date": "2026-07-11",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 21,
+     "turns": 378,
+     "inputTokens": 3008502,
+     "outputTokens": 233226,
+     "cacheTokens": 35064414,
+     "agentMinutes": 99,
+     "activeMinutes": 46
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 29,
+     "turns": 464,
+     "inputTokens": 1893584,
+     "outputTokens": 254736,
+     "cacheTokens": 36866192,
+     "agentMinutes": 148,
+     "activeMinutes": 97
+    }
+   }
+  },
+  {
+   "date": "2026-07-12",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 22,
+     "turns": 308,
+     "inputTokens": 1195656,
+     "outputTokens": 140756,
+     "cacheTokens": 31174836,
+     "agentMinutes": 102,
+     "activeMinutes": 67
+    },
+    "claude-code": {
+     "sessions": 2,
+     "prompts": 25,
+     "turns": 225,
+     "inputTokens": 1016550,
+     "outputTokens": 108675,
+     "cacheTokens": 20664450,
+     "agentMinutes": 159,
+     "activeMinutes": 95
+    }
+   }
+  },
+  {
+   "date": "2026-07-13",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 22,
+     "turns": 308,
+     "inputTokens": 1519672,
+     "outputTokens": 117656,
+     "cacheTokens": 21818412,
+     "agentMinutes": 165,
+     "activeMinutes": 80
+    },
+    "claude-code": {
+     "sessions": 6,
+     "prompts": 66,
+     "turns": 594,
+     "inputTokens": 4241754,
+     "outputTokens": 340362,
+     "cacheTokens": 65417220,
+     "agentMinutes": 440,
+     "activeMinutes": 256
+    }
+   }
+  },
+  {
+   "date": "2026-07-14",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 26,
+     "turns": 364,
+     "inputTokens": 2808624,
+     "outputTokens": 191100,
+     "cacheTokens": 43501640,
+     "agentMinutes": 150,
+     "activeMinutes": 87
+    },
+    "claude-code": {
+     "sessions": 8,
+     "prompts": 49,
+     "turns": 441,
+     "inputTokens": 2799468,
+     "outputTokens": 276066,
+     "cacheTokens": 38262042,
+     "agentMinutes": 253,
+     "activeMinutes": 185
+    }
+   }
+  },
+  {
+   "date": "2026-07-15",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 23,
+     "turns": 322,
+     "inputTokens": 1458982,
+     "outputTokens": 207368,
+     "cacheTokens": 27976326,
+     "agentMinutes": 106,
+     "activeMinutes": 63
+    },
+    "claude-code": {
+     "sessions": 9,
+     "prompts": 77,
+     "turns": 1232,
+     "inputTokens": 6901664,
+     "outputTokens": 588896,
+     "cacheTokens": 151706016,
+     "agentMinutes": 523,
+     "activeMinutes": 285
+    }
+   }
+  },
+  {
+   "date": "2026-07-16",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 38,
+     "turns": 684,
+     "inputTokens": 5202504,
+     "outputTokens": 242820,
+     "cacheTokens": 66783708,
+     "agentMinutes": 206,
+     "activeMinutes": 95
+    },
+    "claude-code": {
+     "sessions": 8,
+     "prompts": 55,
+     "turns": 770,
+     "inputTokens": 2440130,
+     "outputTokens": 559020,
+     "cacheTokens": 60710650,
+     "agentMinutes": 201,
+     "activeMinutes": 124
+    }
+   }
+  },
+  {
+   "date": "2026-07-17",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 28,
+     "turns": 448,
+     "inputTokens": 1838592,
+     "outputTokens": 152768,
+     "cacheTokens": 32457152,
+     "agentMinutes": 90,
+     "activeMinutes": 70
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 41,
+     "turns": 533,
+     "inputTokens": 2254057,
+     "outputTokens": 231322,
+     "cacheTokens": 33347145,
+     "agentMinutes": 185,
+     "activeMinutes": 104
+    }
+   }
+  },
+  {
+   "date": "2026-07-18",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 21,
+     "turns": 168,
+     "inputTokens": 1050672,
+     "outputTokens": 71064,
+     "cacheTokens": 19080264,
+     "agentMinutes": 94,
+     "activeMinutes": 72
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 39,
+     "turns": 429,
+     "inputTokens": 2854995,
+     "outputTokens": 307164,
+     "cacheTokens": 57140226,
+     "agentMinutes": 160,
+     "activeMinutes": 101
+    }
+   }
+  },
+  {
+   "date": "2026-07-19",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 19,
+     "turns": 323,
+     "inputTokens": 2872116,
+     "outputTokens": 232883,
+     "cacheTokens": 36876910,
+     "agentMinutes": 71,
+     "activeMinutes": 39
+    },
+    "claude-code": {
+     "sessions": 6,
+     "prompts": 37,
+     "turns": 518,
+     "inputTokens": 3113698,
+     "outputTokens": 376068,
+     "cacheTokens": 47509924,
+     "agentMinutes": 141,
+     "activeMinutes": 87
+    }
+   }
+  },
+  {
+   "date": "2026-07-20",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 30,
+     "turns": 360,
+     "inputTokens": 1185480,
+     "outputTokens": 196200,
+     "cacheTokens": 31839480,
+     "agentMinutes": 122,
+     "activeMinutes": 100
+    },
+    "claude-code": {
+     "sessions": 9,
+     "prompts": 89,
+     "turns": 1157,
+     "inputTokens": 9252529,
+     "outputTokens": 354042,
+     "cacheTokens": 103454312,
+     "agentMinutes": 313,
+     "activeMinutes": 203
+    }
+   }
+  },
+  {
+   "date": "2026-07-21",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 28,
+     "turns": 252,
+     "inputTokens": 2039184,
+     "outputTokens": 163296,
+     "cacheTokens": 34805232,
+     "agentMinutes": 175,
+     "activeMinutes": 95
+    },
+    "claude-code": {
+     "sessions": 7,
+     "prompts": 77,
+     "turns": 1232,
+     "inputTokens": 9126656,
+     "outputTokens": 790944,
+     "cacheTokens": 100050720,
+     "agentMinutes": 273,
+     "activeMinutes": 215
+    }
+   }
+  },
+  {
+   "date": "2026-07-22",
+   "agents": {
+    "claude-code": {
+     "sessions": 7,
+     "prompts": 44,
+     "turns": 748,
+     "inputTokens": 6657200,
+     "outputTokens": 341088,
+     "cacheTokens": 98183228,
+     "agentMinutes": 260,
+     "activeMinutes": 148
+    }
+   }
+  },
+  {
+   "date": "2026-07-23",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 38,
+     "turns": 342,
+     "inputTokens": 1985310,
+     "outputTokens": 143640,
+     "cacheTokens": 32508810,
+     "agentMinutes": 239,
+     "activeMinutes": 135
+    },
+    "claude-code": {
+     "sessions": 12,
+     "prompts": 79,
+     "turns": 1185,
+     "inputTokens": 4527885,
+     "outputTokens": 754845,
+     "cacheTokens": 82776990,
+     "agentMinutes": 415,
+     "activeMinutes": 206
+    }
+   }
+  },
+  {
+   "date": "2026-07-24",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 18,
+     "turns": 234,
+     "inputTokens": 1502280,
+     "outputTokens": 152802,
+     "cacheTokens": 15967224,
+     "agentMinutes": 77,
+     "activeMinutes": 44
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 46,
+     "turns": 690,
+     "inputTokens": 5162580,
+     "outputTokens": 255990,
+     "cacheTokens": 46524630,
+     "agentMinutes": 325,
+     "activeMinutes": 169
+    }
+   }
+  },
+  {
+   "date": "2026-07-25",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 110,
+     "inputTokens": 682000,
+     "outputTokens": 85910,
+     "cacheTokens": 10450440,
+     "agentMinutes": 69,
+     "activeMinutes": 37
+    }
+   }
+  },
+  {
+   "date": "2026-07-26",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 17,
+     "turns": 238,
+     "inputTokens": 2051322,
+     "outputTokens": 162316,
+     "cacheTokens": 19924170,
+     "agentMinutes": 78,
+     "activeMinutes": 58
+    },
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 32,
+     "turns": 544,
+     "inputTokens": 3107872,
+     "outputTokens": 242624,
+     "cacheTokens": 71743264,
+     "agentMinutes": 149,
+     "activeMinutes": 122
+    }
+   }
+  },
+  {
+   "date": "2026-07-27",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 27,
+     "turns": 216,
+     "inputTokens": 1567512,
+     "outputTokens": 166752,
+     "cacheTokens": 16649496,
+     "agentMinutes": 122,
+     "activeMinutes": 68
+    },
+    "claude-code": {
+     "sessions": 8,
+     "prompts": 70,
+     "turns": 560,
+     "inputTokens": 1809360,
+     "outputTokens": 229040,
+     "cacheTokens": 58160480,
+     "agentMinutes": 452,
+     "activeMinutes": 261
+    }
+   }
+  },
+  {
+   "date": "2026-07-28",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 31,
+     "turns": 558,
+     "inputTokens": 2116494,
+     "outputTokens": 228222,
+     "cacheTokens": 60930252,
+     "agentMinutes": 101,
+     "activeMinutes": 80
+    }
+   }
+  },
+  {
+   "date": "2026-07-29",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 20,
+     "turns": 220,
+     "inputTokens": 1653740,
+     "outputTokens": 72160,
+     "cacheTokens": 16217300,
+     "agentMinutes": 147,
+     "activeMinutes": 69
+    },
+    "claude-code": {
+     "sessions": 13,
+     "prompts": 100,
+     "turns": 1500,
+     "inputTokens": 7506000,
+     "outputTokens": 772500,
+     "cacheTokens": 173800500,
+     "agentMinutes": 561,
+     "activeMinutes": 352
+    }
+   }
+  },
+  {
+   "date": "2026-07-30",
+   "agents": {
+    "codex": {
+     "sessions": 5,
+     "prompts": 37,
+     "turns": 629,
+     "inputTokens": 5599987,
+     "outputTokens": 233359,
+     "cacheTokens": 39795572,
+     "agentMinutes": 180,
+     "activeMinutes": 134
+    },
+    "claude-code": {
+     "sessions": 10,
+     "prompts": 96,
+     "turns": 1152,
+     "inputTokens": 4810752,
+     "outputTokens": 702720,
+     "cacheTokens": 112474368,
+     "agentMinutes": 365,
+     "activeMinutes": 259
+    }
+   }
+  },
+  {
+   "date": "2026-07-31",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 30,
+     "turns": 480,
+     "inputTokens": 3493920,
+     "outputTokens": 266880,
+     "cacheTokens": 60607200,
+     "agentMinutes": 248,
+     "activeMinutes": 118
+    },
+    "claude-code": {
+     "sessions": 12,
+     "prompts": 82,
+     "turns": 1394,
+     "inputTokens": 10884352,
+     "outputTokens": 915858,
+     "cacheTokens": 103756814,
+     "agentMinutes": 492,
+     "activeMinutes": 261
+    }
+   }
+  },
+  {
+   "date": "2026-08-01",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 13,
+     "turns": 156,
+     "inputTokens": 816972,
+     "outputTokens": 110292,
+     "cacheTokens": 17620980,
+     "agentMinutes": 40,
+     "activeMinutes": 31
+    }
+   }
+  },
+  {
+   "date": "2026-08-02",
+   "agents": {
+    "claude-code": {
+     "sessions": 3,
+     "prompts": 25,
+     "turns": 250,
+     "inputTokens": 1207750,
+     "outputTokens": 176750,
+     "cacheTokens": 24792250,
+     "agentMinutes": 107,
+     "activeMinutes": 81
+    }
+   }
+  },
+  {
+   "date": "2026-08-03",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 19,
+     "turns": 228,
+     "inputTokens": 2028744,
+     "outputTokens": 139080,
+     "cacheTokens": 17885688,
+     "agentMinutes": 96,
+     "activeMinutes": 48
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 45,
+     "turns": 765,
+     "inputTokens": 2526030,
+     "outputTokens": 323595,
+     "cacheTokens": 90250110,
+     "agentMinutes": 341,
+     "activeMinutes": 160
+    }
+   }
+  },
+  {
+   "date": "2026-08-04",
+   "agents": {
+    "claude-code": {
+     "sessions": 11,
+     "prompts": 91,
+     "turns": 1547,
+     "inputTokens": 8248604,
+     "outputTokens": 1064336,
+     "cacheTokens": 175029127,
+     "agentMinutes": 482,
+     "activeMinutes": 300
+    }
+   }
+  },
+  {
+   "date": "2026-08-05",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 28,
+     "turns": 280,
+     "inputTokens": 1441160,
+     "outputTokens": 223720,
+     "cacheTokens": 26031320,
+     "agentMinutes": 194,
+     "activeMinutes": 97
+    },
+    "claude-code": {
+     "sessions": 8,
+     "prompts": 80,
+     "turns": 1120,
+     "inputTokens": 8591520,
+     "outputTokens": 691040,
+     "cacheTokens": 151347840,
+     "agentMinutes": 341,
+     "activeMinutes": 203
+    }
+   }
+  },
+  {
+   "date": "2026-08-06",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 24,
+     "turns": 216,
+     "inputTokens": 990792,
+     "outputTokens": 109944,
+     "cacheTokens": 20212848,
+     "agentMinutes": 97,
+     "activeMinutes": 57
+    },
+    "claude-code": {
+     "sessions": 9,
+     "prompts": 74,
+     "turns": 1036,
+     "inputTokens": 3965808,
+     "outputTokens": 320124,
+     "cacheTokens": 65666860,
+     "agentMinutes": 497,
+     "activeMinutes": 290
+    }
+   }
+  },
+  {
+   "date": "2026-08-07",
+   "agents": {
+    "claude-code": {
+     "sessions": 13,
+     "prompts": 111,
+     "turns": 1665,
+     "inputTokens": 10474515,
+     "outputTokens": 944055,
+     "cacheTokens": 150927255,
+     "agentMinutes": 725,
+     "activeMinutes": 435
+    }
+   }
+  },
+  {
+   "date": "2026-08-08",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 14,
+     "turns": 182,
+     "inputTokens": 659204,
+     "outputTokens": 135408,
+     "cacheTokens": 16278080,
+     "agentMinutes": 53,
+     "activeMinutes": 41
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 46,
+     "turns": 690,
+     "inputTokens": 4908660,
+     "outputTokens": 429870,
+     "cacheTokens": 70421400,
+     "agentMinutes": 173,
+     "activeMinutes": 136
+    }
+   }
+  },
+  {
+   "date": "2026-08-09",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 8,
+     "turns": 104,
+     "inputTokens": 391248,
+     "outputTokens": 62400,
+     "cacheTokens": 6317168,
+     "agentMinutes": 24,
+     "activeMinutes": 20
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 48,
+     "turns": 672,
+     "inputTokens": 3432576,
+     "outputTokens": 534912,
+     "cacheTokens": 43311072,
+     "agentMinutes": 190,
+     "activeMinutes": 148
+    }
+   }
+  },
+  {
+   "date": "2026-08-10",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 13,
+     "turns": 195,
+     "inputTokens": 1396005,
+     "outputTokens": 62010,
+     "cacheTokens": 12417405,
+     "agentMinutes": 58,
+     "activeMinutes": 44
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 56,
+     "turns": 728,
+     "inputTokens": 2630992,
+     "outputTokens": 366912,
+     "cacheTokens": 53844336,
+     "agentMinutes": 260,
+     "activeMinutes": 141
+    }
+   }
+  },
+  {
+   "date": "2026-08-11",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 25,
+     "turns": 225,
+     "inputTokens": 852975,
+     "outputTokens": 163125,
+     "cacheTokens": 24113025,
+     "agentMinutes": 102,
+     "activeMinutes": 63
+    },
+    "claude-code": {
+     "sessions": 10,
+     "prompts": 86,
+     "turns": 688,
+     "inputTokens": 3301712,
+     "outputTokens": 225664,
+     "cacheTokens": 89796384,
+     "agentMinutes": 502,
+     "activeMinutes": 335
+    }
+   }
+  },
+  {
+   "date": "2026-08-12",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 13,
+     "turns": 195,
+     "inputTokens": 1678170,
+     "outputTokens": 121290,
+     "cacheTokens": 27103050,
+     "agentMinutes": 65,
+     "activeMinutes": 30
+    },
+    "claude-code": {
+     "sessions": 11,
+     "prompts": 70,
+     "turns": 630,
+     "inputTokens": 4940460,
+     "outputTokens": 413280,
+     "cacheTokens": 72413460,
+     "agentMinutes": 377,
+     "activeMinutes": 228
+    }
+   }
+  },
+  {
+   "date": "2026-08-13",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 19,
+     "turns": 342,
+     "inputTokens": 3040380,
+     "outputTokens": 129618,
+     "cacheTokens": 37702422,
+     "agentMinutes": 148,
+     "activeMinutes": 71
+    },
+    "claude-code": {
+     "sessions": 9,
+     "prompts": 67,
+     "turns": 1072,
+     "inputTokens": 8150416,
+     "outputTokens": 572448,
+     "cacheTokens": 83284752,
+     "agentMinutes": 387,
+     "activeMinutes": 192
+    }
+   }
+  },
+  {
+   "date": "2026-08-14",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 29,
+     "turns": 435,
+     "inputTokens": 2037540,
+     "outputTokens": 347130,
+     "cacheTokens": 55882275,
+     "agentMinutes": 181,
+     "activeMinutes": 94
+    },
+    "claude-code": {
+     "sessions": 10,
+     "prompts": 106,
+     "turns": 1590,
+     "inputTokens": 6751140,
+     "outputTokens": 504030,
+     "cacheTokens": 113572110,
+     "agentMinutes": 504,
+     "activeMinutes": 236
+    }
+   }
+  },
+  {
+   "date": "2026-08-15",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 7,
+     "turns": 77,
+     "inputTokens": 491645,
+     "outputTokens": 30415,
+     "cacheTokens": 9533370,
+     "agentMinutes": 38,
+     "activeMinutes": 27
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 33,
+     "turns": 561,
+     "inputTokens": 2647920,
+     "outputTokens": 208692,
+     "cacheTokens": 69299769,
+     "agentMinutes": 186,
+     "activeMinutes": 131
+    }
+   }
+  },
+  {
+   "date": "2026-08-16",
+   "agents": {
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 28,
+     "turns": 420,
+     "inputTokens": 2467500,
+     "outputTokens": 322560,
+     "cacheTokens": 41499360,
+     "agentMinutes": 111,
+     "activeMinutes": 79
+    }
+   }
+  },
+  {
+   "date": "2026-08-17",
+   "agents": {
+    "codex": {
+     "sessions": 4,
+     "prompts": 27,
+     "turns": 432,
+     "inputTokens": 2855952,
+     "outputTokens": 282096,
+     "cacheTokens": 48496320,
+     "agentMinutes": 145,
+     "activeMinutes": 91
+    }
+   }
+  },
+  {
+   "date": "2026-08-18",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 15,
+     "turns": 240,
+     "inputTokens": 1239360,
+     "outputTokens": 130560,
+     "cacheTokens": 32666160,
+     "agentMinutes": 60,
+     "activeMinutes": 49
+    },
+    "claude-code": {
+     "sessions": 12,
+     "prompts": 125,
+     "turns": 1125,
+     "inputTokens": 9229500,
+     "outputTokens": 608625,
+     "cacheTokens": 137259000,
+     "agentMinutes": 664,
+     "activeMinutes": 315
+    }
+   }
+  },
+  {
+   "date": "2026-08-19",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 20,
+     "turns": 220,
+     "inputTokens": 805640,
+     "outputTokens": 98560,
+     "cacheTokens": 19443160,
+     "agentMinutes": 101,
+     "activeMinutes": 47
+    },
+    "claude-code": {
+     "sessions": 6,
+     "prompts": 56,
+     "turns": 560,
+     "inputTokens": 4060000,
+     "outputTokens": 243040,
+     "cacheTokens": 61139120,
+     "agentMinutes": 248,
+     "activeMinutes": 116
+    }
+   }
+  },
+  {
+   "date": "2026-08-20",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 23,
+     "turns": 230,
+     "inputTokens": 1650940,
+     "outputTokens": 174800,
+     "cacheTokens": 14019880,
+     "agentMinutes": 88,
+     "activeMinutes": 48
+    },
+    "claude-code": {
+     "sessions": 6,
+     "prompts": 63,
+     "turns": 945,
+     "inputTokens": 6154785,
+     "outputTokens": 697410,
+     "cacheTokens": 92446515,
+     "agentMinutes": 294,
+     "activeMinutes": 135
+    }
+   }
+  },
+  {
+   "date": "2026-08-21",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 24,
+     "turns": 264,
+     "inputTokens": 921360,
+     "outputTokens": 178992,
+     "cacheTokens": 24977568,
+     "agentMinutes": 143,
+     "activeMinutes": 70
+    },
+    "claude-code": {
+     "sessions": 8,
+     "prompts": 76,
+     "turns": 1216,
+     "inputTokens": 5315136,
+     "outputTokens": 601920,
+     "cacheTokens": 131780352,
+     "agentMinutes": 560,
+     "activeMinutes": 265
+    }
+   }
+  },
+  {
+   "date": "2026-08-22",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 9,
+     "turns": 108,
+     "inputTokens": 904176,
+     "outputTokens": 33156,
+     "cacheTokens": 12196872,
+     "agentMinutes": 39,
+     "activeMinutes": 21
+    },
+    "claude-code": {
+     "sessions": 4,
+     "prompts": 52,
+     "turns": 884,
+     "inputTokens": 6408116,
+     "outputTokens": 547196,
+     "cacheTokens": 83226832,
+     "agentMinutes": 275,
+     "activeMinutes": 132
+    }
+   }
+  },
+  {
+   "date": "2026-08-23",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 5,
+     "turns": 60,
+     "inputTokens": 467280,
+     "outputTokens": 40560,
+     "cacheTokens": 6776820,
+     "agentMinutes": 25,
+     "activeMinutes": 19
+    },
+    "claude-code": {
+     "sessions": 6,
+     "prompts": 49,
+     "turns": 539,
+     "inputTokens": 1795948,
+     "outputTokens": 414491,
+     "cacheTokens": 34657700,
+     "agentMinutes": 178,
+     "activeMinutes": 120
+    }
+   }
+  },
+  {
+   "date": "2026-08-24",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 15,
+     "turns": 195,
+     "inputTokens": 1171170,
+     "outputTokens": 77025,
+     "cacheTokens": 25066275,
+     "agentMinutes": 57,
+     "activeMinutes": 36
+    },
+    "claude-code": {
+     "sessions": 13,
+     "prompts": 144,
+     "turns": 1296,
+     "inputTokens": 5988816,
+     "outputTokens": 487296,
+     "cacheTokens": 110445120,
+     "agentMinutes": 871,
+     "activeMinutes": 489
+    }
+   }
+  },
+  {
+   "date": "2026-08-25",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 19,
+     "turns": 190,
+     "inputTokens": 887110,
+     "outputTokens": 145160,
+     "cacheTokens": 23994910,
+     "agentMinutes": 95,
+     "activeMinutes": 53
+    },
+    "claude-code": {
+     "sessions": 9,
+     "prompts": 74,
+     "turns": 740,
+     "inputTokens": 2991820,
+     "outputTokens": 523920,
+     "cacheTokens": 102593600,
+     "agentMinutes": 300,
+     "activeMinutes": 247
+    }
+   }
+  },
+  {
+   "date": "2026-08-26",
+   "agents": {
+    "claude-code": {
+     "sessions": 10,
+     "prompts": 106,
+     "turns": 1590,
+     "inputTokens": 5080050,
+     "outputTokens": 593070,
+     "cacheTokens": 210401520,
+     "agentMinutes": 794,
+     "activeMinutes": 394
+    }
+   }
+  },
+  {
+   "date": "2026-08-27",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 18,
+     "turns": 270,
+     "inputTokens": 1746360,
+     "outputTokens": 144450,
+     "cacheTokens": 25272000,
+     "agentMinutes": 92,
+     "activeMinutes": 43
+    },
+    "claude-code": {
+     "sessions": 18,
+     "prompts": 142,
+     "turns": 1562,
+     "inputTokens": 12035210,
+     "outputTokens": 835670,
+     "cacheTokens": 153333730,
+     "agentMinutes": 487,
+     "activeMinutes": 348
+    }
+   }
+  },
+  {
+   "date": "2026-08-28",
+   "agents": {
+    "codex": {
+     "sessions": 3,
+     "prompts": 19,
+     "turns": 190,
+     "inputTokens": 1678270,
+     "outputTokens": 114570,
+     "cacheTokens": 18290730,
+     "agentMinutes": 73,
+     "activeMinutes": 53
+    },
+    "claude-code": {
+     "sessions": 9,
+     "prompts": 93,
+     "turns": 1488,
+     "inputTokens": 10841568,
+     "outputTokens": 1038624,
+     "cacheTokens": 165870336,
+     "agentMinutes": 579,
+     "activeMinutes": 268
+    }
+   }
+  },
+  {
+   "date": "2026-08-29",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 8,
+     "turns": 120,
+     "inputTokens": 449520,
+     "outputTokens": 50520,
+     "cacheTokens": 9074040,
+     "agentMinutes": 30,
+     "activeMinutes": 16
+    },
+    "claude-code": {
+     "sessions": 7,
+     "prompts": 69,
+     "turns": 1173,
+     "inputTokens": 7466145,
+     "outputTokens": 721395,
+     "cacheTokens": 124166742,
+     "agentMinutes": 427,
+     "activeMinutes": 265
+    }
+   }
+  },
+  {
+   "date": "2026-08-30",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 6,
+     "turns": 72,
+     "inputTokens": 304848,
+     "outputTokens": 25056,
+     "cacheTokens": 6686352,
+     "agentMinutes": 20,
+     "activeMinutes": 13
+    },
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 47,
+     "turns": 846,
+     "inputTokens": 4369590,
+     "outputTokens": 520290,
+     "cacheTokens": 68683356,
+     "agentMinutes": 162,
+     "activeMinutes": 113
+    }
+   }
+  },
+  {
+   "date": "2026-08-31",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 14,
+     "turns": 168,
+     "inputTokens": 949200,
+     "outputTokens": 70056,
+     "cacheTokens": 11969832,
+     "agentMinutes": 106,
+     "activeMinutes": 55
+    },
+    "claude-code": {
+     "sessions": 14,
+     "prompts": 145,
+     "turns": 1305,
+     "inputTokens": 6069555,
+     "outputTokens": 550710,
+     "cacheTokens": 119639790,
+     "agentMinutes": 972,
+     "activeMinutes": 575
+    }
+   }
+  },
+  {
+   "date": "2026-09-01",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 10,
+     "turns": 150,
+     "inputTokens": 674250,
+     "outputTokens": 103350,
+     "cacheTokens": 11920200,
+     "agentMinutes": 41,
+     "activeMinutes": 28
+    },
+    "claude-code": {
+     "sessions": 25,
+     "prompts": 149,
+     "turns": 2384,
+     "inputTokens": 12430176,
+     "outputTokens": 1609200,
+     "cacheTokens": 326388672,
+     "agentMinutes": 622,
+     "activeMinutes": 426
+    }
+   }
+  },
+  {
+   "date": "2026-09-02",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 9,
+     "turns": 153,
+     "inputTokens": 1207476,
+     "outputTokens": 90117,
+     "cacheTokens": 18531054,
+     "agentMinutes": 41,
+     "activeMinutes": 20
+    }
+   }
+  },
+  {
+   "date": "2026-09-03",
+   "agents": {
+    "codex": {
+     "sessions": 2,
+     "prompts": 16,
+     "turns": 128,
+     "inputTokens": 787712,
+     "outputTokens": 68736,
+     "cacheTokens": 12420992,
+     "agentMinutes": 89,
+     "activeMinutes": 49
+    },
+    "claude-code": {
+     "sessions": 12,
+     "prompts": 139,
+     "turns": 2363,
+     "inputTokens": 14336321,
+     "outputTokens": 1758072,
+     "cacheTokens": 289798320,
+     "agentMinutes": 551,
+     "activeMinutes": 441
+    }
+   }
+  },
+  {
+   "date": "2026-09-04",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 99,
+     "inputTokens": 676170,
+     "outputTokens": 70983,
+     "cacheTokens": 6311646,
+     "agentMinutes": 66,
+     "activeMinutes": 37
+    },
+    "claude-code": {
+     "sessions": 16,
+     "prompts": 107,
+     "turns": 1391,
+     "inputTokens": 9353084,
+     "outputTokens": 815126,
+     "cacheTokens": 125162180,
+     "agentMinutes": 279,
+     "activeMinutes": 224
+    }
+   }
+  },
+  {
+   "date": "2026-09-05",
+   "agents": {
+    "claude-code": {
+     "sessions": 6,
+     "prompts": 68,
+     "turns": 884,
+     "inputTokens": 4267952,
+     "outputTokens": 696592,
+     "cacheTokens": 116037376,
+     "agentMinutes": 228,
+     "activeMinutes": 172
+    }
+   }
+  },
+  {
+   "date": "2026-09-06",
+   "agents": {
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 32,
+     "turns": 544,
+     "inputTokens": 2045440,
+     "outputTokens": 175712,
+     "cacheTokens": 60696800,
+     "agentMinutes": 105,
+     "activeMinutes": 81
+    }
+   }
+  },
+  {
+   "date": "2026-09-07",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 11,
+     "turns": 132,
+     "inputTokens": 1105896,
+     "outputTokens": 43428,
+     "cacheTokens": 8802552,
+     "agentMinutes": 37,
+     "activeMinutes": 28
+    },
+    "claude-code": {
+     "sessions": 18,
+     "prompts": 109,
+     "turns": 1744,
+     "inputTokens": 5242464,
+     "outputTokens": 1028960,
+     "cacheTokens": 222513472,
+     "agentMinutes": 647,
+     "activeMinutes": 360
+    }
+   }
+  },
+  {
+   "date": "2026-09-08",
+   "agents": {
+    "claude-code": {
+     "sessions": 16,
+     "prompts": 151,
+     "turns": 1510,
+     "inputTokens": 12908990,
+     "outputTokens": 496790,
+     "cacheTokens": 172405760,
+     "agentMinutes": 705,
+     "activeMinutes": 526
+    }
+   }
+  },
+  {
+   "date": "2026-09-09",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 7,
+     "turns": 70,
+     "inputTokens": 436100,
+     "outputTokens": 23030,
+     "cacheTokens": 5761070,
+     "agentMinutes": 44,
+     "activeMinutes": 28
+    },
+    "claude-code": {
+     "sessions": 19,
+     "prompts": 163,
+     "turns": 1956,
+     "inputTokens": 12972192,
+     "outputTokens": 1017120,
+     "cacheTokens": 190408776,
+     "agentMinutes": 832,
+     "activeMinutes": 543
+    }
+   }
+  },
+  {
+   "date": "2026-09-10",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 5,
+     "turns": 70,
+     "inputTokens": 514780,
+     "outputTokens": 41230,
+     "cacheTokens": 9190930,
+     "agentMinutes": 23,
+     "activeMinutes": 12
+    },
+    "claude-code": {
+     "sessions": 19,
+     "prompts": 129,
+     "turns": 1806,
+     "inputTokens": 5715990,
+     "outputTokens": 1284066,
+     "cacheTokens": 145393836,
+     "agentMinutes": 1018,
+     "activeMinutes": 478
+    }
+   }
+  },
+  {
+   "date": "2026-09-11",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 7,
+     "turns": 98,
+     "inputTokens": 854364,
+     "outputTokens": 68502,
+     "cacheTokens": 8633114,
+     "agentMinutes": 27,
+     "activeMinutes": 22
+    },
+    "claude-code": {
+     "sessions": 18,
+     "prompts": 137,
+     "turns": 2055,
+     "inputTokens": 15443325,
+     "outputTokens": 914475,
+     "cacheTokens": 187194060,
+     "agentMinutes": 753,
+     "activeMinutes": 346
+    }
+   }
+  },
+  {
+   "date": "2026-09-12",
+   "agents": {
+    "claude-code": {
+     "sessions": 12,
+     "prompts": 73,
+     "turns": 949,
+     "inputTokens": 7629011,
+     "outputTokens": 615901,
+     "cacheTokens": 83597410,
+     "agentMinutes": 403,
+     "activeMinutes": 243
+    }
+   }
+  },
+  {
+   "date": "2026-09-13",
+   "agents": {
+    "claude-code": {
+     "sessions": 8,
+     "prompts": 59,
+     "turns": 944,
+     "inputTokens": 5449712,
+     "outputTokens": 507872,
+     "cacheTokens": 99121888,
+     "agentMinutes": 318,
+     "activeMinutes": 172
+    }
+   }
+  },
+  {
+   "date": "2026-09-14",
+   "agents": {
+    "claude-code": {
+     "sessions": 12,
+     "prompts": 92,
+     "turns": 1380,
+     "inputTokens": 9269460,
+     "outputTokens": 456780,
+     "cacheTokens": 95876880,
+     "agentMinutes": 338,
+     "activeMinutes": 258
+    }
+   }
+  },
+  {
+   "date": "2026-09-15",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 6,
+     "turns": 72,
+     "inputTokens": 581040,
+     "outputTokens": 44640,
+     "cacheTokens": 7301088,
+     "agentMinutes": 25,
+     "activeMinutes": 18
+    },
+    "claude-code": {
+     "sessions": 20,
+     "prompts": 136,
+     "turns": 1632,
+     "inputTokens": 10446432,
+     "outputTokens": 1008576,
+     "cacheTokens": 163208160,
+     "agentMinutes": 513,
+     "activeMinutes": 327
+    }
+   }
+  },
+  {
+   "date": "2026-09-16",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 7,
+     "turns": 119,
+     "inputTokens": 823004,
+     "outputTokens": 37604,
+     "cacheTokens": 11216583,
+     "agentMinutes": 21,
+     "activeMinutes": 16
+    },
+    "claude-code": {
+     "sessions": 17,
+     "prompts": 140,
+     "turns": 1260,
+     "inputTokens": 10353420,
+     "outputTokens": 967680,
+     "cacheTokens": 136784340,
+     "agentMinutes": 636,
+     "activeMinutes": 296
+    }
+   }
+  },
+  {
+   "date": "2026-09-17",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 6,
+     "turns": 54,
+     "inputTokens": 377946,
+     "outputTokens": 26028,
+     "cacheTokens": 4903686,
+     "agentMinutes": 49,
+     "activeMinutes": 24
+    },
+    "claude-code": {
+     "sessions": 9,
+     "prompts": 104,
+     "turns": 1560,
+     "inputTokens": 7653360,
+     "outputTokens": 1182480,
+     "cacheTokens": 197884440,
+     "agentMinutes": 670,
+     "activeMinutes": 333
+    }
+   }
+  },
+  {
+   "date": "2026-09-18",
+   "agents": {
+    "codex": {
+     "sessions": 1,
+     "prompts": 4,
+     "turns": 72,
+     "inputTokens": 347904,
+     "outputTokens": 32544,
+     "cacheTokens": 8706816,
+     "agentMinutes": 11,
+     "activeMinutes": 9
+    },
+    "claude-code": {
+     "sessions": 17,
+     "prompts": 144,
+     "turns": 1296,
+     "inputTokens": 6776784,
+     "outputTokens": 454896,
+     "cacheTokens": 94719456,
+     "agentMinutes": 1129,
+     "activeMinutes": 537
+    }
+   }
+  },
+  {
+   "date": "2026-09-19",
+   "agents": {
+    "claude-code": {
+     "sessions": 8,
+     "prompts": 82,
+     "turns": 1148,
+     "inputTokens": 4083436,
+     "outputTokens": 592368,
+     "cacheTokens": 80853640,
+     "agentMinutes": 385,
+     "activeMinutes": 237
+    }
+   }
+  },
+  {
+   "date": "2026-09-20",
+   "agents": {
+    "claude-code": {
+     "sessions": 7,
+     "prompts": 45,
+     "turns": 720,
+     "inputTokens": 3198240,
+     "outputTokens": 262080,
+     "cacheTokens": 78442560,
+     "agentMinutes": 234,
+     "activeMinutes": 114
+    }
+   }
+  },
+  {
+   "date": "2026-09-21",
+   "agents": {
+    "claude-code": {
+     "sessions": 19,
+     "prompts": 146,
+     "turns": 2482,
+     "inputTokens": 9590448,
+     "outputTokens": 766938,
+     "cacheTokens": 212623012,
+     "agentMinutes": 606,
+     "activeMinutes": 337
+    }
+   }
+  },
+  {
+   "date": "2026-09-22",
+   "agents": {
+    "claude-code": {
+     "sessions": 27,
+     "prompts": 191,
+     "turns": 3247,
+     "inputTokens": 14319270,
+     "outputTokens": 2227442,
+     "cacheTokens": 449086076,
+     "agentMinutes": 957,
+     "activeMinutes": 561
+    }
+   }
+  },
+  {
+   "date": "2026-09-23",
+   "agents": {
+    "claude-code": {
+     "sessions": 14,
+     "prompts": 137,
+     "turns": 1507,
+     "inputTokens": 7899694,
+     "outputTokens": 932833,
+     "cacheTokens": 135443132,
+     "agentMinutes": 571,
+     "activeMinutes": 385
+    }
+   }
+  },
+  {
+   "date": "2026-09-24",
+   "agents": {
+    "claude-code": {
+     "sessions": 19,
+     "prompts": 216,
+     "turns": 1944,
+     "inputTokens": 15886368,
+     "outputTokens": 752328,
+     "cacheTokens": 224784720,
+     "agentMinutes": 1132,
+     "activeMinutes": 845
+    }
+   }
+  },
+  {
+   "date": "2026-09-25",
+   "agents": {
+    "claude-code": {
+     "sessions": 22,
+     "prompts": 152,
+     "turns": 1824,
+     "inputTokens": 13141920,
+     "outputTokens": 915648,
+     "cacheTokens": 225269472,
+     "agentMinutes": 785,
+     "activeMinutes": 450
+    }
+   }
+  },
+  {
+   "date": "2026-09-26",
+   "agents": {
+    "claude-code": {
+     "sessions": 5,
+     "prompts": 51,
+     "turns": 459,
+     "inputTokens": 1742364,
+     "outputTokens": 295137,
+     "cacheTokens": 39723696,
+     "agentMinutes": 166,
+     "activeMinutes": 128
+    }
+   }
+  },
+  {
+   "date": "2026-09-27",
+   "agents": {
+    "claude-code": {
+     "sessions": 7,
+     "prompts": 45,
+     "turns": 450,
+     "inputTokens": 3783150,
+     "outputTokens": 138150,
+     "cacheTokens": 40138650,
+     "agentMinutes": 310,
+     "activeMinutes": 142
+    }
+   }
+  },
+  {
+   "date": "2026-09-28",
+   "agents": {
+    "claude-code": {
+     "sessions": 15,
+     "prompts": 137,
+     "turns": 1233,
+     "inputTokens": 7157565,
+     "outputTokens": 741033,
+     "cacheTokens": 139410378,
+     "agentMinutes": 605,
+     "activeMinutes": 389
+    }
+   }
+  },
+  {
+   "date": "2026-09-29",
+   "agents": {
+    "claude-code": {
+     "sessions": 29,
+     "prompts": 189,
+     "turns": 2079,
+     "inputTokens": 15717240,
+     "outputTokens": 1087317,
+     "cacheTokens": 243712854,
+     "agentMinutes": 1125,
+     "activeMinutes": 634
+    }
+   }
+  },
+  {
+   "date": "2026-09-30",
+   "agents": {
+    "claude-code": {
+     "sessions": 21,
+     "prompts": 208,
+     "turns": 2704,
+     "inputTokens": 15099136,
+     "outputTokens": 1024816,
+     "cacheTokens": 346855600,
+     "agentMinutes": 592,
+     "activeMinutes": 443
+    }
+   }
+  },
+  {
+   "date": "2026-10-01",
+   "agents": {
+    "claude-code": {
+     "sessions": 31,
+     "prompts": 227,
+     "turns": 2497,
+     "inputTokens": 9358756,
+     "outputTokens": 1842786,
+     "cacheTokens": 327039581,
+     "agentMinutes": 971,
+     "activeMinutes": 772
+    }
+   }
+  },
+  {
+   "date": "2026-10-02",
+   "agents": {
+    "claude-code": {
+     "sessions": 20,
+     "prompts": 170,
+     "turns": 3060,
+     "inputTokens": 18274320,
+     "outputTokens": 1624860,
+     "cacheTokens": 204049980,
+     "agentMinutes": 756,
+     "activeMinutes": 377
+    }
+   }
+  }
+ ]
+}

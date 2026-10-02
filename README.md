@@ -1,80 +1,121 @@
+<div align="center">
+
 # agent-usage
 
-AI 코딩 에이전트(Claude Code, Codex)를 **얼마나 쓰고 있는지**, 그리고 **이전 기간과 비교해 어떻게 변했는지** 보여주는 React 컴포넌트.
+**How much do you use AI coding agents, and how does it compare with your past self?**
 
-로컬 로그만 읽고, 외부로 아무것도 보내지 않습니다.
+A React dashboard for Claude Code and Codex usage, built from the logs already on your machine.
+
+[![Live demo](https://img.shields.io/badge/live_demo-open-111111?style=flat-square)](https://chaehy5665.github.io/agent-usage/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-111111?style=flat-square)](LICENSE)
+![React 19](https://img.shields.io/badge/React-19-111111?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-7-111111?style=flat-square&logo=typescript)
+![Vite](https://img.shields.io/badge/Vite-8-111111?style=flat-square&logo=vite)
+
+[Live demo](https://chaehy5665.github.io/agent-usage/) · [Quick start](#quick-start) · [Metrics](#metrics) · [Privacy](#privacy)
+
+</div>
+
+<br>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.png">
-  <img alt="에이전트 사용량 화면 — 지표 탭, 이전 기간 대비 변화, 추세 차트, 레버리지, 에이전트 비중, 모델, 활동 기록" src="docs/screenshot-light.png">
+  <img alt="Dashboard: metric tabs, change vs. the previous period, trend chart, leverage, agent share, models, and an activity calendar" src="docs/screenshot-light.png">
 </picture>
 
-<sub>스크린샷은 합성 샘플 데이터입니다.</sub>
+<p align="center"><sub>Screenshots and the live demo use synthetic sample data. The UI copy is in Korean.</sub></p>
 
-## 빠른 시작
+## Highlights
+
+- **Today vs. yesterday at this time.** A day in progress isn't compared with all of yesterday. It's compared with yesterday *up to the same clock time*, using hourly data.
+- **Leverage.** How many hours your agents worked for every hour you did, now and before.
+- **Overlap-aware time.** Parallel sessions, subagents, and two agents running at once are counted once for wall-clock time.
+- **Every machine, once.** Logs from SSH servers are merged with local ones, and sessions the desktop app mirrors locally aren't double-counted.
+- **Private by default.** Only daily and hourly totals leave the collector. No prompt text, file paths, or project names.
+
+## Quick start
 
 ```bash
 npm install
-npm run collect   # 내 로컬 로그 → public/usage.json (git에 안 올라감)
+npm run collect   # your logs → public/usage.json (gitignored)
 npm run dev
 ```
 
-`public/usage.json`이 없으면 합성 샘플 데이터(`public/usage.sample.json`)로 렌더링됩니다.
+Without `public/usage.json`, the app renders the synthetic sample (`public/usage.sample.json`).
 
-| URL 옵션 | |
+| URL option | |
 |---|---|
-| `?sample` | 내 데이터가 있어도 샘플 데이터로 보기 (스크린샷·데모용) |
-| `?theme=light` / `?theme=dark` | OS 설정 대신 테마 고정 |
+| `?sample` | Show sample data even when your own data exists (screenshots, demos) |
+| `?theme=light` / `?theme=dark` | Pin the theme instead of following the OS |
 
-## 화면 구성
+## How it works
 
-- **헤더** — 기간(오늘 / 7 / 30 / 90일)과 에이전트(전체 / Claude Code / Codex) 필터
-  - 7·30·90일: 최근 N일을 바로 앞 N일과 비교
-  - **오늘: 어제의 나와 비교.** 하루가 끝나지 않았으니 어제 하루 전체가 아니라 *어제 같은 시각까지*와 비교 (시간 단위 데이터, 진행 중인 시간은 분 비율로 계산)
-- **지표 탭** — 5개 지표의 현재 값과 방향(↑↓)만. 누른 지표가 아래 전체를 바꿈
-  | 지표 | 의미 |
-  |---|---|
-  | 활성 시간 | 에이전트가 일한 실제 벽시계 시간. 동시 세션은 한 번만 세고(에이전트끼리 겹쳐도), 5분 넘는 공백은 제외 |
-  | 에이전트 가동 | 세션별 작업 시간의 합. 병렬 세션·서브에이전트가 겹쳐 쌓임 |
-  | 프롬프트 | 사람이 직접 보낸 요청 수 |
-  | 세션 | 하루에 열린 대화 세션 수 |
-  | 토큰 | 입력 + 출력 (캐시 읽기 제외) |
-- **히어로** — 얼마나 변했는지를 크게("↑ 95% 늘었어요"), 비교 대상 값을 한 줄로("이전 30일엔 132.6h"), 보조 통계 3개
-- **추세 차트**
-  - 기간: 최근(실선) vs 이전(점선) 일별. 오늘이 진행 중이면 마지막 구간은 점선
-  - 오늘: 0–24시 누적 곡선. 어제는 하루 끝까지 점선으로 그려서 "어제는 여기까지 갔다"가 보이고, 지금 시각에 오늘과 어제의 차이를 표시
-- **레버리지** — 에이전트 가동 시간 ÷ 내 작업 시간. "내가 1시간 일할 때 에이전트들이 몇 시간 일했나". 내 시간 막대 하나와, 에이전트 시간을 그 막대 몇 개분으로 나란히 보여주고 이전 기간(오늘이면 어제 같은 시각)과 비교. 전체일 때는 에이전트별 레버리지도 표시
-  - **내 작업 시간은 추정치**예요. 사람이 보낸 프롬프트 시각만 로그에 남기 때문에, 프롬프트마다 직전 2분(결과 읽고 쓰는 시간)을 일한 것으로 보고, 다음 프롬프트가 15분 안에 오면 그 사이도 계속 일한 것으로 이어 붙입니다. 두 에이전트를 동시에 다뤄도 내 시간은 한 번만 셉니다. 기준을 바꾸려면 `scripts/collect.mjs`의 `PROMPT_LEAD_MS`, `PROMPT_JOIN_MS`
-- **에이전트 비중** — 이전/최근 100% 막대로 누가 일을 했는지의 변화, 에이전트별 값과 증감
-- **모델** — 응답 수 기준 상위 모델
-- **활동 기록** — GitHub 잔디처럼 하루하루를 칸으로. 최대 1년, 화면 폭에 맞춰 주 수가 조절됨
-- **표로 보기** — 차트와 같은 값을 표로 (오늘이면 시간별)
+```mermaid
+flowchart LR
+  A["Claude Code<br/>~/.claude/projects"] --> C
+  B["Codex<br/>~/.codex/sessions"] --> C
+  S["SSH hosts<br/>(remotes.txt)"] -- "collect.mjs --raw over ssh" --> C
+  C["scripts/collect.mjs<br/>dedupe by id · daily + hourly totals"] --> J["public/usage.json"]
+  J --> U["&lt;AgentUsage /&gt;"]
+```
 
-**숫자는 한 자리에 한 번만:** 현재 값은 탭에, 변화량은 히어로에, 비교 대상 값은 히어로 문장에만 나옵니다. 차트는 호버할 때만 숫자를 보여줍니다.
-
-디자인 메모: 색은 에이전트 구분(Claude Code 주황, Codex 파랑)에만 쓰고, 나머지는 잉크 한 가지 농도로 표현합니다. 라이트/다크 모두 대응하고, `prefers-reduced-motion`이면 애니메이션을 끕니다. 글꼴은 Pretendard(없으면 시스템 글꼴).
-
-## 데이터 수집 (`scripts/collect.mjs`)
-
-| 에이전트 | 읽는 위치 | 세는 방식 |
+| Agent | Reads | Counting |
 |---|---|---|
-| Claude Code | `~/.claude/projects/**/*.jsonl` | 응답은 `message.id`, 프롬프트는 레코드 `uuid`로 중복 제거 (이어하기한 세션이 이전 기록을 복사해도 한 번만 셈) |
-| Codex | `~/.codex/sessions/**/*.jsonl` | 토큰은 누적 `token_count`의 차분, 프롬프트는 `task_started` |
+| Claude Code | `~/.claude/projects/**/*.jsonl` | Responses de-duplicated by `message.id` and prompts by record `uuid`, so resumed sessions that copy old history count once |
+| Codex | `~/.codex/sessions/**/*.jsonl` | Tokens from deltas of the cumulative `token_count`, prompts from `task_started` |
 
-### SSH 서버의 로그도 합치기
+## Metrics
 
-서버에서 직접 `claude` / `codex`를 실행하면 로그는 서버에만 남습니다. `remotes.txt`(gitignore됨)에 SSH 호스트를 한 줄에 하나씩 적거나 `--remote`로 넘기세요. 서버에 `node`만 있으면 되고, 설치할 것은 없습니다.
+| Metric | Meaning |
+|---|---|
+| **Active time** | Wall-clock time any agent was working. Overlapping sessions, and agents, count once. Gaps over 5 minutes are idle. |
+| **Agent hours** | Sum of every session's working time. Parallel sessions and subagents stack. |
+| **Prompts** | Requests you sent yourself |
+| **Sessions** | Conversations active on a day |
+| **Tokens** | Input + output (cache reads excluded) |
+| **Leverage** | Agent hours ÷ your working time |
+
+**Your working time is an estimate.** Logs only record when you sent a prompt, so each prompt counts the 2 minutes before it, for reading results and writing. A next prompt within 15 minutes joins the stretch, and using two agents at once still counts as your one hour. Tune it with `PROMPT_LEAD_MS` and `PROMPT_JOIN_MS` in `scripts/collect.mjs`.
+
+**Pick a range:** today, 7, 30, or 90 days. Each range is compared with the one right before it, and today with yesterday at the same time.
+
+**Each number appears once.** The current value lives in the tab, the change in the hero, and the previous value in the sentence under it. Charts show numbers on hover.
+
+<details>
+<summary><b>What's on the page</b></summary>
+
+- **Metric tabs.** Current value and direction (↑↓) for each metric. The selected one drives everything below.
+- **Hero.** How much it changed ("↑ 95%"), the previous value, and three supporting stats.
+- **Trend.** Daily current (solid) vs. previous (dashed). An unfinished today is dotted. In *today* mode it's a 0–24h cumulative curve, with yesterday drawn to the end of the day and the gap marked at the current time.
+- **Leverage.** One bar of your time next to the agents' time drawn as that many copies of it, with per-agent leverage.
+- **Agent share.** 100% bars of who did the work, before vs. now.
+- **Models.** Top models by number of responses.
+- **Activity.** A contribution-style calendar of up to a year, fitted to the width.
+- **Table view.** The same numbers as a table (hourly in *today* mode).
+
+Color is used only to identify agents (Claude Code orange, Codex blue). Everything else is one ink ramp. Light and dark themes are supported, and motion turns off under `prefers-reduced-motion`.
+
+</details>
+
+## Privacy
+
+- `usage.json` holds only daily/hourly aggregates and response counts per model: no prompt text, paths, or project names.
+- `public/usage.json` and `remotes.txt` are gitignored.
+- The [live demo](https://chaehy5665.github.io/agent-usage/) is built by GitHub Actions from the repo, so it can only see the synthetic sample. The build also drops `usage.json` from its output, as a second guard.
+- Nothing is sent anywhere. The collector reads files locally, or on your own SSH hosts.
+
+## Collecting from SSH servers
+
+If you run `claude` or `codex` directly on a server, its logs only live there. List SSH hosts in `remotes.txt` (one per line), or pass `--remote`. The server only needs `node`, with nothing to install.
 
 ```bash
 echo my-server >> remotes.txt
-npm run collect            # 또는: npm run collect -- --remote my-server
+npm run collect            # or: npm run collect -- --remote my-server
 ```
 
-스크립트를 SSH로 서버에 흘려보내 `--raw` 모드로 실행하고(서버에 파일을 남기지 않음), 메시지 id·프롬프트 id·파일별 활동 구간만 받아와 합칩니다. 데스크톱 앱의 SSH 세션은 로컬(`~/.claude/projects/ssh-*`)에도 사본이 남는데, 같은 id로 합쳐지므로 두 번 세지 않습니다. 날짜는 서버가 아닌 이 컴퓨터의 시간대를 따릅니다.
+The collector pipes itself to the host over SSH and runs in `--raw` mode, so no files are left behind. It returns only message ids, prompt ids, and activity spans, which are merged by id. The desktop app keeps local copies of its SSH sessions (`~/.claude/projects/ssh-*`), and those merge with the server's originals instead of counting twice. Days follow this machine's time zone.
 
-출력에는 **일별 집계값과 모델별 응답 수만** 들어갑니다. 프롬프트 내용, 경로, 프로젝트 이름은 포함되지 않습니다. 날짜는 로컬 시간대 기준입니다.
-
-## 컴포넌트로 쓰기
+## Using the component
 
 ```tsx
 import { AgentUsage } from "./src";
@@ -82,19 +123,24 @@ import { AgentUsage } from "./src";
 <AgentUsage data={usage} defaultRange={30} defaultMetric="activeHours" />
 ```
 
-| prop | 기본값 | 설명 |
+| Prop | Default | |
 |---|---|---|
-| `data` | — | `collect.mjs`가 만든 JSON |
-| `endDate` | 수집일 | 비교 기준이 되는 마지막 날 (`YYYY-MM-DD`) |
-| `defaultRange` | `30` | `7 \| 30 \| 90` |
+| `data` | — | JSON produced by `collect.mjs` |
+| `endDate` | collection day | Last day of the current window (`YYYY-MM-DD`) |
+| `defaultRange` | `30` | `1 \| 7 \| 30 \| 90`. `1` is today vs. yesterday at this time |
 | `defaultMetric` | `"activeHours"` | `activeHours \| agentHours \| prompts \| sessions \| tokens` |
 
-라이트/다크 모드는 `prefers-color-scheme`과 `<html data-theme="dark|light">`를 모두 따릅니다.
+The theme follows `prefers-color-scheme`, or `<html data-theme="light|dark">` when set.
 
-## 다른 에이전트 추가
+## Adding another agent
 
-`collect.mjs`에 `collectXxx()`를 추가해 `bucket(date, "xxx")`에 값을 쌓고, 출력의 `agents`에 표시 이름을 넣으면 컴포넌트는 그대로 동작합니다 (색은 순서대로 배정).
+In `scripts/collect.mjs`:
 
-## 라이선스
+1. Write a `scanXxx(src)` that fills `src.msgs` (responses with tokens), `src.prompts` (your prompts), and `src.files` (activity runs per session).
+2. Call it from `scanAll()` and add the agent to `AGENTS`.
 
-MIT
+The component picks it up as is, and colors are assigned in order.
+
+## License
+
+[MIT](LICENSE)

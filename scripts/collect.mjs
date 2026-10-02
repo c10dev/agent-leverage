@@ -17,6 +17,10 @@ import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const IDLE_GAP_MS = 5 * 60 * 1000; // gaps longer than this end an activity run
+// "My" working time, estimated from when I sent prompts: each prompt counts the few minutes
+// spent reading and typing before it, and prompts this close together count as one stretch of work.
+const PROMPT_LEAD_MS = 2 * 60 * 1000;
+const PROMPT_JOIN_MS = 15 * 60 * 1000;
 const AGENTS = { "claude-code": "Claude Code", codex: "Codex" };
 
 // ---------- scanning (runs locally and, in --raw mode, on remote hosts) ----------
@@ -256,10 +260,11 @@ const bucket = (date, agent) =>
     cacheTokens: 0,
     agentMinutes: 0, // summed per session — parallel sessions and subagents stack
     activeMinutes: 0, // wall clock — overlapping sessions merged
+    humanMinutes: 0, // my time at the keyboard, from prompt times
   });
 const slots = () => Array(24).fill(0);
 const hourBucket = (date, agent) =>
-  ((hourly[date] ??= {})[agent] ??= { activeMinutes: slots(), agentMinutes: slots(), prompts: slots(), sessions: slots(), tokens: slots() });
+  ((hourly[date] ??= {})[agent] ??= { activeMinutes: slots(), agentMinutes: slots(), humanMinutes: slots(), prompts: slots(), sessions: slots(), tokens: slots() });
 const hourOf = (ts) => new Date(ts).getHours();
 
 /** Merge overlapping [start, end] runs and report the covered minutes per local day and hour. */
@@ -279,7 +284,19 @@ function unionByHour(runs, add) {
   flush();
 }
 
+/** My working stretches: [prompt - lead, prompt], chained when the next prompt comes soon enough. */
+function humanSpans(stamps) {
+  const spans = [];
+  for (const t of [...stamps].sort((a, b) => a - b)) {
+    const last = spans.at(-1);
+    if (last && t - PROMPT_LEAD_MS - last[1] <= PROMPT_JOIN_MS) last[1] = t;
+    else spans.push([t - PROMPT_LEAD_MS, t]);
+  }
+  return spans;
+}
+
 const everyRun = []; // across all agents, for "all agents" wall clock
+const everyPrompt = []; // across all agents — I'm one person, prompting two agents at once is still my one hour
 for (const [agent, src] of Object.entries(merged)) {
   for (const [ts, input, output, cache, model] of Object.values(src.msgs)) {
     const date = dayKey(ts);
@@ -295,6 +312,12 @@ for (const [agent, src] of Object.entries(merged)) {
     bucket(dayKey(ts), agent).prompts++;
     hourBucket(dayKey(ts), agent).prompts[hourOf(ts)]++;
   }
+  everyPrompt.push(...Object.values(src.prompts));
+  for (const [s, e] of humanSpans(Object.values(src.prompts)))
+    for (const [date, hour, ms] of byHour(s, e)) {
+      bucket(date, agent).humanMinutes += ms / 60000;
+      hourBucket(date, agent).humanMinutes[hour] += ms / 60000;
+    }
 
   const sessionFirstSeen = new Map(); // "sid|date" -> earliest activity that day
   const seen = (sid, ts) => {
@@ -332,17 +355,22 @@ for (const [agent, src] of Object.entries(merged)) {
 // same, across agents — Claude Code and Codex running at once count once
 const allActive = {};
 unionByHour(everyRun, (date, hour, min) => ((allActive[date] ??= slots())[hour] += min));
+const allHuman = {};
+for (const [s, e] of humanSpans(everyPrompt))
+  for (const [date, hour, ms] of byHour(s, e)) (allHuman[date] ??= slots())[hour] += ms / 60000;
 
 const round1 = (v) => Math.round(v * 10) / 10;
 for (const agents of Object.values(daily))
   for (const m of Object.values(agents)) {
     m.agentMinutes = Math.round(m.agentMinutes);
     m.activeMinutes = Math.round(m.activeMinutes);
+    m.humanMinutes = Math.round(m.humanMinutes);
   }
 for (const agents of Object.values(hourly))
   for (const h of Object.values(agents)) {
     h.activeMinutes = h.activeMinutes.map(round1);
     h.agentMinutes = h.agentMinutes.map(round1);
+    h.humanMinutes = h.humanMinutes.map(round1);
   }
 
 const days = Object.keys(daily).sort();
@@ -356,7 +384,12 @@ const out = {
     date,
     agents: daily[date],
     allActiveMinutes: Math.round(sum24(allActive[date] ?? [])),
-    hourly: { agents: hourly[date] ?? {}, allActiveMinutes: (allActive[date] ?? slots()).map(round1) },
+    allHumanMinutes: Math.round(sum24(allHuman[date] ?? [])),
+    hourly: {
+      agents: hourly[date] ?? {},
+      allActiveMinutes: (allActive[date] ?? slots()).map(round1),
+      allHumanMinutes: (allHuman[date] ?? slots()).map(round1),
+    },
   })),
 };
 

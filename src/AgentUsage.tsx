@@ -11,6 +11,7 @@ import {
   fmt,
   fmtClock,
   fmtDate,
+  fmtRatio,
   hourlySeries,
   sum,
   valueUntil,
@@ -228,6 +229,8 @@ export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "
           )}
         </div>
 
+        <LeverageCard data={data} view={view} agents={agents} color={color} single={agentFilter !== "all" ? agentFilter : null} />
+
         <div className="au-grid">
           <ShareCard data={data} view={view} metric={metric} color={color} focus={agentFilter} />
           <ModelsCard data={data} agents={agents} color={color} />
@@ -423,6 +426,102 @@ function HeatLegend() {
         <i key={l} className={`au-cell-key au-l${l}`} />
       ))}
       많음
+    </div>
+  );
+}
+
+// ---------- leverage: agent hours per hour of mine ----------
+
+function LeverageCard(props: { data: UsageData; view: View; agents: string[]; color: (a: string) => string; single: string | null }) {
+  const { data, view, agents, color, single } = props;
+  const ratio = (sel: string[]) => {
+    const agent = compare(data, view, sel, "agentHours");
+    const human = compare(data, view, sel, "humanHours");
+    return {
+      agent: agent.cur,
+      human: human.cur,
+      cur: human.cur > 0 ? agent.cur / human.cur : null,
+      prev: human.prev > 0 ? agent.prev / human.prev : null,
+    };
+  };
+  const r = ratio(agents);
+  const perAgent = single ? [] : Object.keys(data.agents).map((a) => ({ a, ...ratio([a]) }));
+  const change = r.cur !== null && r.prev !== null ? describeChange(r.cur, r.prev) : null;
+  const agentColor = single ? color(single) : "color-mix(in srgb, var(--ink) 32%, var(--surface))";
+
+  // One bar of my time, then the agents' time drawn as that many copies of it.
+  const scale = Math.max(r.agent, r.human) || 1;
+  const copies = r.cur && r.cur >= 1 && r.cur <= 24 ? r.cur : null;
+
+  return (
+    <div className="au-card au-leverage">
+      <div className="au-lev-head">
+        <div>
+          <h2>레버리지</h2>
+          <p className="au-card-sub">내가 일한 1시간 동안 에이전트들이 일한 시간</p>
+        </div>
+        <div className="au-lev-figure">
+          <p className="au-lev-ratio">
+            {r.cur !== null ? (
+              <>
+                {fmtRatio(r.cur).replace("배", "")}
+                <span className="au-hero-unit">배</span>
+              </>
+            ) : (
+              "–"
+            )}
+          </p>
+          <p className="au-lev-compare">
+            {change && <Arrow change={change} />} {view.prevPhrase} <b>{r.prev !== null ? fmtRatio(r.prev) : "기록 없음"}</b>
+          </p>
+        </div>
+      </div>
+
+      {r.cur !== null && (
+        <div className="au-lev-bars" key={`${view.range}-${single}`}>
+          <span className="au-lev-label">나</span>
+          <div className="au-lev-track">
+            <span className="au-lev-me" style={{ width: `${(r.human / scale) * 100}%` }} />
+          </div>
+          <span className="au-lev-val">{fmt(r.human, "humanHours")}</span>
+
+          <span className="au-lev-label">에이전트</span>
+          <div className="au-lev-track">
+            {copies ? (
+              Array.from({ length: Math.ceil(copies) }, (_, i) => (
+                <span
+                  key={i}
+                  className="au-lev-copy"
+                  style={{
+                    width: `calc(${((Math.min(1, copies - i) * r.human) / scale) * 100}% - 3px)`,
+                    background: agentColor,
+                    animationDelay: `${i * 60}ms`,
+                  }}
+                />
+              ))
+            ) : (
+              <span className="au-lev-copy" style={{ width: `${(r.agent / scale) * 100}%`, background: agentColor }} />
+            )}
+          </div>
+          <span className="au-lev-val">{fmt(r.agent, "agentHours")}</span>
+        </div>
+      )}
+
+      <div className="au-lev-foot">
+        {perAgent.length > 0 && (
+          <ul className="au-lev-agents">
+            {perAgent.map((p) => (
+              <li key={p.a}>
+                <i className="au-dot" style={{ background: color(p.a) }} aria-hidden />
+                {data.agents[p.a]} <b>{p.cur !== null ? fmtRatio(p.cur) : "–"}</b>
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="au-lev-note" title={METRICS.humanHours.hint}>
+          내 작업 시간은 프롬프트를 보낸 시각으로 추정해요 · 프롬프트마다 2분, 15분 안에 이어지면 계속 일한 걸로
+        </p>
+      </div>
     </div>
   );
 }

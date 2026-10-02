@@ -9,6 +9,7 @@ export type Metrics = {
   cacheTokens: number;
   agentMinutes: number;
   activeMinutes: number;
+  humanMinutes?: number; // my time at the keyboard, estimated from prompt times
 };
 
 export type UsageData = {
@@ -17,15 +18,22 @@ export type UsageData = {
   sources?: string[]; // where logs were read: "local" and/or SSH host names
   agents: Record<string, string>; // id -> display name
   models: Record<string, Record<string, number>>;
-  /** allActiveMinutes: wall clock across every agent, overlaps counted once */
-  days: { date: string; agents: Record<string, Metrics>; allActiveMinutes?: number; hourly?: DayHourly }[];
+  /** all*Minutes: across every agent, overlaps counted once */
+  days: { date: string; agents: Record<string, Metrics>; allActiveMinutes?: number; allHumanMinutes?: number; hourly?: DayHourly }[];
 };
 
 /** The same day split into 24 local hours. */
-export type Hourly = { activeMinutes: number[]; agentMinutes: number[]; prompts: number[]; sessions: number[]; tokens: number[] };
-export type DayHourly = { agents: Record<string, Hourly>; allActiveMinutes: number[] };
+export type Hourly = {
+  activeMinutes: number[];
+  agentMinutes: number[];
+  humanMinutes?: number[];
+  prompts: number[];
+  sessions: number[];
+  tokens: number[];
+};
+export type DayHourly = { agents: Record<string, Hourly>; allActiveMinutes: number[]; allHumanMinutes?: number[] };
 
-export type MetricKey = "activeHours" | "agentHours" | "prompts" | "sessions" | "tokens";
+export type MetricKey = "activeHours" | "agentHours" | "prompts" | "sessions" | "tokens" | "humanHours";
 
 type MetricInfo = {
   label: string;
@@ -59,9 +67,15 @@ export const METRICS: Record<MetricKey, MetricInfo> = {
     unit: "토큰",
     hint: "입력 + 출력 토큰 (캐시 읽기 제외)",
   },
+  humanHours: {
+    label: "내 작업 시간",
+    unit: "시간",
+    hint: "프롬프트를 보낸 시각으로 추정. 프롬프트마다 2분, 15분 안에 이어진 프롬프트 사이는 계속 일한 것으로 봅니다.",
+  },
 };
 
-export const METRIC_KEYS = Object.keys(METRICS) as MetricKey[];
+/** Metrics shown as tabs. humanHours only feeds the leverage card. */
+export const METRIC_KEYS: MetricKey[] = ["activeHours", "agentHours", "prompts", "sessions", "tokens"];
 
 export function metricValue(m: Metrics | undefined, key: MetricKey): number {
   if (!m) return 0;
@@ -76,6 +90,8 @@ export function metricValue(m: Metrics | undefined, key: MetricKey): number {
       return m.sessions;
     case "tokens":
       return m.inputTokens + m.outputTokens;
+    case "humanHours":
+      return (m.humanMinutes ?? 0) / 60;
   }
 }
 
@@ -109,12 +125,16 @@ export type DayPoint = { date: string; byAgent: Record<string, number>; total: n
 
 type Day = UsageData["days"][number];
 
+const isAll = (data: UsageData, agents: string[]) => agents.length === Object.keys(data.agents).length;
+
 /** One day's value for the selected agents. */
 export function dayTotal(data: UsageData, day: Day | undefined, agents: string[], key: MetricKey): number {
   if (!day) return 0;
-  // wall clock isn't additive: two agents busy in the same hour is still one hour
-  if (key === "activeHours" && day.allActiveMinutes != null && agents.length === Object.keys(data.agents).length)
-    return day.allActiveMinutes / 60;
+  // clock time isn't additive: two agents busy in the same hour is still one hour (for them, and for me)
+  if (isAll(data, agents)) {
+    if (key === "activeHours" && day.allActiveMinutes != null) return day.allActiveMinutes / 60;
+    if (key === "humanHours" && day.allHumanMinutes != null) return day.allHumanMinutes / 60;
+  }
   return agents.reduce((s, a) => s + metricValue(day.agents[a], key), 0);
 }
 
@@ -138,6 +158,8 @@ function hourValue(h: Hourly | undefined, key: MetricKey, i: number): number {
       return h.activeMinutes[i] / 60;
     case "agentHours":
       return h.agentMinutes[i] / 60;
+    case "humanHours":
+      return (h.humanMinutes?.[i] ?? 0) / 60;
     default:
       return h[key][i];
   }
@@ -150,8 +172,8 @@ export function hourlySeries(data: UsageData, agents: string[], key: MetricKey, 
   const h = data.days.find((d) => d.date === date)?.hourly;
   const hours = Array.from({ length: 24 }, (_, i) => i);
   const byAgent = Object.fromEntries(agents.map((a) => [a, hours.map((i) => hourValue(h?.agents[a], key, i))]));
-  const all = key === "activeHours" && h && agents.length === Object.keys(data.agents).length;
-  const total = all ? h.allActiveMinutes.map((m) => m / 60) : hours.map((i) => agents.reduce((s, a) => s + byAgent[a][i], 0));
+  const union = !h || !isAll(data, agents) ? undefined : key === "activeHours" ? h.allActiveMinutes : key === "humanHours" ? h.allHumanMinutes : undefined;
+  const total = union ? union.map((m) => m / 60) : hours.map((i) => agents.reduce((s, a) => s + byAgent[a][i], 0));
   return { total, byAgent };
 }
 
@@ -203,7 +225,7 @@ const compact = new Intl.NumberFormat("ko-KR", { notation: "compact", maximumFra
 const plain1 = new Intl.NumberFormat("ko-KR", { maximumFractionDigits: 1 });
 const plain0 = new Intl.NumberFormat("ko-KR", { maximumFractionDigits: 0 });
 
-const isHours = (key: MetricKey) => key === "activeHours" || key === "agentHours";
+const isHours = (key: MetricKey) => key === "activeHours" || key === "agentHours" || key === "humanHours";
 
 /** Compact value for axes, chips and tooltips: "12.5h", "4,347", "7.7억". */
 export function fmt(v: number, key: MetricKey): string {
@@ -218,6 +240,11 @@ export function fmtClock(hours: number): string {
   const h = Math.floor(hours) % 24;
   const m = Math.floor((hours - Math.floor(hours)) * 60);
   return `${h < 12 ? "오전" : "오후"} ${h % 12 || 12}:${String(m).padStart(2, "0")}`;
+}
+
+/** 3.04 → "3.0배" */
+export function fmtRatio(r: number): string {
+  return `${r >= 10 ? Math.round(r).toLocaleString("ko-KR") : r.toFixed(1)}배`;
 }
 
 export function fmtDate(s: string, opts: { weekday?: boolean; long?: boolean } = {}): string {

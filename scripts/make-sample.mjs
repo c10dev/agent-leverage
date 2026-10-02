@@ -25,6 +25,7 @@ function day(scale) {
     cacheTokens: turns * Math.round(60000 + rand() * 80000),
     agentMinutes: Math.round(activeMinutes * (1.2 + rand())),
     activeMinutes,
+    humanMinutes: Math.round(activeMinutes * (0.35 + rand() * 0.3)),
   };
 }
 
@@ -42,17 +43,18 @@ function spread(total, whole) {
   return floored;
 }
 
-function hourlyFor(agents, allActiveMinutes) {
+function hourlyFor(agents, allActiveMinutes, allHumanMinutes) {
   const byAgent = {};
   for (const [a, m] of Object.entries(agents))
     byAgent[a] = {
       activeMinutes: spread(m.activeMinutes, false),
       agentMinutes: spread(m.agentMinutes, false),
+      humanMinutes: spread(m.humanMinutes, false),
       prompts: spread(m.prompts, true),
       sessions: spread(m.sessions, true),
       tokens: spread(m.inputTokens + m.outputTokens, true),
     };
-  return { agents: byAgent, allActiveMinutes: spread(allActiveMinutes, false) };
+  return { agents: byAgent, allActiveMinutes: spread(allActiveMinutes, false), allHumanMinutes: spread(allHumanMinutes, false) };
 }
 
 const days = [];
@@ -69,7 +71,10 @@ for (let i = DAYS - 1; i >= 0; i--) {
   if (rand() < 0.95 && claude > 0.05) agents["claude-code"] = day(claude);
   const mins = Object.values(agents).map((m) => m.activeMinutes);
   const allActiveMinutes = Math.min(1440, Math.round(Math.max(0, ...mins) + 0.6 * (mins.reduce((a, b) => a + b, 0) - Math.max(0, ...mins))));
-  if (mins.length) days.push({ date: key(d), agents, allActiveMinutes, hourly: hourlyFor(agents, allActiveMinutes) });
+  const human = Object.values(agents).map((m) => m.humanMinutes);
+  const allHumanMinutes = Math.round(Math.max(0, ...human) + 0.7 * (human.reduce((a, b) => a + b, 0) - Math.max(0, ...human)));
+  if (mins.length)
+    days.push({ date: key(d), agents, allActiveMinutes, allHumanMinutes, hourly: hourlyFor(agents, allActiveMinutes, allHumanMinutes) });
 }
 
 const out = {

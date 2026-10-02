@@ -604,6 +604,113 @@
   margin-right: 4px;
 }
 
+/* ---------- leverage ---------- */
+
+.au-lev-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 32px;
+}
+.au-lev-figure {
+  text-align: right;
+}
+.au-lev-ratio {
+  font-size: 56px;
+  font-weight: 760;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+.au-lev-compare {
+  margin-top: 8px !important;
+  font-size: 14px;
+  color: var(--text-2);
+}
+.au-lev-compare b {
+  color: var(--ink);
+  font-weight: 650;
+}
+.au-lev-compare .au-arrow {
+  margin: 0 2px 0 0;
+}
+.au-lev-bars {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 24px;
+}
+.au-lev-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.au-lev-track {
+  display: flex;
+  gap: 3px;
+  height: 18px;
+}
+.au-lev-me,
+.au-lev-copy {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  flex: none;
+}
+.au-lev-me {
+  background: var(--ink);
+  animation: au-grow 500ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.au-lev-copy {
+  min-width: 2px;
+  transform-origin: left;
+  animation: au-grow 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes au-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+.au-lev-val {
+  font-size: 13px;
+  font-weight: 650;
+  text-align: right;
+  min-width: 52px;
+}
+.au-lev-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.au-lev-agents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  list-style: none;
+  padding: 0;
+  font-size: 13px;
+  color: var(--text-2);
+}
+.au-lev-agents li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.au-lev-agents b {
+  color: var(--ink);
+  font-weight: 700;
+}
+.au-lev-note {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
 /* ---------- agent share ---------- */
 
 .au-share {
@@ -806,6 +913,12 @@
   }
 }
 @media (max-width: 520px) {
+  .au-lev-figure {
+    text-align: left;
+  }
+  .au-lev-ratio {
+    font-size: 48px;
+  }
   .au-root {
     padding: 28px 16px 24px;
   }

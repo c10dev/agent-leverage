@@ -144,6 +144,7 @@
   border-radius: 9px;
   font-size: 13px;
   font-weight: 550;
+  white-space: nowrap;
   color: var(--text-2);
   transition: background 160ms, color 160ms, box-shadow 160ms;
 }

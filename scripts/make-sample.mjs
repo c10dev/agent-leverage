@@ -40,7 +40,9 @@ for (let i = DAYS - 1; i >= 0; i--) {
   const claude = (0.15 + t * t * 2.2) * weekend;
   if (rand() < 0.9 && codex > 0.08) agents.codex = day(codex);
   if (rand() < 0.95 && claude > 0.05) agents["claude-code"] = day(claude);
-  if (Object.keys(agents).length) days.push({ date: key(d), agents });
+  const mins = Object.values(agents).map((m) => m.activeMinutes);
+  const allActiveMinutes = Math.min(1440, Math.round(Math.max(0, ...mins) + 0.6 * (mins.reduce((a, b) => a + b, 0) - Math.max(0, ...mins))));
+  if (mins.length) days.push({ date: key(d), agents, allActiveMinutes });
 }
 
 const out = {

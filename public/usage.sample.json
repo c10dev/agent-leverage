@@ -31,7 +31,8 @@
      "agentMinutes": 253,
      "activeMinutes": 122
     }
-   }
+   },
+   "allActiveMinutes": 122
   },
   {
    "date": "2026-04-07",
@@ -56,7 +57,8 @@
      "agentMinutes": 69,
      "activeMinutes": 34
     }
-   }
+   },
+   "allActiveMinutes": 303
   },
   {
    "date": "2026-04-08",
@@ -81,7 +83,8 @@
      "agentMinutes": 64,
      "activeMinutes": 48
     }
-   }
+   },
+   "allActiveMinutes": 174
   },
   {
    "date": "2026-04-09",
@@ -106,7 +109,8 @@
      "agentMinutes": 122,
      "activeMinutes": 56
     }
-   }
+   },
+   "allActiveMinutes": 259
   },
   {
    "date": "2026-04-10",
@@ -131,7 +135,8 @@
      "agentMinutes": 73,
      "activeMinutes": 36
     }
-   }
+   },
+   "allActiveMinutes": 314
   },
   {
    "date": "2026-04-11",
@@ -156,7 +161,8 @@
      "agentMinutes": 17,
      "activeMinutes": 11
     }
-   }
+   },
+   "allActiveMinutes": 106
   },
   {
    "date": "2026-04-12",
@@ -181,7 +187,8 @@
      "agentMinutes": 27,
      "activeMinutes": 15
     }
-   }
+   },
+   "allActiveMinutes": 135
   },
   {
    "date": "2026-04-13",
@@ -206,7 +213,8 @@
      "agentMinutes": 41,
      "activeMinutes": 27
     }
-   }
+   },
+   "allActiveMinutes": 272
   },
   {
    "date": "2026-04-14",
@@ -231,7 +239,8 @@
      "agentMinutes": 72,
      "activeMinutes": 35
     }
-   }
+   },
+   "allActiveMinutes": 249
   },
   {
    "date": "2026-04-15",
@@ -256,7 +265,8 @@
      "agentMinutes": 75,
      "activeMinutes": 42
     }
-   }
+   },
+   "allActiveMinutes": 326
   },
   {
    "date": "2026-04-16",
@@ -281,7 +291,8 @@
      "agentMinutes": 70,
      "activeMinutes": 33
     }
-   }
+   },
+   "allActiveMinutes": 157
   },
   {
    "date": "2026-04-17",
@@ -306,7 +317,8 @@
      "agentMinutes": 56,
      "activeMinutes": 36
     }
-   }
+   },
+   "allActiveMinutes": 284
   },
   {
    "date": "2026-04-18",
@@ -331,7 +343,8 @@
      "agentMinutes": 24,
      "activeMinutes": 17
     }
-   }
+   },
+   "allActiveMinutes": 121
   },
   {
    "date": "2026-04-19",
@@ -356,7 +369,8 @@
      "agentMinutes": 52,
      "activeMinutes": 25
     }
-   }
+   },
+   "allActiveMinutes": 159
   },
   {
    "date": "2026-04-20",
@@ -381,7 +395,8 @@
      "agentMinutes": 56,
      "activeMinutes": 42
     }
-   }
+   },
+   "allActiveMinutes": 203
   },
   {
    "date": "2026-04-21",
@@ -406,7 +421,8 @@
      "agentMinutes": 30,
      "activeMinutes": 20
     }
-   }
+   },
+   "allActiveMinutes": 211
   },
   {
    "date": "2026-04-22",
@@ -431,7 +447,8 @@
      "agentMinutes": 50,
      "activeMinutes": 39
     }
-   }
+   },
+   "allActiveMinutes": 227
   },
   {
    "date": "2026-04-23",
@@ -456,7 +473,8 @@
      "agentMinutes": 50,
      "activeMinutes": 36
     }
-   }
+   },
+   "allActiveMinutes": 230
   },
   {
    "date": "2026-04-24",
@@ -481,7 +499,8 @@
      "agentMinutes": 98,
      "activeMinutes": 56
     }
-   }
+   },
+   "allActiveMinutes": 309
   },
   {
    "date": "2026-04-25",
@@ -506,7 +525,8 @@
      "agentMinutes": 20,
      "activeMinutes": 13
     }
-   }
+   },
+   "allActiveMinutes": 83
   },
   {
    "date": "2026-04-26",
@@ -531,7 +551,8 @@
      "agentMinutes": 18,
      "activeMinutes": 10
     }
-   }
+   },
+   "allActiveMinutes": 87
   },
   {
    "date": "2026-04-27",
@@ -556,7 +577,8 @@
      "agentMinutes": 64,
      "activeMinutes": 32
     }
-   }
+   },
+   "allActiveMinutes": 227
   },
   {
    "date": "2026-04-28",
@@ -581,7 +603,8 @@
      "agentMinutes": 72,
      "activeMinutes": 58
     }
-   }
+   },
+   "allActiveMinutes": 253
   },
   {
    "date": "2026-04-29",
@@ -606,7 +629,8 @@
      "agentMinutes": 44,
      "activeMinutes": 28
     }
-   }
+   },
+   "allActiveMinutes": 231
   },
   {
    "date": "2026-04-30",
@@ -631,7 +655,8 @@
      "agentMinutes": 64,
      "activeMinutes": 49
     }
-   }
+   },
+   "allActiveMinutes": 151
   },
   {
    "date": "2026-05-01",
@@ -656,7 +681,8 @@
      "agentMinutes": 50,
      "activeMinutes": 40
     }
-   }
+   },
+   "allActiveMinutes": 337
   },
   {
    "date": "2026-05-02",
@@ -681,7 +707,8 @@
      "agentMinutes": 42,
      "activeMinutes": 20
     }
-   }
+   },
+   "allActiveMinutes": 77
   },
   {
    "date": "2026-05-03",
@@ -706,7 +733,8 @@
      "agentMinutes": 29,
      "activeMinutes": 21
     }
-   }
+   },
+   "allActiveMinutes": 84
   },
   {
    "date": "2026-05-04",
@@ -731,7 +759,8 @@
      "agentMinutes": 66,
      "activeMinutes": 48
     }
-   }
+   },
+   "allActiveMinutes": 208
   },
   {
    "date": "2026-05-05",
@@ -756,7 +785,8 @@
      "agentMinutes": 140,
      "activeMinutes": 66
     }
-   }
+   },
+   "allActiveMinutes": 282
   },
   {
    "date": "2026-05-06",
@@ -781,7 +811,8 @@
      "agentMinutes": 116,
      "activeMinutes": 56
     }
-   }
+   },
+   "allActiveMinutes": 351
   },
   {
    "date": "2026-05-07",
@@ -806,7 +837,8 @@
      "agentMinutes": 70,
      "activeMinutes": 35
     }
-   }
+   },
+   "allActiveMinutes": 297
   },
   {
    "date": "2026-05-08",
@@ -831,7 +863,8 @@
      "agentMinutes": 60,
      "activeMinutes": 44
     }
-   }
+   },
+   "allActiveMinutes": 183
   },
   {
    "date": "2026-05-09",
@@ -856,7 +889,8 @@
      "agentMinutes": 32,
      "activeMinutes": 21
     }
-   }
+   },
+   "allActiveMinutes": 108
   },
   {
    "date": "2026-05-10",
@@ -881,7 +915,8 @@
      "agentMinutes": 21,
      "activeMinutes": 13
     }
-   }
+   },
+   "allActiveMinutes": 94
   },
   {
    "date": "2026-05-11",
@@ -906,7 +941,8 @@
      "agentMinutes": 149,
      "activeMinutes": 87
     }
-   }
+   },
+   "allActiveMinutes": 188
   },
   {
    "date": "2026-05-12",
@@ -931,7 +967,8 @@
      "agentMinutes": 88,
      "activeMinutes": 46
     }
-   }
+   },
+   "allActiveMinutes": 198
   },
   {
    "date": "2026-05-13",
@@ -956,7 +993,8 @@
      "agentMinutes": 129,
      "activeMinutes": 81
     }
-   }
+   },
+   "allActiveMinutes": 215
   },
   {
    "date": "2026-05-14",
@@ -981,7 +1019,8 @@
      "agentMinutes": 64,
      "activeMinutes": 37
     }
-   }
+   },
+   "allActiveMinutes": 143
   },
   {
    "date": "2026-05-15",
@@ -1006,7 +1045,8 @@
      "agentMinutes": 130,
      "activeMinutes": 74
     }
-   }
+   },
+   "allActiveMinutes": 236
   },
   {
    "date": "2026-05-16",
@@ -1031,7 +1071,8 @@
      "agentMinutes": 31,
      "activeMinutes": 21
     }
-   }
+   },
+   "allActiveMinutes": 68
   },
   {
    "date": "2026-05-17",
@@ -1056,7 +1097,8 @@
      "agentMinutes": 30,
      "activeMinutes": 20
     }
-   }
+   },
+   "allActiveMinutes": 68
   },
   {
    "date": "2026-05-18",
@@ -1081,7 +1123,8 @@
      "agentMinutes": 92,
      "activeMinutes": 48
     }
-   }
+   },
+   "allActiveMinutes": 205
   },
   {
    "date": "2026-05-19",
@@ -1106,7 +1149,8 @@
      "agentMinutes": 62,
      "activeMinutes": 30
     }
-   }
+   },
+   "allActiveMinutes": 203
   },
   {
    "date": "2026-05-20",
@@ -1131,7 +1175,8 @@
      "agentMinutes": 102,
      "activeMinutes": 47
     }
-   }
+   },
+   "allActiveMinutes": 116
   },
   {
    "date": "2026-05-21",
@@ -1156,7 +1201,8 @@
      "agentMinutes": 89,
      "activeMinutes": 66
     }
-   }
+   },
+   "allActiveMinutes": 129
   },
   {
    "date": "2026-05-22",
@@ -1171,7 +1217,8 @@
      "agentMinutes": 156,
      "activeMinutes": 87
     }
-   }
+   },
+   "allActiveMinutes": 87
   },
   {
    "date": "2026-05-23",
@@ -1196,7 +1243,8 @@
      "agentMinutes": 57,
      "activeMinutes": 31
     }
-   }
+   },
+   "allActiveMinutes": 79
   },
   {
    "date": "2026-05-24",
@@ -1221,7 +1269,8 @@
      "agentMinutes": 46,
      "activeMinutes": 28
     }
-   }
+   },
+   "allActiveMinutes": 90
   },
   {
    "date": "2026-05-25",
@@ -1246,7 +1295,8 @@
      "agentMinutes": 109,
      "activeMinutes": 55
     }
-   }
+   },
+   "allActiveMinutes": 223
   },
   {
    "date": "2026-05-26",
@@ -1271,7 +1321,8 @@
      "agentMinutes": 132,
      "activeMinutes": 63
     }
-   }
+   },
+   "allActiveMinutes": 161
   },
   {
    "date": "2026-05-27",
@@ -1296,7 +1347,8 @@
      "agentMinutes": 179,
      "activeMinutes": 84
     }
-   }
+   },
+   "allActiveMinutes": 153
   },
   {
    "date": "2026-05-28",
@@ -1321,7 +1373,8 @@
      "agentMinutes": 66,
      "activeMinutes": 46
     }
-   }
+   },
+   "allActiveMinutes": 188
   },
   {
    "date": "2026-05-29",
@@ -1346,7 +1399,8 @@
      "agentMinutes": 246,
      "activeMinutes": 125
     }
-   }
+   },
+   "allActiveMinutes": 189
   },
   {
    "date": "2026-05-30",
@@ -1371,7 +1425,8 @@
      "agentMinutes": 85,
      "activeMinutes": 49
     }
-   }
+   },
+   "allActiveMinutes": 127
   },
   {
    "date": "2026-05-31",
@@ -1386,7 +1441,8 @@
      "agentMinutes": 98,
      "activeMinutes": 48
     }
-   }
+   },
+   "allActiveMinutes": 48
   },
   {
    "date": "2026-06-01",
@@ -1411,7 +1467,8 @@
      "agentMinutes": 158,
      "activeMinutes": 101
     }
-   }
+   },
+   "allActiveMinutes": 201
   },
   {
    "date": "2026-06-02",
@@ -1436,7 +1493,8 @@
      "agentMinutes": 118,
      "activeMinutes": 59
     }
-   }
+   },
+   "allActiveMinutes": 167
   },
   {
    "date": "2026-06-03",
@@ -1451,7 +1509,8 @@
      "agentMinutes": 146,
      "activeMinutes": 79
     }
-   }
+   },
+   "allActiveMinutes": 79
   },
   {
    "date": "2026-06-04",
@@ -1476,7 +1535,8 @@
      "agentMinutes": 59,
      "activeMinutes": 45
     }
-   }
+   },
+   "allActiveMinutes": 199
   },
   {
    "date": "2026-06-05",
@@ -1501,7 +1561,8 @@
      "agentMinutes": 111,
      "activeMinutes": 59
     }
-   }
+   },
+   "allActiveMinutes": 176
   },
   {
    "date": "2026-06-06",
@@ -1526,7 +1587,8 @@
      "agentMinutes": 82,
      "activeMinutes": 41
     }
-   }
+   },
+   "allActiveMinutes": 113
   },
   {
    "date": "2026-06-07",
@@ -1551,7 +1613,8 @@
      "agentMinutes": 72,
      "activeMinutes": 38
     }
-   }
+   },
+   "allActiveMinutes": 66
   },
   {
    "date": "2026-06-08",
@@ -1576,7 +1639,8 @@
      "agentMinutes": 236,
      "activeMinutes": 142
     }
-   }
+   },
+   "allActiveMinutes": 237
   },
   {
    "date": "2026-06-09",
@@ -1591,7 +1655,8 @@
      "agentMinutes": 265,
      "activeMinutes": 135
     }
-   }
+   },
+   "allActiveMinutes": 135
   },
   {
    "date": "2026-06-10",
@@ -1616,7 +1681,8 @@
      "agentMinutes": 77,
      "activeMinutes": 60
     }
-   }
+   },
+   "allActiveMinutes": 159
   },
   {
    "date": "2026-06-11",
@@ -1641,7 +1707,8 @@
      "agentMinutes": 92,
      "activeMinutes": 54
     }
-   }
+   },
+   "allActiveMinutes": 192
   },
   {
    "date": "2026-06-12",
@@ -1666,7 +1733,8 @@
      "agentMinutes": 205,
      "activeMinutes": 121
     }
-   }
+   },
+   "allActiveMinutes": 181
   },
   {
    "date": "2026-06-13",
@@ -1691,7 +1759,8 @@
      "agentMinutes": 42,
      "activeMinutes": 28
     }
-   }
+   },
+   "allActiveMinutes": 90
   },
   {
    "date": "2026-06-14",
@@ -1706,7 +1775,8 @@
      "agentMinutes": 59,
      "activeMinutes": 40
     }
-   }
+   },
+   "allActiveMinutes": 40
   },
   {
    "date": "2026-06-15",
@@ -1731,7 +1801,8 @@
      "agentMinutes": 200,
      "activeMinutes": 137
     }
-   }
+   },
+   "allActiveMinutes": 283
   },
   {
    "date": "2026-06-16",
@@ -1756,7 +1827,8 @@
      "agentMinutes": 132,
      "activeMinutes": 99
     }
-   }
+   },
+   "allActiveMinutes": 155
   },
   {
    "date": "2026-06-17",
@@ -1781,7 +1853,8 @@
      "agentMinutes": 192,
      "activeMinutes": 104
     }
-   }
+   },
+   "allActiveMinutes": 244
   },
   {
    "date": "2026-06-18",
@@ -1806,7 +1879,8 @@
      "agentMinutes": 219,
      "activeMinutes": 178
     }
-   }
+   },
+   "allActiveMinutes": 282
   },
   {
    "date": "2026-06-19",
@@ -1831,7 +1905,8 @@
      "agentMinutes": 86,
      "activeMinutes": 61
     }
-   }
+   },
+   "allActiveMinutes": 148
   },
   {
    "date": "2026-06-20",
@@ -1856,7 +1931,8 @@
      "agentMinutes": 91,
      "activeMinutes": 42
     }
-   }
+   },
+   "allActiveMinutes": 91
   },
   {
    "date": "2026-06-21",
@@ -1881,7 +1957,8 @@
      "agentMinutes": 136,
      "activeMinutes": 66
     }
-   }
+   },
+   "allActiveMinutes": 92
   },
   {
    "date": "2026-06-22",
@@ -1906,7 +1983,8 @@
      "agentMinutes": 205,
      "activeMinutes": 127
     }
-   }
+   },
+   "allActiveMinutes": 280
   },
   {
    "date": "2026-06-23",
@@ -1931,7 +2009,8 @@
      "agentMinutes": 144,
      "activeMinutes": 96
     }
-   }
+   },
+   "allActiveMinutes": 173
   },
   {
    "date": "2026-06-24",
@@ -1956,7 +2035,8 @@
      "agentMinutes": 341,
      "activeMinutes": 186
     }
-   }
+   },
+   "allActiveMinutes": 257
   },
   {
    "date": "2026-06-25",
@@ -1981,7 +2061,8 @@
      "agentMinutes": 158,
      "activeMinutes": 94
     }
-   }
+   },
+   "allActiveMinutes": 143
   },
   {
    "date": "2026-06-26",
@@ -2006,7 +2087,8 @@
      "agentMinutes": 146,
      "activeMinutes": 104
     }
-   }
+   },
+   "allActiveMinutes": 161
   },
   {
    "date": "2026-06-27",
@@ -2031,7 +2113,8 @@
      "agentMinutes": 103,
      "activeMinutes": 79
     }
-   }
+   },
+   "allActiveMinutes": 126
   },
   {
    "date": "2026-06-28",
@@ -2046,7 +2129,8 @@
      "agentMinutes": 104,
      "activeMinutes": 74
     }
-   }
+   },
+   "allActiveMinutes": 74
   },
   {
    "date": "2026-06-29",
@@ -2071,7 +2155,8 @@
      "agentMinutes": 280,
      "activeMinutes": 139
     }
-   }
+   },
+   "allActiveMinutes": 181
   },
   {
    "date": "2026-06-30",
@@ -2096,7 +2181,8 @@
      "agentMinutes": 195,
      "activeMinutes": 89
     }
-   }
+   },
+   "allActiveMinutes": 136
   },
   {
    "date": "2026-07-01",
@@ -2121,7 +2207,8 @@
      "agentMinutes": 222,
      "activeMinutes": 120
     }
-   }
+   },
+   "allActiveMinutes": 154
   },
   {
    "date": "2026-07-02",
@@ -2146,7 +2233,8 @@
      "agentMinutes": 208,
      "activeMinutes": 161
     }
-   }
+   },
+   "allActiveMinutes": 241
   },
   {
    "date": "2026-07-03",
@@ -2171,7 +2259,8 @@
      "agentMinutes": 203,
      "activeMinutes": 104
     }
-   }
+   },
+   "allActiveMinutes": 158
   },
   {
    "date": "2026-07-04",
@@ -2196,7 +2285,8 @@
      "agentMinutes": 99,
      "activeMinutes": 68
     }
-   }
+   },
+   "allActiveMinutes": 94
   },
   {
    "date": "2026-07-05",
@@ -2211,7 +2301,8 @@
      "agentMinutes": 139,
      "activeMinutes": 70
     }
-   }
+   },
+   "allActiveMinutes": 70
   },
   {
    "date": "2026-07-06",
@@ -2236,7 +2327,8 @@
      "agentMinutes": 254,
      "activeMinutes": 202
     }
-   }
+   },
+   "allActiveMinutes": 259
   },
   {
    "date": "2026-07-07",
@@ -2261,7 +2353,8 @@
      "agentMinutes": 199,
      "activeMinutes": 161
     }
-   }
+   },
+   "allActiveMinutes": 260
   },
   {
    "date": "2026-07-08",
@@ -2276,7 +2369,8 @@
      "agentMinutes": 462,
      "activeMinutes": 244
     }
-   }
+   },
+   "allActiveMinutes": 244
   },
   {
    "date": "2026-07-09",
@@ -2291,7 +2385,8 @@
      "agentMinutes": 334,
      "activeMinutes": 196
     }
-   }
+   },
+   "allActiveMinutes": 196
   },
   {
    "date": "2026-07-10",
@@ -2316,7 +2411,8 @@
      "agentMinutes": 169,
      "activeMinutes": 119
     }
-   }
+   },
+   "allActiveMinutes": 265
   },
   {
    "date": "2026-07-11",
@@ -2341,7 +2437,8 @@
      "agentMinutes": 148,
      "activeMinutes": 97
     }
-   }
+   },
+   "allActiveMinutes": 125
   },
   {
    "date": "2026-07-12",
@@ -2366,7 +2463,8 @@
      "agentMinutes": 159,
      "activeMinutes": 95
     }
-   }
+   },
+   "allActiveMinutes": 135
   },
   {
    "date": "2026-07-13",
@@ -2391,7 +2489,8 @@
      "agentMinutes": 440,
      "activeMinutes": 256
     }
-   }
+   },
+   "allActiveMinutes": 304
   },
   {
    "date": "2026-07-14",
@@ -2416,7 +2515,8 @@
      "agentMinutes": 253,
      "activeMinutes": 185
     }
-   }
+   },
+   "allActiveMinutes": 237
   },
   {
    "date": "2026-07-15",
@@ -2441,7 +2541,8 @@
      "agentMinutes": 523,
      "activeMinutes": 285
     }
-   }
+   },
+   "allActiveMinutes": 323
   },
   {
    "date": "2026-07-16",
@@ -2466,7 +2567,8 @@
      "agentMinutes": 201,
      "activeMinutes": 124
     }
-   }
+   },
+   "allActiveMinutes": 181
   },
   {
    "date": "2026-07-17",
@@ -2491,7 +2593,8 @@
      "agentMinutes": 185,
      "activeMinutes": 104
     }
-   }
+   },
+   "allActiveMinutes": 146
   },
   {
    "date": "2026-07-18",
@@ -2516,7 +2619,8 @@
      "agentMinutes": 160,
      "activeMinutes": 101
     }
-   }
+   },
+   "allActiveMinutes": 144
   },
   {
    "date": "2026-07-19",
@@ -2541,7 +2645,8 @@
      "agentMinutes": 141,
      "activeMinutes": 87
     }
-   }
+   },
+   "allActiveMinutes": 110
   },
   {
    "date": "2026-07-20",
@@ -2566,7 +2671,8 @@
      "agentMinutes": 313,
      "activeMinutes": 203
     }
-   }
+   },
+   "allActiveMinutes": 263
   },
   {
    "date": "2026-07-21",
@@ -2591,7 +2697,8 @@
      "agentMinutes": 273,
      "activeMinutes": 215
     }
-   }
+   },
+   "allActiveMinutes": 272
   },
   {
    "date": "2026-07-22",
@@ -2606,7 +2713,8 @@
      "agentMinutes": 260,
      "activeMinutes": 148
     }
-   }
+   },
+   "allActiveMinutes": 148
   },
   {
    "date": "2026-07-23",
@@ -2631,7 +2739,8 @@
      "agentMinutes": 415,
      "activeMinutes": 206
     }
-   }
+   },
+   "allActiveMinutes": 287
   },
   {
    "date": "2026-07-24",
@@ -2656,7 +2765,8 @@
      "agentMinutes": 325,
      "activeMinutes": 169
     }
-   }
+   },
+   "allActiveMinutes": 195
   },
   {
    "date": "2026-07-25",
@@ -2671,7 +2781,8 @@
      "agentMinutes": 69,
      "activeMinutes": 37
     }
-   }
+   },
+   "allActiveMinutes": 37
   },
   {
    "date": "2026-07-26",
@@ -2696,7 +2807,8 @@
      "agentMinutes": 149,
      "activeMinutes": 122
     }
-   }
+   },
+   "allActiveMinutes": 157
   },
   {
    "date": "2026-07-27",
@@ -2721,7 +2833,8 @@
      "agentMinutes": 452,
      "activeMinutes": 261
     }
-   }
+   },
+   "allActiveMinutes": 302
   },
   {
    "date": "2026-07-28",
@@ -2736,7 +2849,8 @@
      "agentMinutes": 101,
      "activeMinutes": 80
     }
-   }
+   },
+   "allActiveMinutes": 80
   },
   {
    "date": "2026-07-29",
@@ -2761,7 +2875,8 @@
      "agentMinutes": 561,
      "activeMinutes": 352
     }
-   }
+   },
+   "allActiveMinutes": 393
   },
   {
    "date": "2026-07-30",
@@ -2786,7 +2901,8 @@
      "agentMinutes": 365,
      "activeMinutes": 259
     }
-   }
+   },
+   "allActiveMinutes": 339
   },
   {
    "date": "2026-07-31",
@@ -2811,7 +2927,8 @@
      "agentMinutes": 492,
      "activeMinutes": 261
     }
-   }
+   },
+   "allActiveMinutes": 332
   },
   {
    "date": "2026-08-01",
@@ -2826,7 +2943,8 @@
      "agentMinutes": 40,
      "activeMinutes": 31
     }
-   }
+   },
+   "allActiveMinutes": 31
   },
   {
    "date": "2026-08-02",
@@ -2841,7 +2959,8 @@
      "agentMinutes": 107,
      "activeMinutes": 81
     }
-   }
+   },
+   "allActiveMinutes": 81
   },
   {
    "date": "2026-08-03",
@@ -2866,7 +2985,8 @@
      "agentMinutes": 341,
      "activeMinutes": 160
     }
-   }
+   },
+   "allActiveMinutes": 189
   },
   {
    "date": "2026-08-04",
@@ -2881,7 +3001,8 @@
      "agentMinutes": 482,
      "activeMinutes": 300
     }
-   }
+   },
+   "allActiveMinutes": 300
   },
   {
    "date": "2026-08-05",
@@ -2906,7 +3027,8 @@
      "agentMinutes": 341,
      "activeMinutes": 203
     }
-   }
+   },
+   "allActiveMinutes": 261
   },
   {
    "date": "2026-08-06",
@@ -2931,7 +3053,8 @@
      "agentMinutes": 497,
      "activeMinutes": 290
     }
-   }
+   },
+   "allActiveMinutes": 324
   },
   {
    "date": "2026-08-07",
@@ -2946,7 +3069,8 @@
      "agentMinutes": 725,
      "activeMinutes": 435
     }
-   }
+   },
+   "allActiveMinutes": 435
   },
   {
    "date": "2026-08-08",
@@ -2971,7 +3095,8 @@
      "agentMinutes": 173,
      "activeMinutes": 136
     }
-   }
+   },
+   "allActiveMinutes": 161
   },
   {
    "date": "2026-08-09",
@@ -2996,7 +3121,8 @@
      "agentMinutes": 190,
      "activeMinutes": 148
     }
-   }
+   },
+   "allActiveMinutes": 160
   },
   {
    "date": "2026-08-10",
@@ -3021,7 +3147,8 @@
      "agentMinutes": 260,
      "activeMinutes": 141
     }
-   }
+   },
+   "allActiveMinutes": 167
   },
   {
    "date": "2026-08-11",
@@ -3046,7 +3173,8 @@
      "agentMinutes": 502,
      "activeMinutes": 335
     }
-   }
+   },
+   "allActiveMinutes": 373
   },
   {
    "date": "2026-08-12",
@@ -3071,7 +3199,8 @@
      "agentMinutes": 377,
      "activeMinutes": 228
     }
-   }
+   },
+   "allActiveMinutes": 246
   },
   {
    "date": "2026-08-13",
@@ -3096,7 +3225,8 @@
      "agentMinutes": 387,
      "activeMinutes": 192
     }
-   }
+   },
+   "allActiveMinutes": 235
   },
   {
    "date": "2026-08-14",
@@ -3121,7 +3251,8 @@
      "agentMinutes": 504,
      "activeMinutes": 236
     }
-   }
+   },
+   "allActiveMinutes": 292
   },
   {
    "date": "2026-08-15",
@@ -3146,7 +3277,8 @@
      "agentMinutes": 186,
      "activeMinutes": 131
     }
-   }
+   },
+   "allActiveMinutes": 147
   },
   {
    "date": "2026-08-16",
@@ -3161,7 +3293,8 @@
      "agentMinutes": 111,
      "activeMinutes": 79
     }
-   }
+   },
+   "allActiveMinutes": 79
   },
   {
    "date": "2026-08-17",
@@ -3176,7 +3309,8 @@
      "agentMinutes": 145,
      "activeMinutes": 91
     }
-   }
+   },
+   "allActiveMinutes": 91
   },
   {
    "date": "2026-08-18",
@@ -3201,7 +3335,8 @@
      "agentMinutes": 664,
      "activeMinutes": 315
     }
-   }
+   },
+   "allActiveMinutes": 344
   },
   {
    "date": "2026-08-19",
@@ -3226,7 +3361,8 @@
      "agentMinutes": 248,
      "activeMinutes": 116
     }
-   }
+   },
+   "allActiveMinutes": 144
   },
   {
    "date": "2026-08-20",
@@ -3251,7 +3387,8 @@
      "agentMinutes": 294,
      "activeMinutes": 135
     }
-   }
+   },
+   "allActiveMinutes": 164
   },
   {
    "date": "2026-08-21",
@@ -3276,7 +3413,8 @@
      "agentMinutes": 560,
      "activeMinutes": 265
     }
-   }
+   },
+   "allActiveMinutes": 307
   },
   {
    "date": "2026-08-22",
@@ -3301,7 +3439,8 @@
      "agentMinutes": 275,
      "activeMinutes": 132
     }
-   }
+   },
+   "allActiveMinutes": 145
   },
   {
    "date": "2026-08-23",
@@ -3326,7 +3465,8 @@
      "agentMinutes": 178,
      "activeMinutes": 120
     }
-   }
+   },
+   "allActiveMinutes": 131
   },
   {
    "date": "2026-08-24",
@@ -3351,7 +3491,8 @@
      "agentMinutes": 871,
      "activeMinutes": 489
     }
-   }
+   },
+   "allActiveMinutes": 511
   },
   {
    "date": "2026-08-25",
@@ -3376,7 +3517,8 @@
      "agentMinutes": 300,
      "activeMinutes": 247
     }
-   }
+   },
+   "allActiveMinutes": 279
   },
   {
    "date": "2026-08-26",
@@ -3391,7 +3533,8 @@
      "agentMinutes": 794,
      "activeMinutes": 394
     }
-   }
+   },
+   "allActiveMinutes": 394
   },
   {
    "date": "2026-08-27",
@@ -3416,7 +3559,8 @@
      "agentMinutes": 487,
      "activeMinutes": 348
     }
-   }
+   },
+   "allActiveMinutes": 374
   },
   {
    "date": "2026-08-28",
@@ -3441,7 +3585,8 @@
      "agentMinutes": 579,
      "activeMinutes": 268
     }
-   }
+   },
+   "allActiveMinutes": 300
   },
   {
    "date": "2026-08-29",
@@ -3466,7 +3611,8 @@
      "agentMinutes": 427,
      "activeMinutes": 265
     }
-   }
+   },
+   "allActiveMinutes": 275
   },
   {
    "date": "2026-08-30",
@@ -3491,7 +3637,8 @@
      "agentMinutes": 162,
      "activeMinutes": 113
     }
-   }
+   },
+   "allActiveMinutes": 121
   },
   {
    "date": "2026-08-31",
@@ -3516,7 +3663,8 @@
      "agentMinutes": 972,
      "activeMinutes": 575
     }
-   }
+   },
+   "allActiveMinutes": 608
   },
   {
    "date": "2026-09-01",
@@ -3541,7 +3689,8 @@
      "agentMinutes": 622,
      "activeMinutes": 426
     }
-   }
+   },
+   "allActiveMinutes": 443
   },
   {
    "date": "2026-09-02",
@@ -3556,7 +3705,8 @@
      "agentMinutes": 41,
      "activeMinutes": 20
     }
-   }
+   },
+   "allActiveMinutes": 20
   },
   {
    "date": "2026-09-03",
@@ -3581,7 +3731,8 @@
      "agentMinutes": 551,
      "activeMinutes": 441
     }
-   }
+   },
+   "allActiveMinutes": 470
   },
   {
    "date": "2026-09-04",
@@ -3606,7 +3757,8 @@
      "agentMinutes": 279,
      "activeMinutes": 224
     }
-   }
+   },
+   "allActiveMinutes": 246
   },
   {
    "date": "2026-09-05",
@@ -3621,7 +3773,8 @@
      "agentMinutes": 228,
      "activeMinutes": 172
     }
-   }
+   },
+   "allActiveMinutes": 172
   },
   {
    "date": "2026-09-06",
@@ -3636,7 +3789,8 @@
      "agentMinutes": 105,
      "activeMinutes": 81
     }
-   }
+   },
+   "allActiveMinutes": 81
   },
   {
    "date": "2026-09-07",
@@ -3661,7 +3815,8 @@
      "agentMinutes": 647,
      "activeMinutes": 360
     }
-   }
+   },
+   "allActiveMinutes": 377
   },
   {
    "date": "2026-09-08",
@@ -3676,7 +3831,8 @@
      "agentMinutes": 705,
      "activeMinutes": 526
     }
-   }
+   },
+   "allActiveMinutes": 526
   },
   {
    "date": "2026-09-09",
@@ -3701,7 +3857,8 @@
      "agentMinutes": 832,
      "activeMinutes": 543
     }
-   }
+   },
+   "allActiveMinutes": 560
   },
   {
    "date": "2026-09-10",
@@ -3726,7 +3883,8 @@
      "agentMinutes": 1018,
      "activeMinutes": 478
     }
-   }
+   },
+   "allActiveMinutes": 485
   },
   {
    "date": "2026-09-11",
@@ -3751,7 +3909,8 @@
      "agentMinutes": 753,
      "activeMinutes": 346
     }
-   }
+   },
+   "allActiveMinutes": 359
   },
   {
    "date": "2026-09-12",
@@ -3766,7 +3925,8 @@
      "agentMinutes": 403,
      "activeMinutes": 243
     }
-   }
+   },
+   "allActiveMinutes": 243
   },
   {
    "date": "2026-09-13",
@@ -3781,7 +3941,8 @@
      "agentMinutes": 318,
      "activeMinutes": 172
     }
-   }
+   },
+   "allActiveMinutes": 172
   },
   {
    "date": "2026-09-14",
@@ -3796,7 +3957,8 @@
      "agentMinutes": 338,
      "activeMinutes": 258
     }
-   }
+   },
+   "allActiveMinutes": 258
   },
   {
    "date": "2026-09-15",
@@ -3821,7 +3983,8 @@
      "agentMinutes": 513,
      "activeMinutes": 327
     }
-   }
+   },
+   "allActiveMinutes": 338
   },
   {
    "date": "2026-09-16",
@@ -3846,7 +4009,8 @@
      "agentMinutes": 636,
      "activeMinutes": 296
     }
-   }
+   },
+   "allActiveMinutes": 306
   },
   {
    "date": "2026-09-17",
@@ -3871,7 +4035,8 @@
      "agentMinutes": 670,
      "activeMinutes": 333
     }
-   }
+   },
+   "allActiveMinutes": 347
   },
   {
    "date": "2026-09-18",
@@ -3896,7 +4061,8 @@
      "agentMinutes": 1129,
      "activeMinutes": 537
     }
-   }
+   },
+   "allActiveMinutes": 542
   },
   {
    "date": "2026-09-19",
@@ -3911,7 +4077,8 @@
      "agentMinutes": 385,
      "activeMinutes": 237
     }
-   }
+   },
+   "allActiveMinutes": 237
   },
   {
    "date": "2026-09-20",
@@ -3926,7 +4093,8 @@
      "agentMinutes": 234,
      "activeMinutes": 114
     }
-   }
+   },
+   "allActiveMinutes": 114
   },
   {
    "date": "2026-09-21",
@@ -3941,7 +4109,8 @@
      "agentMinutes": 606,
      "activeMinutes": 337
     }
-   }
+   },
+   "allActiveMinutes": 337
   },
   {
    "date": "2026-09-22",
@@ -3956,7 +4125,8 @@
      "agentMinutes": 957,
      "activeMinutes": 561
     }
-   }
+   },
+   "allActiveMinutes": 561
   },
   {
    "date": "2026-09-23",
@@ -3971,7 +4141,8 @@
      "agentMinutes": 571,
      "activeMinutes": 385
     }
-   }
+   },
+   "allActiveMinutes": 385
   },
   {
    "date": "2026-09-24",
@@ -3986,7 +4157,8 @@
      "agentMinutes": 1132,
      "activeMinutes": 845
     }
-   }
+   },
+   "allActiveMinutes": 845
   },
   {
    "date": "2026-09-25",
@@ -4001,7 +4173,8 @@
      "agentMinutes": 785,
      "activeMinutes": 450
     }
-   }
+   },
+   "allActiveMinutes": 450
   },
   {
    "date": "2026-09-26",
@@ -4016,7 +4189,8 @@
      "agentMinutes": 166,
      "activeMinutes": 128
     }
-   }
+   },
+   "allActiveMinutes": 128
   },
   {
    "date": "2026-09-27",
@@ -4031,7 +4205,8 @@
      "agentMinutes": 310,
      "activeMinutes": 142
     }
-   }
+   },
+   "allActiveMinutes": 142
   },
   {
    "date": "2026-09-28",
@@ -4046,7 +4221,8 @@
      "agentMinutes": 605,
      "activeMinutes": 389
     }
-   }
+   },
+   "allActiveMinutes": 389
   },
   {
    "date": "2026-09-29",
@@ -4061,7 +4237,8 @@
      "agentMinutes": 1125,
      "activeMinutes": 634
     }
-   }
+   },
+   "allActiveMinutes": 634
   },
   {
    "date": "2026-09-30",
@@ -4076,7 +4253,8 @@
      "agentMinutes": 592,
      "activeMinutes": 443
     }
-   }
+   },
+   "allActiveMinutes": 443
   },
   {
    "date": "2026-10-01",
@@ -4091,7 +4269,8 @@
      "agentMinutes": 971,
      "activeMinutes": 772
     }
-   }
+   },
+   "allActiveMinutes": 772
   },
   {
    "date": "2026-10-02",
@@ -4106,7 +4285,8 @@
      "agentMinutes": 756,
      "activeMinutes": 377
     }
-   }
+   },
+   "allActiveMinutes": 377
   }
  ]
 }

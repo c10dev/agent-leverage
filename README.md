@@ -4,6 +4,13 @@ AI 코딩 에이전트(Claude Code, Codex)를 **얼마나 쓰고 있는지**, �
 
 로컬 로그만 읽고, 외부로 아무것도 보내지 않습니다.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.png">
+  <img alt="에이전트 사용량 화면 — 지표 탭, 이전 기간 대비 변화, 추세 차트, 레버리지, 에이전트 비중, 모델, 활동 기록" src="docs/screenshot-light.png">
+</picture>
+
+<sub>스크린샷은 합성 샘플 데이터입니다.</sub>
+
 ## 빠른 시작
 
 ```bash
@@ -13,6 +20,11 @@ npm run dev
 ```
 
 `public/usage.json`이 없으면 합성 샘플 데이터(`public/usage.sample.json`)로 렌더링됩니다.
+
+| URL 옵션 | |
+|---|---|
+| `?sample` | 내 데이터가 있어도 샘플 데이터로 보기 (스크린샷·데모용) |
+| `?theme=light` / `?theme=dark` | OS 설정 대신 테마 고정 |
 
 ## 화면 구성
 
@@ -82,3 +94,7 @@ import { AgentUsage } from "./src";
 ## 다른 에이전트 추가
 
 `collect.mjs`에 `collectXxx()`를 추가해 `bucket(date, "xxx")`에 값을 쌓고, 출력의 `agents`에 표시 이름을 넣으면 컴포넌트는 그대로 동작합니다 (색은 순서대로 배정).
+
+## 라이선스
+
+MIT

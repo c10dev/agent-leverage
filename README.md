@@ -36,8 +36,19 @@ npm run dev
 
 | 에이전트 | 읽는 위치 | 세는 방식 |
 |---|---|---|
-| Claude Code | `~/.claude/projects/**/*.jsonl` | 응답은 `message.id`로 중복 제거, 프롬프트는 `origin.kind === "human"` |
+| Claude Code | `~/.claude/projects/**/*.jsonl` | 응답은 `message.id`, 프롬프트는 레코드 `uuid`로 중복 제거 (이어하기한 세션이 이전 기록을 복사해도 한 번만 셈) |
 | Codex | `~/.codex/sessions/**/*.jsonl` | 토큰은 누적 `token_count`의 차분, 프롬프트는 `task_started` |
+
+### SSH 서버의 로그도 합치기
+
+서버에서 직접 `claude` / `codex`를 실행하면 로그는 서버에만 남습니다. `remotes.txt`(gitignore됨)에 SSH 호스트를 한 줄에 하나씩 적거나 `--remote`로 넘기세요. 서버에 `node`만 있으면 되고, 설치할 것은 없습니다.
+
+```bash
+echo my-server >> remotes.txt
+npm run collect            # 또는: npm run collect -- --remote my-server
+```
+
+스크립트를 SSH로 서버에 흘려보내 `--raw` 모드로 실행하고(서버에 파일을 남기지 않음), 메시지 id·프롬프트 id·파일별 활동 구간만 받아와 합칩니다. 데스크톱 앱의 SSH 세션은 로컬(`~/.claude/projects/ssh-*`)에도 사본이 남는데, 같은 id로 합쳐지므로 두 번 세지 않습니다. 날짜는 서버가 아닌 이 컴퓨터의 시간대를 따릅니다.
 
 출력에는 **일별 집계값과 모델별 응답 수만** 들어갑니다. 프롬프트 내용, 경로, 프로젝트 이름은 포함되지 않습니다. 날짜는 로컬 시간대 기준입니다.
 

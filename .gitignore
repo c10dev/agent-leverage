@@ -2,3 +2,5 @@ node_modules
 dist
 # real usage data stays local — only the synthetic sample is committed
 public/usage.json
+# your SSH hosts
+remotes.txt

@@ -14,6 +14,7 @@ export type Metrics = {
 export type UsageData = {
   generatedAt: string;
   sample?: boolean;
+  sources?: string[]; // where logs were read: "local" and/or SSH host names
   agents: Record<string, string>; // id -> display name
   models: Record<string, Record<string, number>>;
   days: { date: string; agents: Record<string, Metrics> }[];

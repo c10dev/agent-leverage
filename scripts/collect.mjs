@@ -1,87 +1,25 @@
 #!/usr/bin/env node
-// Scans local AI agent logs and writes a per-day usage summary.
-//   node scripts/collect.mjs [--out public/usage.json]
+// Scans AI agent logs on this machine (and optionally on SSH hosts) and writes a per-day usage summary.
+//   node scripts/collect.mjs [--out public/usage.json] [--remote <ssh-host>]... [--no-local]
+// SSH hosts can also be listed in remotes.txt.
 // Sources: Claude Code (~/.claude/projects), Codex (~/.codex/sessions).
-// Only aggregates leave this script — no prompt text, paths, or project names.
+//
+// Remote hosts run this same script over SSH in --raw mode (needs `node` there) and send back
+// de-duplicatable events: message ids, prompt ids, and per-file activity runs. That way a session
+// the desktop app mirrors locally (~/.claude/projects/ssh-*) and that also lives on the server is
+// counted once. Only aggregates reach the output — no prompt text, paths, or project names.
 
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import readline from "node:readline";
+import { spawn } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
-const HOME = os.homedir();
-const IDLE_GAP_MS = 5 * 60 * 1000; // gaps longer than this don't count as active time
+const IDLE_GAP_MS = 5 * 60 * 1000; // gaps longer than this end an activity run
+const AGENTS = { "claude-code": "Claude Code", codex: "Codex" };
 
-const outArg = process.argv.indexOf("--out");
-const OUT = outArg > -1 ? process.argv[outArg + 1] : "public/usage.json";
-
-// daily[date][agent] -> metrics
-const daily = {};
-const models = {}; // models[agent][model] -> turns
-
-function dayKey(ts) {
-  const d = new Date(ts);
-  const p = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
-}
-
-function bucket(date, agent) {
-  daily[date] ??= {};
-  return (daily[date][agent] ??= {
-    sessions: 0,
-    prompts: 0,
-    turns: 0,
-    inputTokens: 0,
-    outputTokens: 0,
-    cacheTokens: 0,
-    agentMinutes: 0, // summed per session — parallel sessions and subagents stack
-    activeMinutes: 0, // wall clock — overlapping sessions merged
-  });
-}
-
-function bumpModel(agent, model) {
-  if (!model || model.startsWith("<")) return;
-  models[agent] ??= {};
-  models[agent][model] = (models[agent][model] ?? 0) + 1;
-}
-
-// Busy intervals: gaps between consecutive events in a session, ignoring idle gaps.
-const intervals = {}; // intervals[agent] -> [start, end][]
-
-function addActiveTime(agent, timestamps) {
-  timestamps.sort((a, b) => a - b);
-  for (let i = 1; i < timestamps.length; i++) {
-    const gap = timestamps[i] - timestamps[i - 1];
-    if (gap <= 0 || gap > IDLE_GAP_MS) continue;
-    bucket(dayKey(timestamps[i]), agent).agentMinutes += gap / 60000;
-    (intervals[agent] ??= []).push([timestamps[i - 1], timestamps[i]]);
-  }
-}
-
-function mergeWallClock() {
-  for (const [agent, list] of Object.entries(intervals)) {
-    list.sort((a, b) => a[0] - b[0]);
-    let [s, e] = list[0];
-    const flush = () => {
-      // split at local midnight so a run through the night counts toward both days
-      for (let a = s; a < e; ) {
-        const next = new Date(a);
-        next.setHours(24, 0, 0, 0);
-        const b = Math.min(e, next.getTime());
-        bucket(dayKey(a), agent).activeMinutes += (b - a) / 60000;
-        a = b;
-      }
-    };
-    for (const [a, b] of list.slice(1)) {
-      if (a <= e) e = Math.max(e, b);
-      else {
-        flush();
-        [s, e] = [a, b];
-      }
-    }
-    flush();
-  }
-}
+// ---------- scanning (runs locally and, in --raw mode, on remote hosts) ----------
 
 function* walk(dir) {
   let entries;
@@ -109,6 +47,18 @@ async function* lines(file) {
   }
 }
 
+/** Collapse event timestamps into [start, end] runs, splitting on idle gaps. */
+function toRuns(stamps) {
+  stamps.sort((a, b) => a - b);
+  const runs = [];
+  for (const t of stamps) {
+    const last = runs.at(-1);
+    if (last && t - last[1] <= IDLE_GAP_MS) last[1] = t;
+    else runs.push([t, t]);
+  }
+  return runs;
+}
+
 function isHumanPrompt(rec) {
   if (rec.type !== "user" || rec.isSidechain || rec.isMeta) return false;
   if (rec.origin) return rec.origin.kind === "human";
@@ -117,98 +67,227 @@ function isHumanPrompt(rec) {
   return Array.isArray(c) && c.some((b) => b.type === "text") && !c.some((b) => b.type === "tool_result");
 }
 
-async function collectClaude() {
-  const root = path.join(HOME, ".claude", "projects");
-  const seenMsg = new Set();
-  const sessionDays = new Set();
-  let files = 0;
+const emptySource = () => ({ msgs: {}, prompts: {}, files: {} });
+
+// msgs[id] = [ts, input, output, cacheRead, model]; prompts[id] = ts; files[key] = { sid, main, runs }
+
+async function scanClaude(src) {
+  const root = path.join(os.homedir(), ".claude", "projects");
   for (const file of walk(root)) {
-    files++;
     const stamps = [];
+    let sid = null;
+    let main = true;
     for await (const rec of lines(file)) {
-      if (!rec.timestamp) continue;
+      if (rec.type !== "user" && rec.type !== "assistant") continue;
       const ts = Date.parse(rec.timestamp);
       if (Number.isNaN(ts)) continue;
-      const date = dayKey(ts);
-
-      if (rec.type === "user" || rec.type === "assistant") {
-        stamps.push(ts);
-        if (rec.sessionId && !rec.isSidechain && !sessionDays.has(`${rec.sessionId}|${date}`)) {
-          sessionDays.add(`${rec.sessionId}|${date}`);
-          bucket(date, "claude-code").sessions++;
-        }
-      }
-      if (isHumanPrompt(rec)) bucket(date, "claude-code").prompts++;
-
+      stamps.push(ts);
+      sid ??= rec.sessionId;
+      if (rec.isSidechain) main = false;
+      if (isHumanPrompt(rec) && rec.uuid) src.prompts[rec.uuid] = ts;
       const msg = rec.message;
-      if (rec.type === "assistant" && msg?.usage && msg.id && !seenMsg.has(msg.id)) {
-        // one API response is split across several lines sharing an id
-        seenMsg.add(msg.id);
-        if (msg.model === "<synthetic>") continue;
+      // one API response is split across several lines sharing an id; resumed sessions copy them too
+      if (rec.type === "assistant" && msg?.usage && msg.id && msg.model !== "<synthetic>") {
         const u = msg.usage;
-        const b = bucket(date, "claude-code");
-        b.turns++;
-        b.inputTokens += (u.input_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0);
-        b.cacheTokens += u.cache_read_input_tokens ?? 0;
-        b.outputTokens += u.output_tokens ?? 0;
-        bumpModel("claude-code", msg.model);
+        src.msgs[msg.id] ??= [
+          ts,
+          (u.input_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0),
+          u.output_tokens ?? 0,
+          u.cache_read_input_tokens ?? 0,
+          msg.model,
+        ];
       }
     }
-    addActiveTime("claude-code", stamps);
+    // key by session + file name so the desktop app's local mirror of an SSH session collapses with the server copy
+    if (sid && stamps.length) src.files[`${sid}/${path.basename(file)}`] = { sid, main, runs: toRuns(stamps) };
   }
-  return files;
 }
 
-async function collectCodex() {
-  const root = path.join(HOME, ".codex", "sessions");
-  let files = 0;
+async function scanCodex(src) {
+  const root = path.join(os.homedir(), ".codex", "sessions");
   for (const file of walk(root)) {
-    files++;
+    const key = path.basename(file, ".jsonl");
     const stamps = [];
     let prev = null; // previous cumulative token totals
     let model = null;
-    let subagent = false;
-    const days = new Set();
+    let main = true;
+    let n = 0;
     for await (const rec of lines(file)) {
-      if (!rec.timestamp) continue;
       const ts = Date.parse(rec.timestamp);
       if (Number.isNaN(ts)) continue;
-      const date = dayKey(ts);
       const p = rec.payload ?? {};
-
-      if (rec.type === "session_meta") subagent = Boolean(p.source?.subagent);
+      n++;
+      if (rec.type === "session_meta" && p.source?.subagent) main = false;
       if (rec.type === "turn_context" && p.model) model = p.model;
-      if (rec.type === "response_item" || rec.type === "event_msg") {
-        stamps.push(ts);
-        if (!subagent && !days.has(date)) {
-          days.add(date);
-          bucket(date, "codex").sessions++;
-        }
-      }
-      if (p.type === "task_started" && !subagent) bucket(date, "codex").prompts++;
+      if (rec.type === "response_item" || rec.type === "event_msg") stamps.push(ts);
+      if (p.type === "task_started" && main) src.prompts[`${key}:${n}`] = ts;
       if (p.type === "token_count" && p.info?.total_token_usage) {
         const t = p.info.total_token_usage;
         // cumulative counter; the same snapshot is often re-emitted
         if (prev && t.total_tokens === prev.total_tokens) continue;
         const d = (k) => Math.max(0, (t[k] ?? 0) - (prev?.[k] ?? 0));
-        const b = bucket(date, "codex");
-        b.turns++;
-        b.inputTokens += d("input_tokens") - d("cached_input_tokens");
-        b.cacheTokens += d("cached_input_tokens");
-        b.outputTokens += d("output_tokens");
-        bumpModel("codex", model);
+        src.msgs[`${key}:${n}`] = [ts, d("input_tokens") - d("cached_input_tokens"), d("output_tokens"), d("cached_input_tokens"), model];
         prev = t;
       }
     }
-    addActiveTime("codex", stamps);
+    if (stamps.length) src.files[key] = { sid: key, main, runs: toRuns(stamps) };
   }
-  return files;
+}
+
+async function scanAll() {
+  const out = { "claude-code": emptySource(), codex: emptySource() };
+  await scanClaude(out["claude-code"]);
+  await scanCodex(out.codex);
+  return out;
+}
+
+// ---------- raw mode: what a remote host sends back ----------
+
+if (process.argv.includes("--raw")) {
+  const json = JSON.stringify(await scanAll());
+  // stdout to a pipe is async — wait for the flush before exiting
+  await new Promise((resolve) => process.stdout.write(json, resolve));
+  process.exit(0);
+}
+
+// ---------- local driver ----------
+
+function argList(flag) {
+  const out = [];
+  process.argv.forEach((a, i) => a === flag && process.argv[i + 1] && out.push(process.argv[i + 1]));
+  return out;
+}
+
+const OUT = argList("--out").at(-1) ?? "public/usage.json";
+// hosts from --remote, plus remotes.txt (one SSH host per line, gitignored)
+const REMOTES = [
+  ...new Set([
+    ...argList("--remote"),
+    ...(fs.existsSync("remotes.txt") ? fs.readFileSync("remotes.txt", "utf8").split("\n") : [])
+      .map((l) => l.replace(/#.*/, "").trim())
+      .filter(Boolean),
+  ]),
+];
+
+function scanRemote(host) {
+  const script = fs.readFileSync(fileURLToPath(import.meta.url));
+  return new Promise((resolve, reject) => {
+    const ssh = spawn("ssh", ["-C", "-o", "BatchMode=yes", host, "node --input-type=module - --raw"]);
+    const chunks = [];
+    let err = "";
+    ssh.stdout.on("data", (c) => chunks.push(c));
+    ssh.stderr.on("data", (c) => (err += c));
+    ssh.on("close", (code) => {
+      if (code !== 0) return reject(new Error(`${host}: ssh exited ${code}\n${err.trim()}`));
+      try {
+        resolve(JSON.parse(Buffer.concat(chunks).toString()));
+      } catch {
+        reject(new Error(`${host}: couldn't parse output\n${err.trim()}`));
+      }
+    });
+    ssh.stdin.end(script);
+  });
+}
+
+function dayKey(ts) {
+  const d = new Date(ts);
+  const p = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+
+/** Split [s, e] at local midnights. */
+function* byDay(s, e) {
+  for (let a = s; a < e; ) {
+    const next = new Date(a);
+    next.setHours(24, 0, 0, 0);
+    const b = Math.min(e, next.getTime());
+    yield [dayKey(a), b - a];
+    a = b;
+  }
 }
 
 const started = Date.now();
-const [claudeFiles, codexFiles] = [await collectClaude(), await collectCodex()];
+const sources = [];
+const labels = [];
+const pending = [];
+if (!process.argv.includes("--no-local")) pending.push(scanAll().then((s) => ["local", s]));
+for (const host of REMOTES)
+  pending.push(
+    scanRemote(host).then(
+      (s) => [host, s],
+      (e) => (console.error(`skipped ${e.message}`), null),
+    ),
+  );
+for (const r of await Promise.all(pending))
+  if (r) {
+    labels.push(r[0]);
+    sources.push(r[1]);
+  }
 
-mergeWallClock();
+// merge by id — duplicates across machines collapse here
+const merged = {};
+for (const agent of Object.keys(AGENTS)) {
+  merged[agent] = emptySource();
+  for (const s of sources) {
+    Object.assign(merged[agent].msgs, s[agent]?.msgs);
+    Object.assign(merged[agent].prompts, s[agent]?.prompts);
+    Object.assign(merged[agent].files, s[agent]?.files);
+  }
+}
+
+// daily[date][agent] -> metrics
+const daily = {};
+const models = {};
+const bucket = (date, agent) =>
+  ((daily[date] ??= {})[agent] ??= {
+    sessions: 0,
+    prompts: 0,
+    turns: 0,
+    inputTokens: 0,
+    outputTokens: 0,
+    cacheTokens: 0,
+    agentMinutes: 0, // summed per session — parallel sessions and subagents stack
+    activeMinutes: 0, // wall clock — overlapping sessions merged
+  });
+
+for (const [agent, src] of Object.entries(merged)) {
+  for (const [ts, input, output, cache, model] of Object.values(src.msgs)) {
+    const b = bucket(dayKey(ts), agent);
+    b.turns++;
+    b.inputTokens += input;
+    b.outputTokens += output;
+    b.cacheTokens += cache;
+    if (model && !model.startsWith("<")) (models[agent] ??= {})[model] = (models[agent][model] ?? 0) + 1;
+  }
+  for (const ts of Object.values(src.prompts)) bucket(dayKey(ts), agent).prompts++;
+
+  const sessionDays = new Set();
+  const allRuns = [];
+  for (const f of Object.values(src.files)) {
+    for (const [s, e] of f.runs) {
+      allRuns.push([s, e]);
+      for (const [date, ms] of byDay(s, e)) bucket(date, agent).agentMinutes += ms / 60000;
+      if (f.main) sessionDays.add(`${f.sid}|${dayKey(s)}`).add(`${f.sid}|${dayKey(e)}`);
+    }
+  }
+  for (const k of sessionDays) bucket(k.split("|")[1], agent).sessions++;
+
+  // wall clock: union of every run across sessions (and machines)
+  allRuns.sort((a, b) => a[0] - b[0]);
+  let cur = null;
+  const flush = () => {
+    if (cur) for (const [date, ms] of byDay(cur[0], cur[1])) bucket(date, agent).activeMinutes += ms / 60000;
+  };
+  for (const [s, e] of allRuns) {
+    if (cur && s <= cur[1]) cur[1] = Math.max(cur[1], e);
+    else {
+      flush();
+      cur = [s, e];
+    }
+  }
+  flush();
+}
+
 for (const agents of Object.values(daily))
   for (const m of Object.values(agents)) {
     m.agentMinutes = Math.round(m.agentMinutes);
@@ -218,14 +297,16 @@ for (const agents of Object.values(daily))
 const days = Object.keys(daily).sort();
 const out = {
   generatedAt: new Date().toISOString(),
-  agents: { "claude-code": "Claude Code", codex: "Codex" },
+  sources: labels,
+  agents: AGENTS,
   models,
   days: days.map((date) => ({ date, agents: daily[date] })),
 };
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
+const count = (a) => Object.keys(merged[a].files).length;
 console.log(
-  `scanned ${claudeFiles} Claude Code + ${codexFiles} Codex logs in ${((Date.now() - started) / 1000).toFixed(1)}s` +
-    ` → ${OUT} (${days[0]} … ${days.at(-1)}, ${days.length} days)`,
+  `sources: ${labels.join(", ")} · ${count("claude-code")} Claude Code + ${count("codex")} Codex logs (deduped)` +
+    ` in ${((Date.now() - started) / 1000).toFixed(1)}s → ${OUT} (${days[0]} … ${days.at(-1)}, ${days.length} days)`,
 );

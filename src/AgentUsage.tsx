@@ -65,6 +65,11 @@ export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "
           <p className="au-sub">
             {fmtDate(curStart)} – {fmtDate(end)} · 이전 {range}일({fmtDate(prevStart)} – {fmtDate(addDays(curStart, -1))})과 비교
             {data.sample && <span className="au-badge">샘플 데이터</span>}
+            {data.sources && (
+              <span className="au-badge" title="로그를 읽은 곳">
+                {data.sources.map((s) => (s === "local" ? "이 컴퓨터" : s)).join(" + ")}
+              </span>
+            )}
           </p>
         </div>
       </header>

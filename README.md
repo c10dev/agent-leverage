@@ -7,13 +7,13 @@
 How many hours do your AI coding agents work for every hour you do, and how does that compare with your past self?
 A React dashboard for Claude Code and Codex, built from the logs already on your machine.
 
-[![Live demo](https://img.shields.io/badge/live_demo-open-111111?style=flat-square)](https://chaehy5665.github.io/agent-leverage/)
+[![Live demo](https://img.shields.io/badge/live_demo-open-111111?style=flat-square)](https://c10dev.github.io/agent-leverage/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-111111?style=flat-square)](LICENSE)
 ![React 19](https://img.shields.io/badge/React-19-111111?style=flat-square&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-7-111111?style=flat-square&logo=typescript)
 ![Vite](https://img.shields.io/badge/Vite-8-111111?style=flat-square&logo=vite)
 
-[Live demo](https://chaehy5665.github.io/agent-leverage/) · [Quick start](#quick-start) · [Metrics](#metrics) · [Privacy](#privacy)
+[Live demo](https://c10dev.github.io/agent-leverage/) · [Quick start](#quick-start) · [Metrics](#metrics) · [Privacy](#privacy)
 
 </div>
 
@@ -102,7 +102,7 @@ Color is used only to identify agents (Claude Code orange, Codex blue). Everythi
 
 - `usage.json` holds only daily/hourly aggregates and response counts per model: no prompt text, paths, or project names.
 - `public/usage.json` and `remotes.txt` are gitignored.
-- The [live demo](https://chaehy5665.github.io/agent-leverage/) is built by GitHub Actions from the repo, so it can only see the synthetic sample. The build also drops `usage.json` from its output, as a second guard.
+- The [live demo](https://c10dev.github.io/agent-leverage/) is built by GitHub Actions from the repo, so it can only see the synthetic sample. The build also drops `usage.json` from its output, as a second guard.
 - Nothing is sent anywhere. The collector reads files locally, or on your own SSH hosts.
 
 ## Collecting from SSH servers

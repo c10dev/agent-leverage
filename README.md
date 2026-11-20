@@ -74,6 +74,7 @@ flowchart LR
 | **Prompts** | Requests you sent yourself |
 | **Sessions** | Conversations active on a day |
 | **Tokens** | Input + output (cache reads excluded) |
+| **Cost** | Claude Code requests priced at API list price (USD). Models missing from `scripts/prices.json` are left out. It is not your subscription bill. |
 | **Leverage** | Agent hours ÷ your working time |
 
 **Your working time is an estimate.** Logs only record when you sent a prompt, so each prompt counts the 2 minutes before it, for reading results and writing. A next prompt within 15 minutes joins the stretch, and using two agents at once still counts as your one hour. Tune it with `PROMPT_LEAD_MS` and `PROMPT_JOIN_MS` in `scripts/collect.mjs`.
@@ -98,9 +99,35 @@ Color is used only to identify agents (Claude Code orange, Codex blue). Everythi
 
 </details>
 
+## Cache leaks
+
+A *leak* is context that was already in the prompt cache and got written again. The collector compares each request with the one before it in the same stream (a session, or one subagent). Claude Code only.
+
+A request is a miss when both hold:
+
+- It re-processed more than 5% of what the previous request had cached.
+- It re-processed at least 2,000 tokens.
+
+`rewritten = max(0, min(cached(prev), prompt(cur)) - cur.cacheRead)`, where `prompt = input + cache writes + cache reads` and `cached = cache writes + cache reads`.
+
+Each miss gets the first rule that fits:
+
+| Rule | When |
+|---|---|
+| `proxied` | The record has no `requestId`, so the request went through a proxy. Outside the total. |
+| `compaction` / `expectedRebuild` | A compaction happened between the two requests. `compaction` if the cache had expired, `expectedRebuild` if it was still warm. `expectedRebuild` is outside the total. |
+| `modelSwitch` | The model changed. |
+| `coldCache` | The gap was longer than the cache TTL (5 minutes, or 1 hour after a 1-hour write). |
+| `upgrade` | The Claude Code version changed. |
+| `unexplained` | None of the above. |
+
+Cost of a leak: `rewritten × (write multiplier − read multiplier) × input price`. The card shows count, tokens, and USD per rule for the current range. Rules outside the total are counted in a footnote.
+
+**Fix or add prices.** Edit `scripts/prices.json` (USD per million tokens). A model key matches a model name exactly, or with a trailing `-YYYYMMDD`. Nothing is guessed from similar names. Models without a price count as unpriced tokens, and the page footer lists how many.
+
 ## Privacy
 
-- `usage.json` holds only daily/hourly aggregates and response counts per model: no prompt text, paths, or project names.
+- `usage.json` holds only daily/hourly aggregates and response counts per model: no prompt text, paths, or project names. Cost and leaks are daily totals too.
 - `public/usage.json` and `remotes.txt` are gitignored.
 - The [live demo](https://chaehy5665.github.io/agent-leverage/) is built by GitHub Actions from the repo, so it can only see the synthetic sample. The build also drops `usage.json` from its output, as a second guard.
 - Nothing is sent anywhere. The collector reads files locally, or on your own SSH hosts.

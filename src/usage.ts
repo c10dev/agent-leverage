@@ -1,5 +1,10 @@
 // Data shape written by scripts/collect.mjs, plus the period math and copy the component needs.
 
+export type LeakRule = "coldCache" | "modelSwitch" | "compaction" | "upgrade" | "unexplained" | "expectedRebuild" | "proxied";
+export const LEAK_RULES: LeakRule[] = ["coldCache", "modelSwitch", "compaction", "upgrade", "unexplained"]; // counted in the leak total
+export const OUTSIDE_LEAK: LeakRule[] = ["expectedRebuild", "proxied"]; // counted, but left out of the total
+export type LeakStat = { count: number; tokens: number; usd: number };
+
 export type Metrics = {
   sessions: number;
   prompts: number;
@@ -10,6 +15,9 @@ export type Metrics = {
   agentMinutes: number;
   activeMinutes: number;
   humanMinutes?: number; // my time at the keyboard, estimated from prompt times
+  costUsd?: number; // list-price USD of requests that have a price
+  unpricedTokens?: number; // tokens of requests with no price
+  leaks?: Partial<Record<LeakRule, LeakStat>>; // Claude Code only; days with a leak
 };
 
 export type UsageData = {
@@ -18,6 +26,7 @@ export type UsageData = {
   sources?: string[]; // where logs were read: "local" and/or SSH host names
   agents: Record<string, string>; // id -> display name
   models: Record<string, Record<string, number>>;
+  pricing?: { source: string | null; unpriced: Record<string, number> }; // models with no price -> tokens, all time
   /** all*Minutes: across every agent, overlaps counted once */
   days: { date: string; agents: Record<string, Metrics>; allActiveMinutes?: number; allHumanMinutes?: number; hourly?: DayHourly }[];
 };
@@ -30,10 +39,11 @@ export type Hourly = {
   prompts: number[];
   sessions: number[];
   tokens: number[];
+  costUsd?: number[];
 };
 export type DayHourly = { agents: Record<string, Hourly>; allActiveMinutes: number[]; allHumanMinutes?: number[] };
 
-export type MetricKey = "activeHours" | "agentHours" | "prompts" | "sessions" | "tokens" | "humanHours";
+export type MetricKey = "activeHours" | "agentHours" | "prompts" | "sessions" | "tokens" | "cost" | "humanHours";
 
 type MetricInfo = {
   label: string;
@@ -67,6 +77,11 @@ export const METRICS: Record<MetricKey, MetricInfo> = {
     unit: "토큰",
     hint: "입력 + 출력 토큰 (캐시 읽기 제외)",
   },
+  cost: {
+    label: "비용",
+    unit: "달러",
+    hint: "API 정가로 환산한 값. 가격표(scripts/prices.json)에 없는 모델은 빼고, 구독 요금과는 다릅니다.",
+  },
   humanHours: {
     label: "내 작업 시간",
     unit: "시간",
@@ -75,7 +90,7 @@ export const METRICS: Record<MetricKey, MetricInfo> = {
 };
 
 /** Metrics shown as tabs. humanHours only feeds the leverage card. */
-export const METRIC_KEYS: MetricKey[] = ["activeHours", "agentHours", "prompts", "sessions", "tokens"];
+export const METRIC_KEYS: MetricKey[] = ["activeHours", "agentHours", "prompts", "sessions", "tokens", "cost"];
 
 export function metricValue(m: Metrics | undefined, key: MetricKey): number {
   if (!m) return 0;
@@ -90,6 +105,8 @@ export function metricValue(m: Metrics | undefined, key: MetricKey): number {
       return m.sessions;
     case "tokens":
       return m.inputTokens + m.outputTokens;
+    case "cost":
+      return m.costUsd ?? 0;
     case "humanHours":
       return (m.humanMinutes ?? 0) / 60;
   }
@@ -160,7 +177,11 @@ function hourValue(h: Hourly | undefined, key: MetricKey, i: number): number {
       return h.agentMinutes[i] / 60;
     case "humanHours":
       return (h.humanMinutes?.[i] ?? 0) / 60;
-    default:
+    case "cost":
+      return h.costUsd?.[i] ?? 0;
+    case "prompts":
+    case "sessions":
+    case "tokens":
       return h[key][i];
   }
 }
@@ -224,12 +245,15 @@ export function describeChange(cur: number, prev: number): Change {
 const compact = new Intl.NumberFormat("ko-KR", { notation: "compact", maximumFractionDigits: 1 });
 const plain1 = new Intl.NumberFormat("ko-KR", { maximumFractionDigits: 1 });
 const plain0 = new Intl.NumberFormat("ko-KR", { maximumFractionDigits: 0 });
+const usd2 = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const usd0 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 
 const isHours = (key: MetricKey) => key === "activeHours" || key === "agentHours" || key === "humanHours";
 
 /** Compact value for axes, chips and tooltips: "12.5h", "4,347", "7.7억". */
 export function fmt(v: number, key: MetricKey): string {
   if (isHours(key)) return `${plain1.format(v)}h`;
+  if (key === "cost") return v < 100 ? `$${usd2.format(v)}` : `$${usd0.format(v)}`;
   return v >= 10000 ? compact.format(v) : plain0.format(v);
 }
 

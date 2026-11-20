@@ -71,9 +71,12 @@ function isHumanPrompt(rec) {
   return Array.isArray(c) && c.some((b) => b.type === "text") && !c.some((b) => b.type === "tool_result");
 }
 
-const emptySource = () => ({ msgs: {}, prompts: {}, files: {} });
+const emptySource = () => ({ msgs: {}, prompts: {}, files: {}, compacts: {} });
 
-// msgs[id] = [ts, input, output, cacheRead, model]; prompts[id] = ts; files[key] = { sid, main, runs }
+// msgs[id] = [ts, input, output, cacheRead, model, w5m, w1h, stream, speed, geo, proxied, version]
+//   input = input_tokens + cache_creation; w5m + w1h = cache_creation split by TTL; stream = one request chain
+//   (session id, or session:agent for subagents); proxied = 1 when the record has no requestId. Codex stops at model.
+// prompts[id] = ts; files[key] = { sid, main, runs }; compacts[key] = [sessionId, ts]
 
 async function scanClaude(src) {
   const root = path.join(os.homedir(), ".claude", "projects");
@@ -82,6 +85,10 @@ async function scanClaude(src) {
     let sid = null;
     let main = true;
     for await (const rec of lines(file)) {
+      if (rec.type === "system" && rec.subtype === "compact_boundary" && !rec.isSidechain && rec.sessionId) {
+        const at = Date.parse(rec.timestamp);
+        if (!Number.isNaN(at)) src.compacts[`${rec.sessionId}|${rec.timestamp}`] = [rec.sessionId, at];
+      }
       if (rec.type !== "user" && rec.type !== "assistant") continue;
       const ts = Date.parse(rec.timestamp);
       if (Number.isNaN(ts)) continue;
@@ -93,12 +100,22 @@ async function scanClaude(src) {
       // one API response is split across several lines sharing an id; resumed sessions copy them too
       if (rec.type === "assistant" && msg?.usage && msg.id && msg.model !== "<synthetic>") {
         const u = msg.usage;
+        const created = u.cache_creation_input_tokens ?? 0;
+        const w1h = Math.min(created, u.cache_creation?.ephemeral_1h_input_tokens || 0);
+        const stream = rec.isSidechain ? `${rec.sessionId}:${rec.agentId ?? path.basename(file, ".jsonl")}` : rec.sessionId;
         src.msgs[msg.id] ??= [
           ts,
-          (u.input_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0),
+          (u.input_tokens ?? 0) + created,
           u.output_tokens ?? 0,
           u.cache_read_input_tokens ?? 0,
           msg.model,
+          created - w1h,
+          w1h,
+          stream ?? null,
+          u.speed ?? null,
+          u.inference_geo ?? null,
+          rec.requestId ? 0 : 1,
+          rec.version ?? null,
         ];
       }
     }
@@ -217,6 +234,91 @@ function startOfDay(ts) {
   return d.getTime();
 }
 
+// ---------- pricing and cache leaks (local driver only; remote hosts just send the raw fields) ----------
+
+const MTOK = 1e6;
+const MISS_SHARE = 0.05; // a miss re-processes more than 5% of what the cache held ...
+const MISS_MIN_TOKENS = 2000; // ... and at least this many tokens
+const TTL_5M = 5 * 60_000;
+const TTL_1H = 60 * 60_000;
+const r4 = (v) => Math.round(v * 1e4) / 1e4;
+
+const priceTable = JSON.parse(fs.readFileSync(new URL("./prices.json", import.meta.url), "utf8"));
+
+/** Model key equal to a table key, or a table key plus -YYYYMMDD. No fuzzy matching. */
+function modelPrice(table, model) {
+  if (!model) return null;
+  const exact = table.models?.[model];
+  if (exact) return exact;
+  const dated = /^(.*)-\d{8}$/.exec(model);
+  return dated ? (table.models?.[dated[1]] ?? null) : null;
+}
+
+/** Per-token rate for one request, or null when it has no price (unpriced). */
+function rateOf(table, { model, speed, geo, promptTokens = 0 }) {
+  const p = modelPrice(table, model);
+  if (!p || !Number.isFinite(table.writeMult?.["5m"]) || !Number.isFinite(table.writeMult?.["1h"])) return null;
+  let mult = 1;
+  if (speed && speed !== "standard") {
+    const m = p.multipliers?.[`speed:${speed}`] ?? table.multipliers?.[`speed:${speed}`];
+    if (m === undefined) return null;
+    mult *= m;
+  }
+  if (geo) mult *= p.multipliers?.[`inferenceGeo:${geo}`] ?? table.multipliers?.[`inferenceGeo:${geo}`] ?? 1;
+  if (p.longContext && promptTokens > p.longContext.over) mult *= p.longContext.mult;
+  return { pIn: (p.in * mult) / MTOK, pOut: (p.out * mult) / MTOK, readMult: p.readMult, write5m: table.writeMult["5m"], write1h: table.writeMult["1h"] };
+}
+
+/** Read a message tuple into named fields. Codex tuples stop at model, so the tail defaults. */
+function reqOf(t) {
+  const [ts, input, output, cacheRead, model, w5m = 0, w1h = 0, stream = null, speed = null, geo = null, proxied = 0, version = null] = t;
+  const inputRaw = input - w5m - w1h;
+  return { ts, inputRaw, w5m, w1h, cacheRead, output, model, stream, speed, geo, proxied, version, prompt: inputRaw + w5m + w1h + cacheRead };
+}
+
+const cachedOf = (r) => r.w5m + r.w1h + r.cacheRead;
+
+/** USD for one request at a given rate. */
+const costOf = (r, rate) =>
+  r.inputRaw * rate.pIn + r.w5m * rate.write5m * rate.pIn + r.w1h * rate.write1h * rate.pIn + r.cacheRead * rate.readMult * rate.pIn + r.output * rate.pOut;
+
+/** Tokens of the previous request's cache that this request had to process again. 0 when it is not a miss. */
+function rewrittenOf(prev, cur) {
+  const cacheable = cachedOf(prev);
+  const rewritten = Math.max(0, Math.min(cacheable, cur.prompt) - cur.cacheRead);
+  return rewritten > cacheable * MISS_SHARE && rewritten >= MISS_MIN_TOKENS ? rewritten : 0;
+}
+
+/** Cache TTL after a request: 1h if it wrote 1h, 5m if it wrote 5m, else unchanged. */
+const ttlAfter = (r, before) => (r.w1h > 0 ? TTL_1H : r.w5m > 0 ? TTL_5M : before);
+
+/** Compare each request in a stream with the one before it. cuts = compaction times (main streams only). */
+function sessionLeaks(reqs, cuts, table) {
+  const out = [];
+  let ttl = null;
+  for (let i = 0; i < reqs.length; i++) {
+    const cur = reqs[i];
+    if (i > 0) {
+      const prev = reqs[i - 1];
+      const rewritten = rewrittenOf(prev, cur);
+      if (rewritten > 0) {
+        const cold = cur.ts - prev.ts > (ttl ?? TTL_5M);
+        let rule = "unexplained";
+        if (cur.proxied) rule = "proxied";
+        else if (cuts.some((c) => c > prev.ts && c <= cur.ts)) rule = cold ? "compaction" : "expectedRebuild";
+        else if (cur.model !== prev.model) rule = "modelSwitch";
+        else if (cold) rule = "coldCache";
+        else if (prev.version && cur.version && prev.version !== cur.version) rule = "upgrade";
+        const rate = rateOf(table, { ...cur, promptTokens: cur.prompt });
+        const usd = rate ? rewritten * ((cur.w1h > 0 ? rate.write1h : rate.write5m) - rate.readMult) * rate.pIn : 0;
+        out.push({ ts: cur.ts, rule, rewritten, usd });
+      }
+    }
+    ttl = ttlAfter(cur, ttl);
+  }
+  return out;
+}
+
 const started = Date.now();
 const sources = [];
 const labels = [];
@@ -243,6 +345,7 @@ for (const agent of Object.keys(AGENTS)) {
     Object.assign(merged[agent].msgs, s[agent]?.msgs);
     Object.assign(merged[agent].prompts, s[agent]?.prompts);
     Object.assign(merged[agent].files, s[agent]?.files);
+    Object.assign(merged[agent].compacts, s[agent]?.compacts);
   }
 }
 
@@ -261,10 +364,12 @@ const bucket = (date, agent) =>
     agentMinutes: 0, // summed per session — parallel sessions and subagents stack
     activeMinutes: 0, // wall clock — overlapping sessions merged
     humanMinutes: 0, // my time at the keyboard, from prompt times
+    costUsd: 0, // list-price USD of requests that have a price
+    unpricedTokens: 0, // tokens of requests with no price
   });
 const slots = () => Array(24).fill(0);
 const hourBucket = (date, agent) =>
-  ((hourly[date] ??= {})[agent] ??= { activeMinutes: slots(), agentMinutes: slots(), humanMinutes: slots(), prompts: slots(), sessions: slots(), tokens: slots() });
+  ((hourly[date] ??= {})[agent] ??= { activeMinutes: slots(), agentMinutes: slots(), humanMinutes: slots(), prompts: slots(), sessions: slots(), tokens: slots(), costUsd: slots() });
 const hourOf = (ts) => new Date(ts).getHours();
 
 /** Merge overlapping [start, end] runs and report the covered minutes per local day and hour. */
@@ -297,8 +402,11 @@ function humanSpans(stamps) {
 
 const everyRun = []; // across all agents, for "all agents" wall clock
 const everyPrompt = []; // across all agents — I'm one person, prompting two agents at once is still my one hour
+const unpriced = {}; // model -> tokens, all time
 for (const [agent, src] of Object.entries(merged)) {
-  for (const [ts, input, output, cache, model] of Object.values(src.msgs)) {
+  const streams = {}; // Claude Code only: stream -> requests, for cache leaks
+  for (const tuple of Object.values(src.msgs)) {
+    const [ts, input, output, cache, model] = tuple;
     const date = dayKey(ts);
     const b = bucket(date, agent);
     b.turns++;
@@ -307,6 +415,31 @@ for (const [agent, src] of Object.entries(merged)) {
     b.cacheTokens += cache;
     hourBucket(date, agent).tokens[hourOf(ts)] += input + output;
     if (model && !model.startsWith("<")) (models[agent] ??= {})[model] = (models[agent][model] ?? 0) + 1;
+
+    const r = reqOf(tuple);
+    const rate = agent === "claude-code" ? rateOf(priceTable, { ...r, promptTokens: r.prompt }) : null;
+    if (rate) {
+      const usd = costOf(r, rate);
+      b.costUsd += usd;
+      hourBucket(date, agent).costUsd[hourOf(ts)] += usd;
+    } else {
+      const tokens = r.inputRaw + r.w5m + r.w1h + r.cacheRead + r.output;
+      b.unpricedTokens += tokens;
+      unpriced[model || "unknown"] = (unpriced[model || "unknown"] ?? 0) + tokens;
+    }
+    if (agent === "claude-code" && r.stream) (streams[r.stream] ??= []).push(r);
+  }
+  const cutsOf = {};
+  for (const [sid, at] of Object.values(src.compacts)) (cutsOf[sid] ??= []).push(at);
+  for (const [stream, reqs] of Object.entries(streams)) {
+    reqs.sort((a, b) => a.ts - b.ts);
+    for (const e of sessionLeaks(reqs, cutsOf[stream] ?? [], priceTable)) {
+      const leaks = (bucket(dayKey(e.ts), agent).leaks ??= {});
+      const l = (leaks[e.rule] ??= { count: 0, tokens: 0, usd: 0 });
+      l.count++;
+      l.tokens += e.rewritten;
+      l.usd += e.usd;
+    }
   }
   for (const ts of Object.values(src.prompts)) {
     bucket(dayKey(ts), agent).prompts++;
@@ -365,12 +498,18 @@ for (const agents of Object.values(daily))
     m.agentMinutes = Math.round(m.agentMinutes);
     m.activeMinutes = Math.round(m.activeMinutes);
     m.humanMinutes = Math.round(m.humanMinutes);
+    m.costUsd = r4(m.costUsd);
+    for (const l of Object.values(m.leaks ?? {})) {
+      l.tokens = Math.round(l.tokens);
+      l.usd = r4(l.usd);
+    }
   }
 for (const agents of Object.values(hourly))
   for (const h of Object.values(agents)) {
     h.activeMinutes = h.activeMinutes.map(round1);
     h.agentMinutes = h.agentMinutes.map(round1);
     h.humanMinutes = h.humanMinutes.map(round1);
+    h.costUsd = h.costUsd.map(r4);
   }
 
 const days = Object.keys(daily).sort();
@@ -380,6 +519,7 @@ const out = {
   sources: labels,
   agents: AGENTS,
   models,
+  pricing: { source: priceTable.source ?? null, unpriced },
   days: days.map((date) => ({
     date,
     agents: daily[date],

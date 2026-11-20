@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CalendarHeatmap, TodayChart, TrendChart } from "./charts";
 import {
+  LEAK_RULES,
   METRICS,
   METRIC_KEYS,
+  OUTSIDE_LEAK,
   addDays,
   dailySeries,
   dayKey,
@@ -16,6 +18,8 @@ import {
   sum,
   valueUntil,
   type Change,
+  type LeakRule,
+  type LeakStat,
   type MetricKey,
   type UsageData,
 } from "./usage";
@@ -110,6 +114,7 @@ export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "
     [data, agentFilter, range, endDate],
   );
   const active = tabs.find((t) => t.key === metric)!;
+  const unpricedModels = Object.keys(data.pricing?.unpriced ?? {});
 
   const history = useMemo(() => {
     const m = new Map<string, number>();
@@ -236,6 +241,8 @@ export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "
           <ModelsCard data={data} agents={agents} color={color} />
         </div>
 
+        <LeakCard data={data} view={view} agents={agents} />
+
         <div className="au-card">
           <div className="au-card-head">
             <div>
@@ -255,6 +262,14 @@ export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "
             ·
           </span>
           {new Date(data.generatedAt).toLocaleString("ko-KR", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })} 수집
+          {unpricedModels.length > 0 && (
+            <span title={unpricedModels.join(", ")}>
+              <span className="au-sep" aria-hidden>
+                ·
+              </span>
+              가격 없는 모델 {unpricedModels.length}개는 비용에서 뺐어요
+            </span>
+          )}
         </footer>
       </div>
     </section>
@@ -522,6 +537,95 @@ function LeverageCard(props: { data: UsageData; view: View; agents: string[]; co
           내 작업 시간은 프롬프트를 보낸 시각으로 추정해요 · 프롬프트마다 2분, 15분 안에 이어지면 계속 일한 걸로
         </p>
       </div>
+    </div>
+  );
+}
+
+// ---------- cache leaks: context that was already cached and got written again ----------
+
+const LEAK_LABELS: Record<LeakRule, string> = {
+  coldCache: "캐시 만료 (긴 공백)",
+  modelSwitch: "모델 전환",
+  compaction: "압축 뒤 다시 쓰기",
+  upgrade: "버전 변경",
+  unexplained: "원인 불명",
+  expectedRebuild: "",
+  proxied: "",
+};
+
+type LeakSums = Partial<Record<LeakRule, LeakStat>>;
+
+/** Leak stats per rule, summed over the days [start, start+len). */
+function leakTotals(data: UsageData, start: string, len: number): LeakSums {
+  const last = addDays(start, len - 1);
+  const out: LeakSums = {};
+  for (const d of data.days) {
+    if (d.date < start || d.date > last) continue;
+    for (const [rule, s] of Object.entries(d.agents["claude-code"]?.leaks ?? {}) as [LeakRule, LeakStat][]) {
+      const to = (out[rule] ??= { count: 0, tokens: 0, usd: 0 });
+      to.count += s.count;
+      to.tokens += s.tokens;
+      to.usd += s.usd;
+    }
+  }
+  return out;
+}
+
+const leakUsd = (t: LeakSums) => LEAK_RULES.reduce((s, r) => s + (t[r]?.usd ?? 0), 0);
+
+function LeakCard({ data, view, agents }: { data: UsageData; view: View; agents: string[] }) {
+  const anyLeaks = data.days.some((d) => d.agents["claude-code"]?.leaks);
+  if (!agents.includes("claude-code") || !anyLeaks) return null;
+
+  // Today shows the whole day so far. Comparing it with all of yesterday would always read as a drop.
+  const cur = leakTotals(data, view.curStart, view.range);
+  const prev = leakTotals(data, view.prevStart, view.range);
+  const curUsd = leakUsd(cur);
+  const cost = sum(dailySeries(data, ["claude-code"], "cost", view.curStart, view.range));
+  const change = view.today ? null : describeChange(curUsd, leakUsd(prev));
+  const rows = LEAK_RULES.filter((r) => (cur[r]?.count ?? 0) > 0).map((r) => ({ rule: r, ...cur[r]! }));
+  const top = Math.max(...rows.map((r) => r.usd), 0);
+  const countOf = (rules: LeakRule[]) => rules.reduce((n, r) => n + (cur[r]?.count ?? 0), 0);
+
+  return (
+    <div className="au-card au-leaks">
+      <div className="au-card-head">
+        <div>
+          <h2>캐시 누수</h2>
+          <p className="au-card-sub">이미 캐시에 있던 맥락을 다시 쓴 몫 · {view.curLabel}</p>
+        </div>
+        <div className="au-leak-total">
+          <b>{fmt(curUsd, "cost")}</b>
+          <small>{cost > 0 ? `비용의 ${Math.round((curUsd / cost) * 100)}%` : "비용 기록 없음"}</small>
+          {change && change.dir !== "none" && (
+            <span className="au-leak-change">
+              <ChangeText change={change} />
+            </span>
+          )}
+        </div>
+      </div>
+      {rows.length > 0 ? (
+        <ul className="au-leak-rows">
+          {rows.map((r) => (
+            <li key={r.rule}>
+              <span className="au-leak-name">{LEAK_LABELS[r.rule]}</span>
+              <span className="au-leak-track">
+                <span style={{ width: `${top > 0 ? (r.usd / top) * 100 : 0}%` }} />
+              </span>
+              <span className="au-leak-num au-leak-count">{r.count.toLocaleString("ko-KR")}회</span>
+              <span className="au-leak-num">{fmt(r.tokens, "tokens")}</span>
+              <b className="au-leak-num">{fmt(r.usd, "cost")}</b>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="au-leak-note">이 기간엔 누수가 없어요</p>
+      )}
+      {countOf(OUTSIDE_LEAK) > 0 && (
+        <p className="au-leak-note">
+          누수에서 뺀 것: 캐시가 살아 있을 때 압축 뒤 다시 짓기 {countOf(["expectedRebuild"])}회 · 프록시 경로 {countOf(["proxied"])}회
+        </p>
+      )}
     </div>
   );
 }

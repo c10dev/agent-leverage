@@ -77,6 +77,52 @@ for (let i = DAYS - 1; i >= 0; i--) {
     days.push({ date: key(d), agents, allActiveMinutes, allHumanMinutes, hourly: hourlyFor(agents, allActiveMinutes, allHumanMinutes) });
 }
 
+// Cost and leak fields. A second PRNG keeps the draws above (and so every older field) unchanged.
+let seed2 = 7;
+const rand2 = () => ((seed2 = (seed2 * 1664525 + 1013904223) % 2 ** 32) / 2 ** 32);
+const r4 = (v) => Math.round(v * 1e4) / 1e4;
+
+/** Split a USD total over 24 hours with the same CURVE weights. */
+function spreadCost(total) {
+  const w = CURVE.map((c) => c * (0.6 + rand2() * 0.8));
+  const sumW = w.reduce((a, b) => a + b, 0);
+  return w.map((x) => r4((total * x) / sumW));
+}
+
+const USD_PER_REWRITTEN_TOKEN = (1.25 - 0.05) * 4e-6; // Opus 5.5 input price, 5m write minus read
+const codexTokens = { total: 0 };
+for (const d of days) {
+  for (const [a, m] of Object.entries(d.agents)) {
+    if (a !== "claude-code") {
+      m.costUsd = 0;
+      m.unpricedTokens = m.inputTokens + m.outputTokens + m.cacheTokens;
+      codexTokens.total += m.unpricedTokens;
+      continue;
+    }
+    m.costUsd = r4((m.inputTokens * 4 + m.cacheTokens * 0.2 + m.outputTokens * 20) / 1e6);
+    m.unpricedTokens = 0;
+    // leaks add up to 3-12% of the day's cost
+    let pool = m.costUsd * (0.03 + rand2() * 0.09);
+    const shares = { coldCache: 0.4, modelSwitch: 0.15, compaction: 0.2, unexplained: 0.25 };
+    const leaks = {};
+    const add = (rule, usd) => {
+      const tokens = Math.round(usd / USD_PER_REWRITTEN_TOKEN);
+      leaks[rule] = { count: Math.max(1, Math.round(tokens / (150000 + rand2() * 250000))), tokens, usd: r4(usd) };
+    };
+    if (rand2() < 0.2) {
+      const usd = pool * (0.04 + rand2() * 0.06);
+      pool -= usd;
+      add("upgrade", usd);
+    }
+    const jittered = Object.entries(shares).map(([rule, share]) => [rule, share * (0.7 + rand2() * 0.6)]);
+    const norm = jittered.reduce((t, [, w]) => t + w, 0);
+    for (const [rule, w] of jittered) add(rule, (pool * w) / norm);
+    if (rand2() < 0.3) add("expectedRebuild", m.costUsd * 0.01 * (0.5 + rand2()));
+    m.leaks = leaks;
+  }
+  for (const [a, h] of Object.entries(d.hourly.agents)) h.costUsd = spreadCost(d.agents[a].costUsd);
+}
+
 const out = {
   generatedAt: new Date(end.getTime() + 18 * 3600e3).toISOString(),
   sample: true,
@@ -84,6 +130,14 @@ const out = {
   models: {
     "claude-code": { "claude-opus-5-5": 18200, "claude-sonnet-5-5": 4100, "claude-haiku-4-5": 900 },
     codex: { "gpt-5.5": 9800, "gpt-5.6-sol": 3100, "gpt-5.4": 1400 },
+  },
+  pricing: {
+    source: "sample",
+    unpriced: {
+      "gpt-5.5": Math.round(codexTokens.total * (9800 / 14300)),
+      "gpt-5.6-sol": Math.round(codexTokens.total * (3100 / 14300)),
+      "gpt-5.4": Math.round(codexTokens.total * (1400 / 14300)),
+    },
   },
   days,
 };

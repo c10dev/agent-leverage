@@ -3,7 +3,7 @@
 //   node scripts/collect.mjs [--out public/usage.json] [--remote <ssh-host>]... [--no-local]
 // SSH hosts can also be listed in remotes.txt.
 // Days and hours use the local time zone; set TZ (e.g. TZ=Asia/Seoul) to change it.
-// Sources: Claude Code (~/.claude/projects), Codex (~/.codex/sessions).
+// Sources: Claude Code (~/.claude/projects, ~/.claude-*/projects, $CLAUDE_CONFIG_DIR), Codex (~/.codex/sessions, ~/.codex-*/sessions, $CODEX_HOME).
 //
 // Remote hosts run this same script over SSH in --raw mode (needs `node` there) and send back
 // de-duplicatable events: message ids, prompt ids, and per-file activity runs. That way a session
@@ -72,7 +72,32 @@ function isHumanPrompt(rec) {
   return Array.isArray(c) && c.some((b) => b.type === "text") && !c.some((b) => b.type === "tool_result");
 }
 
-const emptySource = () => ({ msgs: {}, prompts: {}, files: {}, compacts: {} });
+const emptySource = () => ({ msgs: {}, prompts: {}, files: {}, compacts: {}, accounts: 0 });
+
+// Existing log folders of every account of one agent: the default folder, sibling folders named <defaultDir>-<name>, and the env var folder.
+function accountRoots(defaultDir, envVar, sub) {
+  const home = os.homedir();
+  const candidates = [path.join(home, defaultDir, sub)];
+  try {
+    for (const e of fs.readdirSync(home, { withFileTypes: true })) {
+      if (e.name.startsWith(`${defaultDir}-`) && (e.isDirectory() || (e.isSymbolicLink() && fs.statSync(path.join(home, e.name)).isDirectory())))
+        candidates.push(path.join(home, e.name, sub));
+    }
+  } catch {
+    // unreadable home folder
+  }
+  if (process.env[envVar]) candidates.push(path.join(path.resolve(process.env[envVar]), sub));
+  const roots = new Set();
+  for (const c of candidates) {
+    try {
+      const real = fs.realpathSync(c);
+      if (fs.statSync(real).isDirectory()) roots.add(real);
+    } catch {
+      // missing or unreadable
+    }
+  }
+  return [...roots].sort();
+}
 
 // msgs[id] = [ts, input, output, cacheRead, model, w5m, w1h, stream, speed, geo, proxied, version]
 //   input = input_tokens + cache_creation; w5m + w1h = cache_creation split by TTL; stream = one request chain
@@ -80,79 +105,87 @@ const emptySource = () => ({ msgs: {}, prompts: {}, files: {}, compacts: {} });
 // prompts[id] = ts; files[key] = { sid, main, runs }; compacts[key] = [sessionId, ts]
 
 async function scanClaude(src) {
-  const root = path.join(os.homedir(), ".claude", "projects");
-  for (const file of walk(root)) {
-    const stamps = [];
-    let sid = null;
-    let main = true;
-    for await (const rec of lines(file)) {
-      if (rec.type === "system" && rec.subtype === "compact_boundary" && !rec.isSidechain && rec.sessionId) {
-        const at = Date.parse(rec.timestamp);
-        if (!Number.isNaN(at)) src.compacts[`${rec.sessionId}|${rec.timestamp}`] = [rec.sessionId, at];
+  for (const root of accountRoots(".claude", "CLAUDE_CONFIG_DIR", "projects")) {
+    let found = false;
+    for (const file of walk(root)) {
+      found = true;
+      const stamps = [];
+      let sid = null;
+      let main = true;
+      for await (const rec of lines(file)) {
+        if (rec.type === "system" && rec.subtype === "compact_boundary" && !rec.isSidechain && rec.sessionId) {
+          const at = Date.parse(rec.timestamp);
+          if (!Number.isNaN(at)) src.compacts[`${rec.sessionId}|${rec.timestamp}`] = [rec.sessionId, at];
+        }
+        if (rec.type !== "user" && rec.type !== "assistant") continue;
+        const ts = Date.parse(rec.timestamp);
+        if (Number.isNaN(ts)) continue;
+        stamps.push(ts);
+        sid ??= rec.sessionId;
+        if (rec.isSidechain) main = false;
+        if (isHumanPrompt(rec) && rec.uuid) src.prompts[rec.uuid] = ts;
+        const msg = rec.message;
+        // one API response is split across several lines sharing an id; resumed sessions copy them too
+        if (rec.type === "assistant" && msg?.usage && msg.id && msg.model !== "<synthetic>") {
+          const u = msg.usage;
+          const created = u.cache_creation_input_tokens ?? 0;
+          const w1h = Math.min(created, u.cache_creation?.ephemeral_1h_input_tokens || 0);
+          const stream = rec.isSidechain ? `${rec.sessionId}:${rec.agentId ?? path.basename(file, ".jsonl")}` : rec.sessionId;
+          src.msgs[msg.id] ??= [
+            ts,
+            (u.input_tokens ?? 0) + created,
+            u.output_tokens ?? 0,
+            u.cache_read_input_tokens ?? 0,
+            msg.model,
+            created - w1h,
+            w1h,
+            stream ?? null,
+            u.speed ?? null,
+            u.inference_geo ?? null,
+            rec.requestId ? 0 : 1,
+            rec.version ?? null,
+          ];
+        }
       }
-      if (rec.type !== "user" && rec.type !== "assistant") continue;
-      const ts = Date.parse(rec.timestamp);
-      if (Number.isNaN(ts)) continue;
-      stamps.push(ts);
-      sid ??= rec.sessionId;
-      if (rec.isSidechain) main = false;
-      if (isHumanPrompt(rec) && rec.uuid) src.prompts[rec.uuid] = ts;
-      const msg = rec.message;
-      // one API response is split across several lines sharing an id; resumed sessions copy them too
-      if (rec.type === "assistant" && msg?.usage && msg.id && msg.model !== "<synthetic>") {
-        const u = msg.usage;
-        const created = u.cache_creation_input_tokens ?? 0;
-        const w1h = Math.min(created, u.cache_creation?.ephemeral_1h_input_tokens || 0);
-        const stream = rec.isSidechain ? `${rec.sessionId}:${rec.agentId ?? path.basename(file, ".jsonl")}` : rec.sessionId;
-        src.msgs[msg.id] ??= [
-          ts,
-          (u.input_tokens ?? 0) + created,
-          u.output_tokens ?? 0,
-          u.cache_read_input_tokens ?? 0,
-          msg.model,
-          created - w1h,
-          w1h,
-          stream ?? null,
-          u.speed ?? null,
-          u.inference_geo ?? null,
-          rec.requestId ? 0 : 1,
-          rec.version ?? null,
-        ];
-      }
+      // key by session + file name so the desktop app's local mirror of an SSH session collapses with the server copy
+      if (sid && stamps.length) src.files[`${sid}/${path.basename(file)}`] = { sid, main, runs: toRuns(stamps) };
     }
-    // key by session + file name so the desktop app's local mirror of an SSH session collapses with the server copy
-    if (sid && stamps.length) src.files[`${sid}/${path.basename(file)}`] = { sid, main, runs: toRuns(stamps) };
+    if (found) src.accounts++;
   }
 }
 
 async function scanCodex(src) {
-  const root = path.join(os.homedir(), ".codex", "sessions");
-  for (const file of walk(root)) {
-    const key = path.basename(file, ".jsonl");
-    const stamps = [];
-    let prev = null; // previous cumulative token totals
-    let model = null;
-    let main = true;
-    let n = 0;
-    for await (const rec of lines(file)) {
-      const ts = Date.parse(rec.timestamp);
-      if (Number.isNaN(ts)) continue;
-      const p = rec.payload ?? {};
-      n++;
-      if (rec.type === "session_meta" && p.source?.subagent) main = false;
-      if (rec.type === "turn_context" && p.model) model = p.model;
-      if (rec.type === "response_item" || rec.type === "event_msg") stamps.push(ts);
-      if (p.type === "task_started" && main) src.prompts[`${key}:${n}`] = ts;
-      if (p.type === "token_count" && p.info?.total_token_usage) {
-        const t = p.info.total_token_usage;
-        // cumulative counter; the same snapshot is often re-emitted
-        if (prev && t.total_tokens === prev.total_tokens) continue;
-        const d = (k) => Math.max(0, (t[k] ?? 0) - (prev?.[k] ?? 0));
-        src.msgs[`${key}:${n}`] = [ts, d("input_tokens") - d("cached_input_tokens"), d("output_tokens"), d("cached_input_tokens"), model];
-        prev = t;
+  for (const root of accountRoots(".codex", "CODEX_HOME", "sessions")) {
+    let found = false;
+    for (const file of walk(root)) {
+      found = true;
+      const key = path.basename(file, ".jsonl");
+      const stamps = [];
+      let prev = null; // previous cumulative token totals
+      let model = null;
+      let main = true;
+      let n = 0;
+      for await (const rec of lines(file)) {
+        const ts = Date.parse(rec.timestamp);
+        if (Number.isNaN(ts)) continue;
+        const p = rec.payload ?? {};
+        n++;
+        if (rec.type === "session_meta" && p.source?.subagent) main = false;
+        if (rec.type === "turn_context" && p.model) model = p.model;
+        if (rec.type === "response_item" || rec.type === "event_msg") stamps.push(ts);
+        if (p.type === "task_started" && main) src.prompts[`${key}:${n}`] = ts;
+        if (p.type === "token_count" && p.info?.total_token_usage) {
+          const t = p.info.total_token_usage;
+          // cumulative counter; the same snapshot is often re-emitted
+          if (prev && t.total_tokens === prev.total_tokens) continue;
+          const d = (k) => Math.max(0, (t[k] ?? 0) - (prev?.[k] ?? 0));
+          src.msgs[`${key}:${n}`] = [ts, d("input_tokens") - d("cached_input_tokens"), d("output_tokens"), d("cached_input_tokens"), model];
+          prev = t;
+        }
       }
+      if (stamps.length) src.files[key] = { sid: key, main, runs: toRuns(stamps) };
     }
-    if (stamps.length) src.files[key] = { sid: key, main, runs: toRuns(stamps) };
+    if (found) src.accounts++;
   }
 }
 
@@ -519,6 +552,7 @@ const out = {
   generatedAt: new Date().toISOString(),
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   sources: labels,
+  ...(labels[0] === "local" && { accounts: { "claude-code": sources[0]["claude-code"].accounts, codex: sources[0].codex.accounts } }),
   agents: AGENTS,
   models,
   pricing: { source: priceTable.source ?? null, unpriced },
@@ -540,5 +574,6 @@ fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
 const count = (a) => Object.keys(merged[a].files).length;
 console.log(
   `sources: ${labels.join(", ")} · ${count("claude-code")} Claude Code + ${count("codex")} Codex logs (deduped)` +
+    (labels[0] === "local" ? ` · accounts: claude-code ${sources[0]["claude-code"].accounts}, codex ${sources[0].codex.accounts}` : "") +
     ` in ${((Date.now() - started) / 1000).toFixed(1)}s → ${OUT} (${days[0]} … ${days.at(-1)}, ${days.length} days)`,
 );

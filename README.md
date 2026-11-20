@@ -62,8 +62,10 @@ flowchart LR
 
 | Agent | Reads | Counting |
 |---|---|---|
-| Claude Code | `~/.claude/projects/**/*.jsonl` | Responses de-duplicated by `message.id` and prompts by record `uuid`, so resumed sessions that copy old history count once |
-| Codex | `~/.codex/sessions/**/*.jsonl` | Tokens from deltas of the cumulative `token_count`, prompts from `task_started` |
+| Claude Code | `~/.claude/projects/**/*.jsonl`, plus `~/.claude-*/projects` and `$CLAUDE_CONFIG_DIR/projects` | Responses de-duplicated by `message.id` and prompts by record `uuid`, so resumed sessions that copy old history count once |
+| Codex | `~/.codex/sessions/**/*.jsonl`, plus `~/.codex-*/sessions` and `$CODEX_HOME/sessions` | Tokens from deltas of the cumulative `token_count`, prompts from `task_started` |
+
+Extra account folders are merged into the same agent. The ids above de-duplicate anything that appears in more than one folder.
 
 ## Metrics
 

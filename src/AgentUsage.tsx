@@ -271,6 +271,11 @@ export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "
 
         <footer className="au-footer">
           {data.sample ? "샘플 데이터" : data.sources?.map((s) => (s === "local" ? "이 컴퓨터" : s)).join(" + ")}
+          {!data.sample &&
+            (() => {
+              const multi = Object.entries(data.accounts ?? {}).filter(([, n]) => n >= 2);
+              return multi.length ? ` (${multi.map(([id, n]) => `${data.agents[id] ?? id} 계정 ${n}개`).join(", ")})` : null;
+            })()}
           <span className="au-sep" aria-hidden>
             ·
           </span>

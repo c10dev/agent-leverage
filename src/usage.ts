@@ -22,6 +22,7 @@ export type Metrics = {
 
 export type UsageData = {
   generatedAt: string;
+  timeZone?: string; // IANA zone the days and hours were bucketed in
   sample?: boolean;
   sources?: string[]; // where logs were read: "local" and/or SSH host names
   agents: Record<string, string>; // id -> display name
@@ -117,6 +118,28 @@ export function metricValue(m: Metrics | undefined, key: MetricKey): number {
 export function parseDay(s: string): Date {
   const [y, m, d] = s.split("-").map(Number);
   return new Date(y, m - 1, d);
+}
+
+/** Wall-clock date and time of `iso` in `timeZone` (browser local when omitted). */
+export function wallClock(iso: string, timeZone?: string): { date: string; hours: number; minutes: number } {
+  const parts = (tz?: string) =>
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: tz,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    }).formatToParts(new Date(iso));
+  let p: Intl.DateTimeFormatPart[];
+  try {
+    p = parts(timeZone);
+  } catch {
+    p = parts(undefined);
+  }
+  const get = (t: string) => p.find((x) => x.type === t)?.value ?? "0";
+  return { date: `${get("year")}-${get("month")}-${get("day")}`, hours: Number(get("hour")), minutes: Number(get("minute")) };
 }
 
 export function dayKey(d: Date): string {

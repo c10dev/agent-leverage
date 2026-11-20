@@ -2,6 +2,7 @@
 // Scans AI agent logs on this machine (and optionally on SSH hosts) and writes a per-day usage summary.
 //   node scripts/collect.mjs [--out public/usage.json] [--remote <ssh-host>]... [--no-local]
 // SSH hosts can also be listed in remotes.txt.
+// Days and hours use the local time zone; set TZ (e.g. TZ=Asia/Seoul) to change it.
 // Sources: Claude Code (~/.claude/projects), Codex (~/.codex/sessions).
 //
 // Remote hosts run this same script over SSH in --raw mode (needs `node` there) and send back
@@ -516,6 +517,7 @@ const days = Object.keys(daily).sort();
 const sum24 = (a) => a.reduce((s, v) => s + v, 0);
 const out = {
   generatedAt: new Date().toISOString(),
+  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   sources: labels,
   agents: AGENTS,
   models,

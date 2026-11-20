@@ -14,7 +14,11 @@ export default function App() {
 
   const refresh = async () => {
     const BASE_URL = import.meta.env.BASE_URL;
-    const res = await fetch(`${BASE_URL}api/collect`, { method: "POST" });
+    const res = await fetch(`${BASE_URL}api/collect`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }),
+    });
     if (!res.ok) throw new Error(`collect ${res.status}`);
     const next = await fetch(`${BASE_URL}usage.json`, { cache: "no-store" });
     if (!next.ok) throw new Error(`usage.json ${next.status}`);

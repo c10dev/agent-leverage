@@ -39,6 +39,8 @@ export type AgentUsageProps = {
   endDate?: string;
   defaultRange?: Range;
   defaultMetric?: MetricKey;
+  /** When set, the footer shows a refresh button that awaits this. */
+  onRefresh?: () => Promise<void>;
 };
 
 /** The two windows being compared, and how to talk about them. */
@@ -92,10 +94,21 @@ function compare(data: UsageData, v: View, agents: string[], key: MetricKey) {
   };
 }
 
-export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "activeHours" }: AgentUsageProps) {
+export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "activeHours", onRefresh }: AgentUsageProps) {
   const [range, setRange] = useState<Range>(defaultRange);
   const [metric, setMetric] = useState<MetricKey>(defaultMetric);
   const [agentFilter, setAgentFilter] = useState("all");
+  const [refreshState, setRefreshState] = useState<"idle" | "busy" | "error">("idle");
+  const refreshClick = async () => {
+    if (!onRefresh) return;
+    setRefreshState("busy");
+    try {
+      await onRefresh();
+      setRefreshState("idle");
+    } catch {
+      setRefreshState("error");
+    }
+  };
 
   const allAgents = Object.keys(data.agents);
   const color = (a: string) => {
@@ -262,6 +275,23 @@ export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "
             ·
           </span>
           {new Date(data.generatedAt).toLocaleString("ko-KR", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })} 수집
+          {onRefresh && (
+            <>
+              <span className="au-sep" aria-hidden>
+                ·
+              </span>
+              <button
+                type="button"
+                className="au-refresh"
+                disabled={refreshState === "busy"}
+                aria-busy={refreshState === "busy"}
+                title={refreshState === "error" ? "수집에 실패했어요" : undefined}
+                onClick={refreshClick}
+              >
+                {refreshState === "busy" ? "수집 중…" : refreshState === "error" ? "실패 · 다시 시도" : "새로고침"}
+              </button>
+            </>
+          )}
           {unpricedModels.length > 0 && (
             <span title={unpricedModels.join(", ")}>
               <span className="au-sep" aria-hidden>

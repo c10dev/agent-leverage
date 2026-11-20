@@ -8,11 +8,22 @@ export default function App() {
   const [data, setData] = useState<UsageData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const params = new URLSearchParams(location.search);
+  const sampleOnly = params.has("sample") || Boolean(import.meta.env.VITE_DEMO);
+  const canRefresh = import.meta.env.DEV && !sampleOnly;
+
+  const refresh = async () => {
+    const BASE_URL = import.meta.env.BASE_URL;
+    const res = await fetch(`${BASE_URL}api/collect`, { method: "POST" });
+    if (!res.ok) throw new Error(`collect ${res.status}`);
+    const next = await fetch(`${BASE_URL}usage.json`, { cache: "no-store" });
+    if (!next.ok) throw new Error(`usage.json ${next.status}`);
+    setData((await next.json()) as UsageData);
+  };
+
   useEffect(() => {
     const load = (file: string) =>
       fetch(`${import.meta.env.BASE_URL}${file}`).then((r) => (r.ok ? (r.json() as Promise<UsageData>) : Promise.reject(r.status)));
-    const params = new URLSearchParams(location.search);
-    const sampleOnly = params.has("sample") || Boolean(import.meta.env.VITE_DEMO);
     const theme = params.get("theme"); // "light" | "dark" — overrides the OS setting
     if (theme) document.documentElement.dataset.theme = theme;
     (sampleOnly ? Promise.reject() : load("usage.json"))
@@ -23,5 +34,5 @@ export default function App() {
 
   if (error) return <p style={{ padding: 24 }}>{error}</p>;
   if (!data) return null;
-  return <AgentUsage data={data} />;
+  return <AgentUsage data={data} onRefresh={canRefresh ? refresh : undefined} />;
 }

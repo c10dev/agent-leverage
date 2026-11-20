@@ -957,6 +957,27 @@ b.au-leak-num {
   color: var(--text-3);
 }
 
+.au-refresh {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  color: var(--text-2);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.au-refresh:hover {
+  color: var(--ink);
+}
+
+.au-refresh:disabled {
+  cursor: progress;
+  text-decoration: none;
+  color: var(--text-3);
+}
+
 /* ---------- small screens ---------- */
 
 @media (max-width: 760px) {

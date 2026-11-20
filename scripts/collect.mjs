@@ -4,6 +4,7 @@
 // SSH hosts can also be listed in remotes.txt.
 // Days and hours use the local time zone; set TZ (e.g. TZ=Asia/Seoul) to change it.
 // Sources: Claude Code (~/.claude/projects, ~/.claude-*/projects, $CLAUDE_CONFIG_DIR), Codex (~/.codex/sessions, ~/.codex-*/sessions, $CODEX_HOME).
+// Also: ~/.hermes/codex*/sessions (Hermes Agent), and Codex token totals from a tokscale cache (~/.config/tokscale) for hours the logs no longer cover.
 //
 // Remote hosts run this same script over SSH in --raw mode (needs `node` there) and send back
 // de-duplicatable events: message ids, prompt ids, and per-file activity runs. That way a session
@@ -154,8 +155,29 @@ async function scanClaude(src) {
   }
 }
 
+// Codex log folders that Hermes Agent writes: ~/.hermes/codex*/sessions.
+function hermesCodexRoots() {
+  const base = path.join(os.homedir(), ".hermes");
+  const roots = [];
+  try {
+    for (const e of fs.readdirSync(base, { withFileTypes: true })) {
+      if (!e.name.startsWith("codex")) continue;
+      try {
+        const real = fs.realpathSync(path.join(base, e.name, "sessions"));
+        if (fs.statSync(real).isDirectory()) roots.push(real);
+      } catch {
+        // no sessions folder
+      }
+    }
+  } catch {
+    // no ~/.hermes
+  }
+  return roots;
+}
+
 async function scanCodex(src) {
-  for (const root of accountRoots(".codex", "CODEX_HOME", "sessions")) {
+  const roots = [...new Set([...accountRoots(".codex", "CODEX_HOME", "sessions"), ...hermesCodexRoots()])].sort();
+  for (const root of roots) {
     let found = false;
     for (const file of walk(root)) {
       found = true;
@@ -387,6 +409,60 @@ for (const agent of Object.keys(AGENTS)) {
   }
 }
 
+// Codex token totals from a tokscale cache. Tokens only: no sessions, prompts, or active time.
+function tokscaleTuples() {
+  const none = { tuples: [], cachedAt: null };
+  const dir = path.join(os.homedir(), ".config", "tokscale");
+  let cache;
+  try {
+    cache = JSON.parse(fs.readFileSync(path.join(dir, "cache", "tui-data-cache.json"), "utf8"));
+  } catch {
+    return none;
+  }
+  const hourlyRows = cache?.data?.hourly;
+  if (!Array.isArray(hourlyRows)) return none;
+  let tz;
+  try {
+    tz = JSON.parse(fs.readFileSync(path.join(dir, "settings.json"), "utf8"))?.scanner?.bucketTimezone;
+  } catch {
+    // no settings file: tokscale defaults to UTC
+  }
+  if (tz && tz !== "UTC" && tz !== "Etc/UTC") {
+    console.error(`skipped tokscale cache: bucketTimezone is ${tz}, not UTC`);
+    return none;
+  }
+  const num = (v) => (Number.isFinite(v) ? v : 0);
+  const tuples = [];
+  for (const row of hourlyRows) {
+    if (!row?.clients?.includes?.("codex")) continue;
+    const ts = Date.parse(String(row.datetime).replace(" ", "T") + "Z") + 30 * 60_000;
+    if (Number.isNaN(ts)) continue;
+    const one = (t, model) => tuples.push([ts, num(t?.input), num(t?.output) + num(t?.reasoning), num(t?.cacheRead), model]);
+    if (Array.isArray(row.models) && row.models.length) for (const [name, info] of row.models) one(info?.tokens, name);
+    else one(row.tokens, null);
+  }
+  return { tuples, cachedAt: Number.isFinite(cache.timestamp) ? cache.timestamp : null };
+}
+
+let tokscaleHours = 0;
+if (!process.argv.includes("--no-local")) {
+  const { tuples } = tokscaleTuples();
+  const hourKey = (ts) => Math.floor(ts / 3600_000);
+  const logSum = {};
+  const msgs = merged.codex.msgs;
+  for (const [ts, input, output, cache] of Object.values(msgs)) logSum[hourKey(ts)] = (logSum[hourKey(ts)] ?? 0) + input + output + cache;
+  const byHour = {};
+  for (const t of tuples) (byHour[hourKey(t[0])] ??= []).push(t);
+  for (const [h, list] of Object.entries(byHour)) {
+    const sum = list.reduce((a, [, i, o, c]) => a + i + o + c, 0);
+    if (sum <= (logSum[h] ?? 0)) continue;
+    for (const [k, v] of Object.entries(msgs)) if (String(hourKey(v[0])) === h) delete msgs[k];
+    list.forEach((t, i) => (msgs[`tokscale:${h}:${i}`] = t));
+    tokscaleHours++;
+  }
+  if (tokscaleHours) labels.push("tokscale");
+}
+
 // daily[date][agent] -> metrics, hourly[date][agent] -> 24-slot arrays (for "today vs yesterday at this time")
 const daily = {};
 const hourly = {};
@@ -578,6 +654,7 @@ fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
 const count = (a) => Object.keys(merged[a].files).length;
 console.log(
   `sources: ${labels.join(", ")} · ${count("claude-code")} Claude Code + ${count("codex")} Codex logs (deduped)` +
+    (tokscaleHours ? ` · tokscale: ${tokscaleHours} hours` : "") +
     (labels[0] === "local" ? ` · accounts: claude-code ${sources[0]["claude-code"].accounts}, codex ${sources[0].codex.accounts}` : "") +
     ` in ${((Date.now() - started) / 1000).toFixed(1)}s → ${OUT} (${days[0]} … ${days.at(-1)}, ${days.length} days)`,
 );

@@ -25,6 +25,7 @@ export type UsageData = {
   timeZone?: string; // IANA zone the days and hours were bucketed in
   sample?: boolean;
   sources?: string[]; // where logs were read: "local" and/or SSH host names
+  accounts?: Record<string, number>; // log folders read per agent on this machine
   agents: Record<string, string>; // id -> display name
   models: Record<string, Record<string, number>>;
   pricing?: { source: string | null; unpriced: Record<string, number> }; // models with no price -> tokens, all time

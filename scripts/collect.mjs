@@ -227,7 +227,9 @@ const REMOTES = [
 function scanRemote(host) {
   const script = fs.readFileSync(fileURLToPath(import.meta.url));
   return new Promise((resolve, reject) => {
-    const ssh = spawn("ssh", ["-C", "-o", "BatchMode=yes", host, "node --input-type=module - --raw"]);
+    // non-interactive SSH shells often miss Homebrew's bin folders (macOS), so add them to PATH
+    const cmd = 'PATH="$PATH:/opt/homebrew/bin:/usr/local/bin" node --input-type=module - --raw';
+    const ssh = spawn("ssh", ["-C", "-o", "BatchMode=yes", host, cmd]);
     const chunks = [];
     let err = "";
     ssh.stdout.on("data", (c) => chunks.push(c));
@@ -371,15 +373,17 @@ for (const r of await Promise.all(pending))
     sources.push(r[1]);
   }
 
-// merge by id — duplicates across machines collapse here
+// merge by id — duplicates across machines collapse here. The first source (this machine) wins for
+// records; for activity files the copy that covers more time wins, because a mirrored copy of a live
+// session (e.g. the desktop app's ssh-* copy on another machine) can lag behind the original.
+const covered = (f) => f.runs.reduce((t, [s, e]) => t + e - s, 0);
 const merged = {};
 for (const agent of Object.keys(AGENTS)) {
   merged[agent] = emptySource();
+  const m = merged[agent];
   for (const s of sources) {
-    Object.assign(merged[agent].msgs, s[agent]?.msgs);
-    Object.assign(merged[agent].prompts, s[agent]?.prompts);
-    Object.assign(merged[agent].files, s[agent]?.files);
-    Object.assign(merged[agent].compacts, s[agent]?.compacts);
+    for (const kind of ["msgs", "prompts", "compacts"]) for (const [k, v] of Object.entries(s[agent]?.[kind] ?? {})) m[kind][k] ??= v;
+    for (const [k, f] of Object.entries(s[agent]?.files ?? {})) if (!m.files[k] || covered(f) > covered(m.files[k])) m.files[k] = f;
   }
 }
 

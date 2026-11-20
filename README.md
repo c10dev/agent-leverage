@@ -136,7 +136,7 @@ Cost of a leak: `rewritten × (write multiplier − read multiplier) × input pr
 
 ## Collecting from SSH servers
 
-If you run `claude` or `codex` directly on a server, its logs only live there. List SSH hosts in `remotes.txt` (one per line), or pass `--remote`. The server only needs `node`, with nothing to install.
+If you run `claude` or `codex` directly on a server, its logs only live there. List SSH hosts in `remotes.txt` (one per line), or pass `--remote`. The server only needs `node`, with nothing to install. The collector also looks for `node` in `/opt/homebrew/bin` and `/usr/local/bin`, so a Mac with Homebrew works over SSH.
 
 ```bash
 echo my-server >> remotes.txt

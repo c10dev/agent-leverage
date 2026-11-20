@@ -7,7 +7,6 @@ import {
   OUTSIDE_LEAK,
   addDays,
   dailySeries,
-  dayKey,
   dayTotal,
   describeChange,
   fmt,
@@ -17,6 +16,7 @@ import {
   hourlySeries,
   sum,
   valueUntil,
+  wallClock,
   type Change,
   type LeakRule,
   type LeakStat,
@@ -60,10 +60,10 @@ type View = {
 };
 
 function makeView(data: UsageData, range: Range, endDate?: string): View {
-  const collected = new Date(data.generatedAt);
-  const end = endDate ?? dayKey(collected);
-  const live = end === dayKey(collected);
-  const until = live ? collected.getHours() + collected.getMinutes() / 60 : 24;
+  const now = wallClock(data.generatedAt, data.timeZone);
+  const end = endDate ?? now.date;
+  const live = end === now.date;
+  const until = live ? now.hours + now.minutes / 60 : 24;
   const curStart = addDays(end, -(range - 1));
   const today = range === 1;
   return {
@@ -274,7 +274,7 @@ export function AgentUsage({ data, endDate, defaultRange = 30, defaultMetric = "
           <span className="au-sep" aria-hidden>
             ·
           </span>
-          {new Date(data.generatedAt).toLocaleString("ko-KR", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })} 수집
+          {new Date(data.generatedAt).toLocaleString("ko-KR", { month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", timeZone: data.timeZone })} 수집
           {onRefresh && (
             <>
               <span className="au-sep" aria-hidden>

@@ -67,6 +67,8 @@ flowchart LR
 
 Extra account folders are merged into the same agent. The ids above de-duplicate anything that appears in more than one folder.
 
+Codex logs that Hermes Agent writes (~/.hermes/codex*/sessions) are read too. If a tokscale cache exists (~/.config/tokscale/cache/tui-data-cache.json), its hourly Codex token totals fill hours where the logs have fewer tokens, for example after old session files were deleted. These hours have tokens only: no sessions, prompts, or active time. The credentials file next to the cache is never read.
+
 ## Metrics
 
 | Metric | Meaning |
